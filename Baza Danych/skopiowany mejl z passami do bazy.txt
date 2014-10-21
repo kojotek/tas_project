@@ -1,0 +1,6 @@
+Username: s383964
+Password: 674lCgcV
+Server: mssql.wmi.amu.edu.pl
+Database: dtas_s383964
+
+Dostêp z sieci wydzia³owej lub za pomoc¹ http://laboratoria.wmi.amu.edu.pl/VPN
