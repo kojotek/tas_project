@@ -162,7 +162,7 @@ button,
 input,
 select,
 textarea {
-  margin: 0;
+  margin: 5px 0 2px 0;
   font-family: inherit;
   font-size: 100%;
 }
@@ -860,6 +860,9 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+    top: 88px;
+    left: 30px;
+    width: 328px;
 }
 
 .col-xs-1,
@@ -1719,7 +1722,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .form-control {
   display: block;
   width: 100%;
-  height: 34px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;

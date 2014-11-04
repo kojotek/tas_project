@@ -41,6 +41,7 @@ namespace ProjektBieda
                 finally 
                 {
                     System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"hahaha!\")</SCRIPT>");
+                    conn.Close();
                 }
             }
         }
