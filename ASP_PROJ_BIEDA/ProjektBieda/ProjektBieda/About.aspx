@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="About" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="ProjektBieda.About" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <br /><br />
+  <br /><br />
     <br />
     <div align="right"><asp:Label ID="LabelTime" runat="server" Text="Label" align="right" Font-Size="10"></asp:Label></div>
     <asp:Label ID="LabelLogin" runat="server" Text="Label" Font-Bold="false" Font-Size="10"></asp:Label>
@@ -21,5 +21,5 @@
     <br />
     <asp:Label ID="LabelTemp4" runat="server" Text="Opis produktu:" Font-Bold="True" Font-Size="12pt"></asp:Label><br />
 
-    <asp:Label ID="TextBoxDescription" runat="server" ReadOnly="True" MaxLength="80" Height="100px" Width="500px"></asp:Label><br />
+<asp:Label ID="TextBoxDescription" runat="server" ReadOnly="True" MaxLength="80" Height="100px" Width="500px"></asp:Label><br />
 </asp:Content>
