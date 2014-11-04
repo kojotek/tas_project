@@ -18,8 +18,8 @@ namespace ProjektBieda.Account
         {
             SqlConnection conn = null; SqlCommand cmd = null;
             try { conn = new SqlConnection("Server=" + serverName + ";Database=" + database + ";User Id=" + userId + ";Password=" + password + ";"); conn.Open(); }
-            catch (InvalidOperationException ex) { System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Klient\")</SCRIPT>"); }
-            catch (SqlException ex) { System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"serwer!\")</SCRIPT>"); }
+            catch (InvalidOperationException ex) { System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Błąd klienta.\")</SCRIPT>"); }
+            catch (SqlException ex) { System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Błąd połączenia z serwerem SQL.\")</SCRIPT>"); }
             finally
             {
                 try
@@ -42,16 +42,22 @@ namespace ProjektBieda.Account
                 }
                 catch (SqlException elol)
                 {
-                    //System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"dupa2!\")</SCRIPT>");
+                    //System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Błąd połączenia z serwerem SQL.\")</SCRIPT>");
                     ErrorMessage.Text = cmd.CommandText;
                 }
                 finally
                 {
-                    System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"hahaha!\")</SCRIPT>");
+                    //System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"hahaha!\")</SCRIPT>");
                     conn.Close();
                 }
             }
+
+            Response.Redirect("Login.aspx");
+
         }
+
+
+
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
             SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
