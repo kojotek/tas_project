@@ -11,8 +11,12 @@ namespace ProjektBieda
 {
     public partial class About : Page
     {
+        
+
         SqlConnection conn;
         SqlCommand cmd;
+        
+        
         public void SqlConnect(string serverName, string database, string userId, string password)
         {
             conn = null; cmd = null;
@@ -32,6 +36,8 @@ namespace ProjektBieda
                 conn.Close();
             }
         }
+        
+        
         public void loadAuction(int id)
         {
             try
@@ -57,10 +63,13 @@ namespace ProjektBieda
                 conn.Close();
             }
         }
+        
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
             loadAuction(2);
         }
+
     }
 }
