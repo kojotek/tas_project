@@ -293,6 +293,8 @@ namespace ProjektBieda.Account
 
         protected void edit1_cancel_Click(object sender, EventArgs e)
         {
+            LoadUserInfo();
+
             edit1.Visible = true;
             edit1_ok.Visible = false;
             edit1_cancel.Visible = false;
@@ -368,6 +370,8 @@ namespace ProjektBieda.Account
 
         protected void edit2_cancel_Click(object sender, EventArgs e)
         {
+            LoadUserInfo();
+
             edit2.Visible = true;
             edit2_ok.Visible = false;
             edit2_cancel.Visible = false;

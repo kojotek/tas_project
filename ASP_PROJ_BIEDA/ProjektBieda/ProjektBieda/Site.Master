@@ -74,7 +74,7 @@
 
             <footer style = "position: absolute; bottom: 0;">
                 <hr />
-                <p>&copy; <%: DateTime.Now.Year %> - Bieda.pl - Twoje miejsce w sieci</p>
+               <!-- <p>&copy; <%: DateTime.Now.Year %> - Bieda.pl - Twoje miejsce w sieci</p> -->
             </footer>
         </div>
     </form>
