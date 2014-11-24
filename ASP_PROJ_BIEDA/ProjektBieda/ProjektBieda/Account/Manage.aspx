@@ -3,135 +3,242 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
+    
+    <br/>
+    <br/>
 
-    <div>
-        <asp:PlaceHolder runat="server" ID="successMessage" Visible="false" ViewStateMode="Disabled">
-            <p class="text-success"><%: SuccessMessage %></p>
-        </asp:PlaceHolder>
-    </div>
+    <asp:Panel ID="Panel1" runat="server" Width="1036px">
+        <asp:TextBox ID="ErrorMsg" runat="server" BorderStyle="None" Height="28px" ReadOnly="True" Visible="False" Width="212px" TextMode="MultiLine">donna mamma es chujoczita</asp:TextBox>
+                    
+    </asp:Panel>
 
-    <div class="row">
-        <div class="col-md-12">
-            <section id="passwordForm">
-                <asp:PlaceHolder runat="server" ID="setPassword" Visible="false">
-                    <p>
-                        You do not have a local password for this site. Add a local
-                        password so you can log in without an external login.
-                    </p>
-                    <div class="form-horizontal">
-                        <h4>Set Password Form</h4>
-                        <asp:ValidationSummary runat="server" ShowModelStateErrors="true" CssClass="text-danger" />
-                        <hr />
-                        <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="password" CssClass="col-md-2 control-label">Password</asp:Label>
-                            <div class="col-md-10">
-                                <asp:TextBox runat="server" ID="password" TextMode="Password" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="password"
-                                    CssClass="text-danger" ErrorMessage="The password field is required."
-                                    Display="Dynamic" ValidationGroup="SetPassword" />
-                                <asp:ModelErrorMessage runat="server" ModelStateKey="NewPassword" AssociatedControlID="password"
-                                    CssClass="text-error" SetFocusOnError="true" />
-                            </div>
-                        </div>
+    <br/>
+    
+    <asp:Table ID="Table1" runat="server" Width="1036px" Height="1036px" CellPadding="30" CellSpacing="0">
 
-                        <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="confirmPassword" CssClass="col-md-2 control-label">Confirm password</asp:Label>
-                            <div class="col-md-10">
-                                <asp:TextBox runat="server" ID="confirmPassword" TextMode="Password" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="confirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required."
-                                    ValidationGroup="SetPassword" />
-                                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="confirmPassword"
-                                    CssClass="text-error" Display="Dynamic" ErrorMessage="The password and confirmation password do not match."
-                                    ValidationGroup="SetPassword" />
 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <asp:Button runat="server" Text="Set Password" ValidationGroup="SetPassword" OnClick="SetPassword_Click" CssClass="btn btn-default" />
-                            </div>
-                        </div>
-                    </div>
-                </asp:PlaceHolder>
+        <asp:TableRow runat="server" >
 
-                <asp:PlaceHolder runat="server" ID="changePasswordHolder" Visible="false">
-                    <p>You're logged in as <strong><%: User.Identity.GetUserName() %></strong>.</p>
-                    <div class="form-horizontal">
-                        <h4>Change Password Form</h4>
-                        <hr />
-                        <asp:ValidationSummary runat="server" ShowModelStateErrors="true" CssClass="text-danger" />
-                        <div class="form-group">
-                            <asp:Label runat="server" ID="CurrentPasswordLabel" AssociatedControlID="CurrentPassword" CssClass="col-md-2 control-label">Current password</asp:Label>
-                            <div class="col-md-10">
-                                <asp:TextBox runat="server" ID="CurrentPassword" TextMode="Password" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="CurrentPassword"
-                                    CssClass="text-danger" ErrorMessage="The current password field is required."
-                                    ValidationGroup="ChangePassword" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <asp:Label runat="server" ID="NewPasswordLabel" AssociatedControlID="NewPassword" CssClass="col-md-2 control-label">New password</asp:Label>
-                            <div class="col-md-10">
-                                <asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword"
-                                    CssClass="text-danger" ErrorMessage="The new password is required."
-                                    ValidationGroup="ChangePassword" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <asp:Label runat="server" ID="ConfirmNewPasswordLabel" AssociatedControlID="ConfirmNewPassword" CssClass="col-md-2 control-label">Confirm new password</asp:Label>
-                            <div class="col-md-10">
-                                <asp:TextBox runat="server" ID="ConfirmNewPassword" TextMode="Password" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmNewPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="Confirm new password is required."
-                                    ValidationGroup="ChangePassword" />
-                                <asp:CompareValidator runat="server" ControlToCompare="NewPassword" ControlToValidate="ConfirmNewPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
-                                    ValidationGroup="ChangePassword" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <asp:Button runat="server" Text="Change Password" ValidationGroup="ChangePassword" OnClick="ChangePassword_Click" CssClass="btn btn-default" />
-                            </div>
-                        </div>
-                    </div>
-                </asp:PlaceHolder>
-            </section>
+            <asp:TableCell runat="server" BackColor="#FFBC79">
+                <asp:Panel ID="Panel2" runat="server" Height="450px" Width="500px">
+                    <asp:Label ID="Label1" runat="server" Text="Dane Twojego Konta" Width="500px" Font-Size="XX-Large"></asp:Label>
+                    
 
-            <section id="externalLoginsForm">
+                    <br />
+                    <br />
+                    <asp:Label ID="Label5" runat="server" Text="Login: " Font-Size="Large"></asp:Label>
+                    
 
-                <asp:ListView runat="server"
-                    ItemType="Microsoft.AspNet.Identity.UserLoginInfo"
-                    SelectMethod="GetLogins" DeleteMethod="RemoveLogin" DataKeyNames="LoginProvider,ProviderKey">
+                    <br />
+                    <asp:TextBox ID="login" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
 
-                    <LayoutTemplate>
-                        <h4>Registered Logins</h4>
-                        <table class="table">
-                            <tbody>
-                                <tr runat="server" id="itemPlaceholder"></tr>
-                            </tbody>
-                        </table>
+                    <br />
+                    <br />
+                    <asp:Label ID="Label6" runat="server" Text="Data przystąpienia: " Font-Size="Large"></asp:Label>
+                    
 
-                    </LayoutTemplate>
-                    <ItemTemplate>
-                        <tr>
-                            <td><%#: Item.LoginProvider %></td>
-                            <td>
-                                <asp:Button runat="server" Text="Remove" CommandName="Delete" CausesValidation="false"
-                                    ToolTip='<%# "Remove this " + Item.LoginProvider + " login from your account" %>'
-                                    Visible="<%# CanRemoveExternalLogins %>" CssClass="btn btn-default" />
-                            </td>
-                        </tr>
-                    </ItemTemplate>
-                </asp:ListView>
+                    <br />
+                    <asp:TextBox ID="data_od" runat="server" BorderStyle="None" Width="500px"
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
+                   
 
-                <uc:OpenAuthProviders runat="server" ReturnUrl="~/Account/Manage" />
-            </section>
+                
 
-        </div>
-    </div>
+                    
+                   
+
+                </asp:Panel>
+            
+
+</asp:TableCell>
+
+            <asp:TableCell runat="server" BackColor="#FF9D3C">
+                <asp:Panel ID="Panel3" runat="server" Height="450px" Width="500px">
+                    <asp:Label ID="Label2" runat="server" Text="Twoje Dane Kontaktowe" Width="500px" Font-Size="XX-Large"></asp:Label>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label7" runat="server" Text="Imię: " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="imie" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FF9D3C"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label8" runat="server" Text="Nazwisko: " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="nazwisko" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FF9D3C"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label9" runat="server" Text="E-mail:  " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="email" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FF9D3C"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label10" runat="server" Text="Telefon " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="telefon" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FF9D3C"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Button ID="edit1" runat="server" BorderStyle="Solid" Height="50px" Text="EDYTUJ" 
+                    Font-Size="X-Large" Width="300px" BackColor="#FF9D3C" OnClick="edit1_Click" />
+
+                    <asp:Button ID="edit1_ok" runat="server" BorderStyle="Solid" Height="50px" Text="ZAPISZ" 
+                    Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="edit1_ok_Click" />
+
+                    <asp:Button ID="edit1_cancel" runat="server" BorderStyle="Solid" Height="50px" Text="ANULUJ" 
+                    Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="edit1_cancel_Click" />
+                    
+         </asp:Panel>
+            
+
+</asp:TableCell>
+
+        </asp:TableRow>
+
+        <asp:TableRow runat="server">
+
+            <asp:TableCell runat="server" BackColor="#FF9D3C">
+                <asp:Panel ID="Panel4" runat="server" Height="600px" Width="500px">
+                    <asp:Label ID="Label3" runat="server" Text="Ustawienia Konta" Width="500px" Font-Size="XX-Large" ></asp:Label>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Button ID="change_pass" runat="server" BorderStyle="Solid" Height="50px" Text="ZMIEŃ HASŁO" BackColor="#FF9D3C"
+                         Font-Size="X-Large" Width="300px" />
+                    
+
+                    <br />
+                    <br />
+                    <asp:Button ID="upgrade" runat="server" BorderStyle="Solid" Height="50px" Text="ZOSTAŃ SPRZEDAWCĄ" BackColor="#FF9D3C"
+                         Font-Size="X-Large" Width="300px" />
+                    
+
+                    <br />
+                    <br />
+                    <asp:Button ID="delete_acc" runat="server" BorderStyle="Solid" Height="50px" Text="USUŃ KONTO" BackColor="#FF9D3C"
+                         Font-Size="X-Large" Width="300px" />
+                
+
+                
+
+                
+
+                </asp:Panel>
+            
+
+</asp:TableCell>
+
+            <asp:TableCell runat="server" BackColor="#FFBC79">
+                <asp:Panel ID="Panel5" runat="server" Height="600px" Width="500px">
+                    <asp:Label ID="Label4" runat="server" Text="Twoje Dane Adresowe" Width="500px" Font-Size="XX-Large"></asp:Label>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label11" runat="server" Text="Kraj: " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="kraj" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label12" runat="server" Text="Miasto: " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="miasto" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label13" runat="server" Text="Kod Pocztowy:  " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="kod" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label16" runat="server" Text="Ulica:  " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="ulica" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label14" runat="server" Text="Numer Budynku: " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="budynek" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Label ID="Label15" runat="server" Text="Numer Mieszkania: " Font-Size="Large"></asp:Label>
+                    
+
+                    <br />
+                    <asp:TextBox ID="mieszkanie" runat="server" BorderStyle="None" Width="500px" 
+                     Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79"></asp:TextBox>
+                    
+
+                    <br />
+                    <br />
+                    <asp:Button ID="edit2" runat="server" BorderStyle="Solid" Height="50px" Text="EDYTUJ" 
+                    Font-Size="X-Large" Width="300px" BackColor="#FFBC79" OnClick="edit2_Click" />
+
+                    <asp:Button ID="edit2_ok" runat="server" BorderStyle="Solid" Height="50px" Text="ZAPISZ" 
+                    Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="edit2_ok_Click" />
+
+                    <asp:Button ID="edit2_cancel" runat="server" BorderStyle="Solid" Height="50px" Text="ANULUJ" 
+                    Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="edit2_cancel_Click" />
+                
+
+                
+
+                
+
+                </asp:Panel>
+            
+
+</asp:TableCell>
+
+        </asp:TableRow>
+      
+    </asp:Table>
 
 </asp:Content>

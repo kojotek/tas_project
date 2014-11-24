@@ -83,6 +83,57 @@ EXEC DODAJ_SPRZEDAWCE
 GO
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////EDYTUJ_DANE//////////////////////////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drop procedure EDYTUJ_DANE
+
+CREATE PROCEDURE EDYTUJ_DANE
+(@telefon varchar(50), @email varchar(50), @kraj varchar(50), @miasto varchar(50), 
+@kod varchar(50), @ulica varchar(50), @nr_budynku varchar(50), @nr_mieszkania varchar(50), 
+@imie varchar(50), @nazwisko varchar(50), @login_uzytkownika varchar(50))
+as
+BEGIN
+
+	BEGIN TRANSACTION a
+
+		BEGIN TRY
+
+			declare @id int
+			set @id = (select id_dane from KLIENT where login = @login_uzytkownika)
+
+			UPDATE DANE set telefon = @telefon WHERE id_dane = @id
+			UPDATE DANE set email = @email WHERE id_dane = @id
+			UPDATE DANE set kraj = @kraj WHERE id_dane = @id
+			UPDATE DANE set miasto= @miasto WHERE id_dane = @id
+			UPDATE DANE set kod = @kod WHERE id_dane = @id
+			UPDATE DANE set ulica = @ulica WHERE id_dane = @id
+			UPDATE DANE set budynek = @nr_budynku WHERE id_dane = @id
+			UPDATE DANE set mieszkanie = @nr_mieszkania WHERE id_dane = @id
+			UPDATE DANE set imie = @imie WHERE id_dane = @id
+			UPDATE DANE set nazwisko = @nazwisko WHERE id_dane = @id
+
+		END TRY
+
+		BEGIN CATCH
+
+			ROLLBACK TRANSACTION a
+
+		END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+--przyklad uzycia
+
+EXEC EDYTUJ_DANE
+'123456126', 'klient@gmail.com', 'Polska', 'Poznañ',
+'12-345', 'umultowska', '24A', '5',
+'Jan', 'Kowalski', 'Janek123'
+GO
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
 --////////////////////////////////USUN KONTO///////////////////////////////////////////////////////////////
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
