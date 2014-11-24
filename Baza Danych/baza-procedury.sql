@@ -274,3 +274,155 @@ select * from OFERTA
 EXEC DODAJ_OFERTE
 '3','Janek123',800
 GO
+
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////POWIADOMIENIE_O_OFERCIE//////////////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drop procedure powiadomienie_o_ofercie
+
+CREATE PROCEDURE powiadomienie_o_ofercie 
+(@sprzedawca varchar(30), @kupujacy varchar(30), @aukcja int, @kwota money)
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+		declare @nazwa_aukcji varchar(100);
+		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+
+		insert into POWIADOMIENIE( login, tresc )
+		values ( @sprzedawca, 'Uzytkownik ' + @kupujacy + ' zlozyl oferte ' + convert(varchar(30), @kwota, 1) + ' zl w aukcji "' + @nazwa_aukcji + '"' );
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////POWIADOMIENIE_O_WYGRANEJ//////////////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drop procedure powiadomienie_o_wygranej
+
+CREATE PROCEDURE powiadomienie_o_wygranej
+(@sprzedawca varchar(30), @kupujacy varchar(30), @aukcja int)
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+		declare @nazwa_aukcji varchar(100);
+		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+
+		insert into POWIADOMIENIE( login, tresc )
+		values ( @kupujacy, 'Gratulacje! Twoja oferta w aukcji "' + @nazwa_aukcji + '" okazala sie najlepsza! Skontaktuj sie z uzytkownikiem ' + @sprzedawca + ', w celu ustalenia szczególów.' );
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////POWIADOMIENIE_O_PRZEGRANEJ//////////////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drop procedure powiadomienie_o_przegranej
+
+CREATE PROCEDURE powiadomienie_o_przegranej
+(@kupujacy varchar(30), @aukcja int)
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+		declare @nazwa_aukcji varchar(100);
+		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+
+		insert into POWIADOMIENIE( login, tresc )
+		values ( @kupujacy, 'Wlasnie zakonczyla sie aukcja "' +@nazwa_aukcji + '". Niestety, oferty innych uzytkowników okazaly sie bardziej atrakcyjne.' );
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////POWIADOMIENIE_O_PRZEBICIU//////////////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drop procedure powiadomienie_o_przebiciu
+
+CREATE PROCEDURE powiadomienie_o_przebiciu
+(@kupujacy varchar(30), @aukcja int)
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+		declare @nazwa_aukcji varchar(100);
+		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+
+		insert into POWIADOMIENIE( login, tresc )
+		values ( @kupujacy, 'Ktos wlasnie przebil twoja oferte w aukcji "' +@nazwa_aukcji + '". Zlóz nowa oferte, by dalej brac udzial w licytacji.' );
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////POWIADOMIENIE_O_ZAKONCZENIU//////////////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drop procedure powiadomienie_o_zakonczeniu
+
+CREATE PROCEDURE powiadomienie_o_zakonczeniu
+(@sprzedawca varchar(30), @zwyciezca varchar(30), @aukcja int)
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+		declare @nazwa_aukcji varchar(100);
+		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+
+		insert into POWIADOMIENIE( login, tresc )
+		values ( @sprzedawca, 'Wlasnie zakonczyla sie twoja aukcja "' + @nazwa_aukcji + '". Najwyzsza oferte zlozyl uzytkownik ' + @zwyciezca + '. Skontaktuj sie z nim, w celu omówienia szczególów finalizacji transakcji.' );
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+

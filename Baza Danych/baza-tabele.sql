@@ -5,6 +5,7 @@ drop table KATEGORIA
 drop table SPRZEDAWCA
 drop table KLIENT
 drop table DANE
+drop table POWIADOMIENIE
 
 CREATE TABLE DANE
 (
@@ -61,7 +62,7 @@ CREATE TABLE AUKCJA
 	login varchar(20) not null references SPRZEDAWCA(login),
 	data_zakonczenia datetime not null,
 	opis text not null,
-	nazwa_produktu varchar(30) not null,
+	nazwa_produktu varchar(100) not null,
 	cena_startowa money not null,
 	cena_wysylki money not null,
 	ocena_sprzedawcy int CHECK(ocena_sprzedawcy <= 10),
@@ -85,4 +86,10 @@ CREATE TABLE OFERTA
   data_zlozenia datetime not null default GETDATE(), 
 )
 
-
+create table POWIADOMIENIE 
+(
+	id int not null primary key identity(1,1),
+	login varchar(20) FOREIGN KEY REFERENCES KLIENT(login),
+	tresc text not null, 
+	data date not null default getdate()
+)

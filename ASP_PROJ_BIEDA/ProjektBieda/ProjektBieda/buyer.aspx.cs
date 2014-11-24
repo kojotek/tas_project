@@ -110,12 +110,6 @@ namespace ProjektBieda
             Table1.GridLines = GridLines.Horizontal;
             Table1.HorizontalAlign = HorizontalAlign.Left;
 
-            
-
-
-
-
-            
             SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
             loadUserData("damianek");
             loadMessages("damianek");
