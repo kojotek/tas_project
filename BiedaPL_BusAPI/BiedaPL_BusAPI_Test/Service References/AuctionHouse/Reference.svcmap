@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0938fc59-22f6-4d01-89cb-e88e6678109a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8080/Auction?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Auction.xsd" MetadataType="Schema" ID="1e909414-2bf5-4f8a-ba92-6cfa64483bf7" SourceId="1" SourceUrl="http://pa:8080/Auction?xsd=xsd4" />
+    <MetadataFile FileName="AuctionManager.wsdl" MetadataType="Wsdl" ID="ed057a0c-ddd2-4dd4-af88-b599b1426727" SourceId="1" SourceUrl="http://localhost:8080/Auction?wsdl" />
+    <MetadataFile FileName="Auction1.xsd" MetadataType="Schema" ID="3170c780-ec2b-481e-a1c6-2f36e190d131" SourceId="1" SourceUrl="http://pa:8080/Auction?xsd=xsd2" />
+    <MetadataFile FileName="Auction2.xsd" MetadataType="Schema" ID="bd3514f7-edb0-429a-90ec-53ac44f85216" SourceId="1" SourceUrl="http://pa:8080/Auction?xsd=xsd3" />
+    <MetadataFile FileName="Auction3.xsd" MetadataType="Schema" ID="ec93b606-fa7f-49bb-a761-0e6ee66bbe06" SourceId="1" SourceUrl="http://pa:8080/Auction?xsd=xsd0" />
+    <MetadataFile FileName="Auction4.xsd" MetadataType="Schema" ID="b8bb7ab6-3281-4008-8fff-16ff18a0e805" SourceId="1" SourceUrl="http://pa:8080/Auction?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

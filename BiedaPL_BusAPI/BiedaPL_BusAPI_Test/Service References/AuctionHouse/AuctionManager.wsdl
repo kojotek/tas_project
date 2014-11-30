@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AuctionManager" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://pa:8080/Auction?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://pa:8080/Auction?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://pa:8080/Auction?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://pa:8080/Auction?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" />
+      <xsd:import schemaLocation="http://pa:8080/Auction?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAuctionManager_getCategoryList_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCategoryList" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_getCategoryList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCategoryListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_getAuctionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:getAuctionList" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_getAuctionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getAuctionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doCreateAuction_InputMessage">
+    <wsdl:part name="parameters" element="tns:doCreateAuction" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doCreateAuction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:doCreateAuctionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doCloneAuction_InputMessage">
+    <wsdl:part name="parameters" element="tns:doCloneAuction" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doCloneAuction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:doCloneAuctionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doFindAuction_InputMessage">
+    <wsdl:part name="parameters" element="tns:doFindAuction" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doFindAuction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:doFindAuctionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doBid_InputMessage">
+    <wsdl:part name="parameters" element="tns:doBid" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doCloseAuction_InputMessage">
+    <wsdl:part name="parameters" element="tns:doCloseAuction" />
+  </wsdl:message>
+  <wsdl:message name="IAuctionManager_doComment_InputMessage">
+    <wsdl:part name="parameters" element="tns:doComment" />
+  </wsdl:message>
+  <wsdl:portType name="IAuctionManager">
+    <wsdl:operation name="getCategoryList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/getCategoryList" message="tns:IAuctionManager_getCategoryList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuctionManager/getCategoryListResponse" message="tns:IAuctionManager_getCategoryList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getAuctionList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/getAuctionList" message="tns:IAuctionManager_getAuctionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuctionManager/getAuctionListResponse" message="tns:IAuctionManager_getAuctionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="doCreateAuction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/doCreateAuction" message="tns:IAuctionManager_doCreateAuction_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuctionManager/doCreateAuctionResponse" message="tns:IAuctionManager_doCreateAuction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="doCloneAuction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/doCloneAuction" message="tns:IAuctionManager_doCloneAuction_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuctionManager/doCloneAuctionResponse" message="tns:IAuctionManager_doCloneAuction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="doFindAuction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/doFindAuction" message="tns:IAuctionManager_doFindAuction_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuctionManager/doFindAuctionResponse" message="tns:IAuctionManager_doFindAuction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="doBid">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/doBid" message="tns:IAuctionManager_doBid_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="doCloseAuction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/doCloseAuction" message="tns:IAuctionManager_doCloseAuction_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="doComment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuctionManager/doComment" message="tns:IAuctionManager_doComment_InputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAuctionManager" type="tns:IAuctionManager">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getCategoryList">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/getCategoryList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAuctionList">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/getAuctionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="doCreateAuction">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/doCreateAuction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="doCloneAuction">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/doCloneAuction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="doFindAuction">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/doFindAuction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="doBid">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/doBid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="doCloseAuction">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/doCloseAuction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="doComment">
+      <soap:operation soapAction="http://tempuri.org/IAuctionManager/doComment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AuctionManager">
+    <wsdl:port name="BasicHttpBinding_IAuctionManager" binding="tns:BasicHttpBinding_IAuctionManager">
+      <soap:address location="http://pa:8080/Auction" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://pa:8080/Auction?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://pa:8080/Auction?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" />
+  <xs:element name="getCategoryList">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getCategoryListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getCategoryListResult" nillable="true" type="q1:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getAuctionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="category" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getAuctionListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="getAuctionListResult" nillable="true" type="q2:ArrayOfAuction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doCreateAuction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="user" nillable="true" type="q3:User" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="auction" nillable="true" type="q4:Auction" />
+        <xs:element minOccurs="0" name="categoryName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doCreateAuctionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="doCreateAuctionResult" nillable="true" type="q5:Auction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doCloneAuction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="user" nillable="true" type="q6:User" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="auction" nillable="true" type="q7:Auction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doCloneAuctionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="doCloneAuctionResult" nillable="true" type="q8:Auction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doFindAuction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="auction" nillable="true" type="q9:Auction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doFindAuctionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="doFindAuctionResult" nillable="true" type="q10:Auction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doBid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="user" nillable="true" type="q11:User" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="auction" nillable="true" type="q12:Auction" />
+        <xs:element minOccurs="0" name="pricePerUnit" type="xs:decimal" />
+        <xs:element minOccurs="0" name="amount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doCloseAuction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="user" nillable="true" type="q13:User" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="auction" nillable="true" type="q14:Auction" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doComment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" minOccurs="0" name="user" nillable="true" type="q15:User" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

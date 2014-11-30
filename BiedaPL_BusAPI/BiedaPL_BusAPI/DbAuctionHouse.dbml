@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="master" Class="DbAuctionHouseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=PA\SQLEXPRESS;Initial Catalog=master;Integrated Security=True" SettingsObjectName="BiedaPL_BusAPI.Properties.Settings" SettingsPropertyName="masterConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AUKCJA" Member="AUKCJAs">
+    <Type Name="AUKCJA">
+      <Column Name="id_aukcji" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_kategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="data_zakonczenia" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="opis" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="nazwa_produktu" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="cena_startowa" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="cena_wysylki" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="ocena_sprzedawcy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="komentarz_dla_sprzedawcy" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="AUKCJA_ZDJECIE" Member="ZDJECIEs" ThisKey="id_aukcji" OtherKey="id_aukcji" Type="ZDJECIE" />
+      <Association Name="AUKCJA_OFERTA" Member="OFERTAs" ThisKey="id_aukcji" OtherKey="id_aukcji" Type="OFERTA" />
+      <Association Name="KATEGORIA_AUKCJA" Member="KATEGORIA" ThisKey="id_kategoria" OtherKey="id_kategoria" Type="KATEGORIA" IsForeignKey="true" />
+      <Association Name="SPRZEDAWCA_AUKCJA" Member="SPRZEDAWCA" ThisKey="login" OtherKey="login" Type="SPRZEDAWCA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ZDJECIE" Member="ZDJECIEs">
+    <Type Name="ZDJECIE">
+      <Column Name="id_zdjecia" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_aukcji" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="zdjecie" Member="zdjecie1" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="podpis" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="AUKCJA_ZDJECIE" Member="AUKCJA" ThisKey="id_aukcji" OtherKey="id_aukcji" Type="AUKCJA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DANE" Member="DANEs">
+    <Type Name="DANE">
+      <Column Name="id_dane" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="telefon" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="nr_konta" Type="System.String" DbType="VarChar(26)" CanBeNull="true" />
+      <Column Name="kraj" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="miasto" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="kod" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="ulica" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="budynek" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="mieszkanie" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="imie" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="nazwisko" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="DANE_KLIENT" Member="KLIENTs" ThisKey="id_dane" OtherKey="id_dane" Type="KLIENT" />
+      <Association Name="DANE_SPRZEDAWCA" Member="SPRZEDAWCAs" ThisKey="id_dane" OtherKey="id_dane" Type="SPRZEDAWCA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KATEGORIA" Member="KATEGORIAs">
+    <Type Name="KATEGORIA">
+      <Column Name="id_kategoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_rodzica" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Nazwa" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="czy_lisc" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="KATEGORIA_AUKCJA" Member="AUKCJAs" ThisKey="id_kategoria" OtherKey="id_kategoria" Type="AUKCJA" />
+      <Association Name="KATEGORIA_KATEGORIA" Member="KATEGORIAs" ThisKey="id_kategoria" OtherKey="id_rodzica" Type="KATEGORIA" />
+      <Association Name="KATEGORIA_KATEGORIA" Member="KATEGORIA1" ThisKey="id_rodzica" OtherKey="id_kategoria" Type="KATEGORIA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KLIENT" Member="KLIENTs">
+    <Type Name="KLIENT">
+      <Column Name="login" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="id_dane" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="haslo" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="data_od" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="data_do" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="KLIENT_OFERTA" Member="OFERTAs" ThisKey="login" OtherKey="login" Type="OFERTA" />
+      <Association Name="KLIENT_POWIADOMIENIE" Member="POWIADOMIENIEs" ThisKey="login" OtherKey="login" Type="POWIADOMIENIE" />
+      <Association Name="DANE_KLIENT" Member="DANE" ThisKey="id_dane" OtherKey="id_dane" Type="DANE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OFERTA" Member="OFERTAs">
+    <Type Name="OFERTA">
+      <Column Name="id_oferta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_aukcji" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="kwota" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="data_zlozenia" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="AUKCJA_OFERTA" Member="AUKCJA" ThisKey="id_aukcji" OtherKey="id_aukcji" Type="AUKCJA" IsForeignKey="true" />
+      <Association Name="KLIENT_OFERTA" Member="KLIENT" ThisKey="login" OtherKey="login" Type="KLIENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.POWIADOMIENIE" Member="POWIADOMIENIEs">
+    <Type Name="POWIADOMIENIE">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="tresc" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="KLIENT_POWIADOMIENIE" Member="KLIENT" ThisKey="login" OtherKey="login" Type="KLIENT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SPRZEDAWCA" Member="SPRZEDAWCAs">
+    <Type Name="SPRZEDAWCA">
+      <Column Name="login" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="id_dane" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="haslo" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="data_od" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="data_do" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="SPRZEDAWCA_AUKCJA" Member="AUKCJAs" ThisKey="login" OtherKey="login" Type="AUKCJA" />
+      <Association Name="DANE_SPRZEDAWCA" Member="DANE" ThisKey="id_dane" OtherKey="id_dane" Type="DANE" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

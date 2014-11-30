@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BiedaPL_BusAPI.Entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://pa:8080/Auction?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://pa:8080/Auction?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://pa:8080/Auction?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfAuction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Auction" nillable="true" type="tns:Auction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAuction" nillable="true" type="tns:ArrayOfAuction" />
+  <xs:complexType name="Auction">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AuctionDraft">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Bids" nillable="true" type="tns:ArrayOfBid" />
+          <xs:element minOccurs="0" name="Closure" nillable="true" type="tns:AuctionClosure" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="TimeToEnd" type="q1:DateTimeOffset" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Auction" nillable="true" type="tns:Auction" />
+  <xs:complexType name="AuctionDraft">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Delivery" nillable="true" type="tns:PricePerDelivery" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Item" nillable="true" type="tns:AuctionItem" />
+      <xs:element minOccurs="0" name="Owner" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="Price" nillable="true" type="tns:PricePerUnit" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuctionDraft" nillable="true" type="tns:AuctionDraft" />
+  <xs:complexType name="PricePerDelivery">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeliverBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PricePerDelivery" nillable="true" type="tns:PricePerDelivery" />
+  <xs:complexType name="AuctionItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PhotoLinkList" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="UnitType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuctionItem" nillable="true" type="tns:AuctionItem" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="PricePerUnit">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:int" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PricePerUnit" nillable="true" type="tns:PricePerUnit" />
+  <xs:complexType name="ArrayOfBid">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Bid" nillable="true" type="tns:Bid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBid" nillable="true" type="tns:ArrayOfBid" />
+  <xs:complexType name="Bid">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Offerent" nillable="true" type="tns:User" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="Time" type="q3:DateTimeOffset" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Bid" nillable="true" type="tns:Bid" />
+  <xs:complexType name="AuctionClosure">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Auction" nillable="true" type="tns:Auction" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Offer" nillable="true" type="tns:Bid" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="AuctionClosure" nillable="true" type="tns:AuctionClosure" />
+</xs:schema>

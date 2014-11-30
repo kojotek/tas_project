@@ -1,0 +1,6 @@
+H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.exe
+H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.pdb
+H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\ResolveAssemblyReference.cache
+H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\BiedaPL_BusAPI_Test.exe
+H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\BiedaPL_BusAPI_Test.pdb
+H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.exe.config
