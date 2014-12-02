@@ -24,10 +24,21 @@ namespace BiedaPL_BusAPI
             string adr = "http://" + Environment.MachineName + ":8080/Auction";
             Uri uri = new Uri(adr);
             ServiceHost host = new ServiceHost(typeof(AuctionManager), uri);
+            //DbAuctionHouseDataContext db = new DbAuctionHouseDataContext();
+            //foreach (var item in db.KLIENTs.Select(x => x.login))
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //KLIENT klient = new KLIENT();
+
+            //db.KLIENTs.InsertOnSubmit(klient);
+            //db.SubmitChanges();
 
             try
             {
-                host.AddServiceEndpoint(typeof(IAuctionManager), new BasicHttpBinding(), uri);
+                BasicHttpBinding www = new BasicHttpBinding();
+                host.AddServiceEndpoint(typeof(IAuctionManager), www, uri);
 
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
                 smb.HttpGetEnabled = true;

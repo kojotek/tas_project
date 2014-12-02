@@ -4,3 +4,8 @@ H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\ResolveAssembly
 H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\BiedaPL_BusAPI_Test.exe
 H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\BiedaPL_BusAPI_Test.pdb
 H:\Projekty\TAS\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.exe.config
+D:\studia\Kulki na zaliczenie\TAS\tas_project\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.exe.config
+D:\studia\Kulki na zaliczenie\TAS\tas_project\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.exe
+D:\studia\Kulki na zaliczenie\TAS\tas_project\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\bin\Debug\BiedaPL_BusAPI_Test.pdb
+D:\studia\Kulki na zaliczenie\TAS\tas_project\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\BiedaPL_BusAPI_Test.exe
+D:\studia\Kulki na zaliczenie\TAS\tas_project\BiedaPL_BusAPI\BiedaPL_BusAPI_Test\obj\x86\Debug\BiedaPL_BusAPI_Test.pdb

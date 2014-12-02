@@ -56,6 +56,11 @@ namespace BiedaPL_BusAPI.Entities
             {
                 result = db.AUKCJAs.Where(x => String.Format("{0} (id:{1})", x.nazwa_produktu, x.id_aukcji) == Title).Count();
             }
+
+
+            //result = (from x in db.AUKCJAs
+            //          where x.nazwa_produktu == Item.Name || x.opis == Item.Description
+            //          select x).Count();
         }
     }
 }

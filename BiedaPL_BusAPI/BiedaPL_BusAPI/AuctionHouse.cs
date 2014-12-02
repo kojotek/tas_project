@@ -54,7 +54,7 @@ namespace BiedaPL_BusAPI
             //moze bedzie trzeba bedzie przechowac "potajemnie = wewnatrz warstwy biznesowej" bazodanowego uzytkownika, zeby go 2 razy nei szukac
             //na projekt bedzie ok, 
             //ale w rzeczywistosci )witualnej= co sie stanie, jak przechowamy kogos kto przestanie istniec?
-
+         
             Auction result = null;
 
             switch (user.Found)
