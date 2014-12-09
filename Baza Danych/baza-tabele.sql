@@ -69,6 +69,12 @@ CREATE TABLE AUKCJA
 	komentarz_dla_sprzedawcy text,
 )
 
+CREATE TABLE TAGI
+(
+	id_aukcji int not null references AUKCJA(id_aukcji),
+	tag varchar(20) not null,
+)
+
 CREATE TABLE ZDJECIE
 (
   id_zdjecia int not null IDENTITY(1,1) PRIMARY KEY,

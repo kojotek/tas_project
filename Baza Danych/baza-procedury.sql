@@ -272,7 +272,7 @@ select * from AUKCJA
 select * from OFERTA
 
 EXEC DODAJ_OFERTE
-'3','Janek123',800
+'2','Janek123',8000
 GO
 
 
@@ -426,3 +426,248 @@ AS
 
 END
 
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - TWORZENIE TAGÓW////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+alter trigger generuj_tagi on AUKCJA
+	for insert
+as
+BEGIN
+
+declare @text varchar(100), 
+		@a int, 
+		@t varchar(20),
+		@l int,
+		@i int
+set @text = (select nazwa_produktu from inserted)
+
+while (SELECT LEN(@text)) > 0
+
+begin
+set @a = (select PATINDEX ('% %', @text))
+if @a != 0 begin
+	set @t = (SELECT LEFT(@text,@a-1))
+	set @l = (SELECT LEN(@text))
+	set @i = (select id_aukcji from inserted)
+	set @text = (select right(@text,@l-@a))
+	insert into TAGI values(@i,@t) end
+if @a = 0 begin
+	insert into TAGI values(@i,@text)
+	set @text = null end
+end
+
+END
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - USUWANIE TAGÓW/////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+alter trigger usuwaj_tagi on AUKCJA
+	instead of delete
+as
+BEGIN
+
+declare @i int
+
+set @i = (select id_aukcji from deleted)
+delete from TAGI where id_aukcji = @i
+delete from AUKCJA where id_aukcji = (select id_aukcji from deleted)
+
+END
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - PO TAGACH//////////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CREATE PROCEDURE wyszukiwanie_tagi
+(@has³o varchar(100))
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+
+create table WYSZUKIWANIE
+(
+	id int not null primary key identity, 
+	tag varchar(20) not null,
+)
+
+declare @a int, 
+		@t varchar(20),
+		@l int
+
+while (SELECT LEN(@has³o)) > 0
+begin
+set @a = (select PATINDEX ('% %', @has³o))
+if @a != 0 begin
+	set @t = (SELECT LEFT(@has³o,@a-1))
+	insert into WYSZUKIWANIE values(@t)
+	set @l = (SELECT LEN(@has³o))
+	set @has³o = (select right(@has³o,@l-@a))
+	end
+if @a = 0 begin
+	insert into WYSZUKIWANIE values(@has³o)
+	set @has³o = null end
+end
+
+select * from AUKCJA where id_aukcji = some (select id_aukcji from TAGI t cross join WYSZUKIWANIE w where t.tag = w.tag group by id_aukcji)
+
+drop table WYSZUKIWANIE
+
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+--przyk³ad u¿ycia
+
+EXEC wyszukiwanie_tagi '8000 beko'
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - PO KATEGORIACH/////////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+create procedure wyszukiwanie_kategorie (@kategoria int)
+as
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+
+	select * from AUKCJA where id_kategoria = @kategoria
+
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+
+ --przyk³ad u¿ycia
+EXEC wyszukiwanie_kategorie 3
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - PO KATEGORIACH i TAGACH////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CREATE PROCEDURE wyszukiwanie_k_t
+(@has³o varchar(100),@kategoria int)
+AS 
+	BEGIN
+
+	BEGIN TRANSACTION a
+
+	BEGIN TRY
+
+create table WYSZUKIWANIE
+(
+	id int not null primary key identity, 
+	tag varchar(20) not null,
+)
+
+declare @a int, 
+		@t varchar(20),
+		@l int
+
+while (SELECT LEN(@has³o)) > 0
+begin
+set @a = (select PATINDEX ('% %', @has³o))
+if @a != 0 begin
+	set @t = (SELECT LEFT(@has³o,@a-1))
+	insert into WYSZUKIWANIE values(@t)
+	set @l = (SELECT LEN(@has³o))
+	set @has³o = (select right(@has³o,@l-@a))
+	end
+if @a = 0 begin
+	insert into WYSZUKIWANIE values(@has³o)
+	set @has³o = null end
+end
+
+select * from AUKCJA where id_aukcji = some (select id_aukcji from TAGI t cross join WYSZUKIWANIE w where t.tag = w.tag group by id_aukcji)
+	and id_kategoria = @kategoria
+
+drop table WYSZUKIWANIE
+
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRANSACTION a
+	END CATCH
+
+	COMMIT TRANSACTION a
+
+END
+
+--przyk³ad u¿ycia
+
+EXEC wyszukiwanie_k_t 'beko 8000', 3
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - SORTOWANIE PO CENIE////////////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+create procedure sortowanie_cena(@rosn¹co bit)
+as
+
+BEGIN
+
+create table #oferty(id_aukcji int, cena money) 
+
+insert into #oferty
+select id_aukcji,max(kwota) from oferta group by id_aukcji
+
+if @rosn¹co = 1
+select * from AUKCJA a left outer join #oferty o on a.id_aukcji = o.id_aukcji order by cena ASC
+	else
+select * from AUKCJA a left outer join #oferty o on a.id_aukcji = o.id_aukcji order by cena DESC
+
+drop table #oferty
+
+END
+
+--przyk³ad u¿ycia
+EXEC sortowanie_cena 1
+
+--//mo¿naby w procedurach wyszukiwania tworzyæ tabele tymczasowe z wynikiem wyszukiwania, i korzystaæ z nich jako wejœcia 
+--//do procedur sortuj¹cych. Wtedy w powy¿szym by³oby np >> select * from #tabela_tymczasowa t left outer join...
+--//lub mo¿emy tworzyæ takie tabele na pocz¹tku dzia³ania procedur sortuj¹cych
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+--////////////////////////////////WYSZUKIWANIE_AUKCJI - SORTOWANIE PO DACIE KOÑCA//////////////////////////
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+create procedure sortowanie_data(@rosn¹co bit)
+as
+
+BEGIN
+
+if @rosn¹co = 1
+select * from AUKCJA order by data_zakonczenia ASC
+	else
+select * from AUKCJA order by data_zakonczenia DESC
+
+END
+
+--przyk³ad u¿ycia
+EXEC sortowanie_data 1
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+insert into AUKCJA values(3, 'Janek123', 3, 'prywatno-publiczna toaleta', 'toaleta fuj fuj', 50, 100,null,null)
+
+select * from TAGI
+select * from AUKCJA
