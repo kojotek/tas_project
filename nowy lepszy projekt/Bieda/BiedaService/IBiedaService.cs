@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using System.Data.SqlClient;
 
 namespace MyWCFServices
 {
@@ -12,5 +13,7 @@ namespace MyWCFServices
     {
         [OperationContract]
         String GetMessage(String name);
+        [OperationContract]
+        string GetMessage2( String user, String pass );
     }
 }
