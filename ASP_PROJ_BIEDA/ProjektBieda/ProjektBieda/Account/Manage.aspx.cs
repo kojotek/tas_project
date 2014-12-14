@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Linq;
 using ProjektBieda.Models;
 using System.Data.SqlClient;
@@ -12,119 +13,6 @@ namespace ProjektBieda.Account
 {
     public partial class Manage : System.Web.UI.Page
     {
-       /* protected string SuccessMessage
-        {
-            get;
-            private set;
-        }
-
-        protected bool CanRemoveExternalLogins
-        {
-            get;
-            private set;
-        }
-
-        private bool HasPassword(UserManager manager)
-        {
-            var user = manager.FindById(User.Identity.GetUserId());
-            return (user != null && user.PasswordHash != null);
-        }
-        
-        protected void Page_Load()
-        {
-            if (!IsPostBack)
-            {
-                // Determine the sections to render
-                UserManager manager = new UserManager();
-                if (HasPassword(manager))
-                {
-                    changePasswordHolder.Visible = true;
-                }
-                else
-                {
-                    setPassword.Visible = true;
-                    changePasswordHolder.Visible = false;
-                }
-                CanRemoveExternalLogins = manager.GetLogins(User.Identity.GetUserId()).Count() > 1;
-
-                // Render success message
-                var message = Request.QueryString["m"];
-                if (message != null)
-                {
-                    // Strip the query string from action
-                    Form.Action = ResolveUrl("~/Account/Manage");
-
-                    SuccessMessage =
-                        message == "ChangePwdSuccess" ? "Your password has been changed."
-                        : message == "SetPwdSuccess" ? "Your password has been set."
-                        : message == "RemoveLoginSuccess" ? "The account was removed."
-                        : String.Empty;
-                    successMessage.Visible = !String.IsNullOrEmpty(SuccessMessage);
-                }
-            }
-        }
-        
-        protected void ChangePassword_Click(object sender, EventArgs e)
-        {
-            if (IsValid)
-            {
-                UserManager manager = new UserManager();
-                IdentityResult result = manager.ChangePassword(User.Identity.GetUserId(), CurrentPassword.Text, NewPassword.Text);
-                if (result.Succeeded)
-                {
-                    Response.Redirect("~/Account/Manage?m=ChangePwdSuccess");
-                }
-                else
-                {
-                    AddErrors(result);
-                }
-            }
-        }
-
-        protected void SetPassword_Click(object sender, EventArgs e)
-        {
-            if (IsValid)
-            {
-                // Create the local login info and link the local account to the user
-                UserManager manager = new UserManager();
-                IdentityResult result = manager.AddPassword(User.Identity.GetUserId(), password.Text);
-                if (result.Succeeded)
-                {
-                    Response.Redirect("~/Account/Manage?m=SetPwdSuccess");
-                }
-                else
-                {
-                    AddErrors(result);
-                }
-            }
-        }
-
-        public IEnumerable<UserLoginInfo> GetLogins()
-        {
-            UserManager manager = new UserManager();
-            var accounts = manager.GetLogins(User.Identity.GetUserId());
-            CanRemoveExternalLogins = accounts.Count() > 1 || HasPassword(manager);
-            return accounts;
-        }
-
-        public void RemoveLogin(string loginProvider, string providerKey)
-        {
-            UserManager manager = new UserManager();
-            var result = manager.RemoveLogin(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-            var msg = result.Succeeded
-                ? "?m=RemoveLoginSuccess"
-                : String.Empty;
-            Response.Redirect("~/Account/Manage" + msg);
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }*/
-
         SqlConnection conn;
 
 
@@ -149,14 +37,262 @@ namespace ProjektBieda.Account
             }
         }
 
-
-
         protected void endConnection()
         {
             conn.Close();
         }
 
+        protected void changePass_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = false;
+            upgrade.Visible = false;
+            delete_acc.Visible = false;
+            changePassword.Visible = true;
+            ustawieniaKontaMsg.Visible = false;
+        }
 
+        protected void changePass_ok_Click(object sender, EventArgs e)
+        {
+            if (IsValid && (newPassT_Box.Text == confirmPassT_Box.Text))
+            {
+                UserManager manager = new UserManager();
+                IdentityResult result = manager.ChangePassword(Context.User.Identity.GetUserId(), oldPassT_Box.Text, newPassT_Box.Text);
+
+                if (result.Succeeded)
+                {
+                    if (SQL_changePass())
+                    {
+                        ustawieniaKontaMsg.Text = "Pomyslna zmiana hasla";
+                        ustawieniaKontaMsg.Visible = true;
+                        ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Green;
+
+                        Context.GetOwinContext().Authentication.SignOut();
+                        Response.Redirect("Login.aspx");
+
+                        change_pass.Visible = true;
+                        upgrade.Visible = true;
+                        delete_acc.Visible = true;
+                        changePassword.Visible = false;
+                    }
+                    else manager.ChangePassword(Context.User.Identity.GetUserId(), newPassT_Box.Text, oldPassT_Box.Text);
+                }
+                else
+                {
+                    ustawieniaKontaMsg.Text = "Nieprawidlowe akutalne haslo";
+                    ustawieniaKontaMsg.Visible = true;
+                    ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            else
+            {
+                ustawieniaKontaMsg.Text = "Haslo oraz zawartosc pola powtorz haslo nie są takie same";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        protected void changePass_cancel_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = true;
+            upgrade.Visible = true;
+            delete_acc.Visible = true;
+            changePassword.Visible = false;
+        }
+
+        protected bool SQL_changePass()
+        {
+            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
+
+            SqlCommand cmd = null;
+
+            try
+            {
+                cmd = new SqlCommand(
+                "EXEC ZMIEN_HASLO " +
+                "\'" + Context.User.Identity.GetUserName() + "\'," +
+                "\'" + newPassT_Box.Text + "\'" , conn);
+                
+                cmd.ExecuteReader();
+            }
+            catch (Exception)
+            {
+                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+                return false;
+            }
+
+            endConnection();
+
+            return true;
+        }
+
+        protected void upgradeAcc_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = false;
+            upgrade.Visible = false;
+            delete_acc.Visible = false;
+            upgradeAccPanel.Visible = true;
+            ustawieniaKontaMsg.Visible = false;
+        }
+
+        protected void upgradeAcc_ok_Click(object sender, EventArgs e)
+        {
+            if(geszeft.Checked)
+            {
+                if(SQL_upgradeAcc())
+                {
+                    ustawieniaKontaMsg.Text = "Twoje konto zostalo ulepszone!";
+                    ustawieniaKontaMsg.Visible = true;
+                    ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Green;
+
+                    change_pass.Visible = true;
+                    upgrade.Visible = true;
+                    delete_acc.Visible = true;
+                    upgradeAccPanel.Visible = false;
+                }
+            }
+            else
+            {
+                ustawieniaKontaMsg.Text = "Nie zgodziles sie na warunki umowy!";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        protected void upgradeAcc_cancel_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = true;
+            upgrade.Visible = true;
+            delete_acc.Visible = true;
+            upgradeAccPanel.Visible = false;
+        }
+
+        protected bool SQL_upgradeAcc()
+        {
+            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
+
+            SqlCommand cmd = null;
+
+            try
+            {
+                cmd = new SqlCommand(
+                "EXEC DODAJ_SPRZEDAWCE " +
+                "\'" + Context.User.Identity.GetUserName() + "\'," +
+                "\'" + numerKontaT_Box.Text + "\'", conn);
+
+                cmd.ExecuteReader();
+            }
+            catch (Exception)
+            {
+                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych lub niewlasciwy numer konta";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+                return false;
+            }
+
+            endConnection();
+
+            return true;
+        }
+
+        protected void deleteAcc_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = false;
+            upgrade.Visible = false;
+            delete_acc.Visible = false;
+            deleteAccPanel.Visible = true;
+        }
+
+        protected void deleteAcc_ok_Click(object sender, EventArgs e)
+        {
+
+            if(SQL_checkPass())
+            {
+                change_pass.Visible = true;
+                upgrade.Visible = true;
+                delete_acc.Visible = true;
+                deleteAccPanel.Visible = false;
+
+                SQL_DeleteAcc();
+
+                Context.GetOwinContext().Authentication.SignOut();
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                ustawieniaKontaMsg.Text = "Bledne haslo";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        protected void deleteAcc_cancel_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = true;
+            upgrade.Visible = true;
+            delete_acc.Visible = true;
+            deleteAccPanel.Visible = false;
+        }
+
+        protected bool SQL_checkPass()
+        {
+            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
+
+            SqlCommand cmd = null;
+            bool cacy = false;
+
+            try
+            {
+                cmd = new SqlCommand
+                    ("select login from KLIENT where login = \'" + Context.User.Identity.GetUserName()
+                    + "\' and haslo = \'" + deleteAccT_Box.Text + "\' and data_do is null", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    if (dr["login"].ToString() == Context.User.Identity.GetUserName()) { cacy = true; }
+                    else { cacy = false; }
+                }
+            }
+            catch (Exception)
+            {
+                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+            }
+
+            endConnection();
+
+            return cacy;
+        }
+
+        protected bool SQL_DeleteAcc()
+        {
+            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
+
+            SqlCommand cmd = null;
+
+            try
+            {
+                cmd = new SqlCommand(
+                "EXEC USUN_KONTO " +
+                "\'" + Context.User.Identity.GetUserName() + "\'", conn);
+
+                cmd.ExecuteReader();
+            }
+            catch (Exception)
+            {
+                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych";
+                ustawieniaKontaMsg.Visible = true;
+                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+                return false;
+            }
+
+            endConnection();
+
+            return true;
+        }
 
         protected void LoadUserInfo()
         {
@@ -398,3 +534,4 @@ namespace ProjektBieda.Account
 
     }
 }
+

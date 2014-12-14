@@ -10,7 +10,9 @@
     <asp:Panel ID="Panel1" runat="server" Width="1036px">
         <asp:TextBox ID="ErrorMsg" runat="server" BorderStyle="None" Height="28px" ReadOnly="True" Visible="False" Width="212px" TextMode="MultiLine">donna mamma es chujoczita</asp:TextBox>
                     
-    </asp:Panel>
+        
+                    
+     </asp:Panel>
 
     <br/>
     
@@ -127,20 +129,95 @@
 
                     <br />
                     <br />
+                    <asp:Label ID="ustawieniaKontaMsg" runat="server" Text="" Font-Size="Large" Visible="false"></asp:Label>
+                    <br />
+                    
+                <asp:Panel ID="changePassword" runat="server" Width="500px" Visible="false">
+
+                    <asp:Label ID="oldPassLabel" runat="server" Text="Obecne Haslo: " Font-Size="Large"></asp:Label>
+                    <br />
+                    
+                    <asp:TextBox ID="oldPassT_Box" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                     Text="" Font-Size="X-Large" BackColor="#FF9D3C" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                    <br />
+
+                    <asp:Label ID="newPassLabel" runat="server" Text="Nowe Haslo: " Font-Size="Large"></asp:Label>
+                    <br />
+                    
+                    <asp:TextBox ID="newPassT_Box" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                     Text="" Font-Size="X-Large" BackColor="#FF9D3C" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                    <br />
+                    
+                    <asp:Label ID="confirmPassLabel" runat="server" Text="Powtorz Haslo: " Font-Size="Large"></asp:Label>
+                    <br />
+                    
+                    <asp:TextBox ID="confirmPassT_Box" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                     Text="" Font-Size="X-Large" BackColor="#FF9D3C" TextMode="Password" CssClass="form-control"></asp:TextBox>
+                    <br />
+
+                    <asp:Button ID="change_pass_ok" runat="server" BorderStyle="Solid" Height="60px" Text="ZAPISZ" CssClass="btn btn-default"
+                    Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="changePass_ok_Click" />
+
+                    <asp:Button ID="change_pass_cancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
+                    Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="changePass_cancel_Click" />
+                    <br />
+
+                </asp:Panel> 
+                    
                     <asp:Button ID="change_pass" runat="server" BorderStyle="Solid" Height="60px" Text="ZMIEŃ HASŁO" BackColor="#FF9D3C"
-                         Font-Size="X-Large" Width="300px" CssClass="btn btn-default" />
-                    
+                    Font-Size="X-Large" Width="300px" CssClass="btn btn-default" OnClick="changePass_Click" />           
 
                     <br />
                     <br />
+    
+                <asp:Panel ID="upgradeAccPanel" runat="server" Width="500px" Visible="false">
+
+                    <asp:Label ID="numerKontaLabel" runat="server" Text="Podaj numer konta bankowego: " Font-Size="Large"></asp:Label>
+                    <br />
+                    
+                    <asp:TextBox ID="numerKontaT_Box" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                     Text="" Font-Size="X-Large" BackColor="#FF9D3C" CssClass="form-control"></asp:TextBox>
+                    <br />
+
+                    zgadzam sie aby obciazyc podany wyzej rachunek na 100 zł <asp:CheckBox ID="geszeft" runat="server" />
+                    <br />
+                    
+                    <asp:Button ID="upgradeAcc_ok" runat="server" BorderStyle="Solid" Height="60px" Text="ZAPISZ" CssClass="btn btn-default"
+                    Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="upgradeAcc_ok_Click" />
+
+                    <asp:Button ID="upgradeAcc_cancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
+                    Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="upgradeAcc_cancel_Click" />
+                    <br />    
+
+                </asp:Panel> 
+
                     <asp:Button ID="upgrade" runat="server" BorderStyle="Solid" Height="60px" Text="ZOSTAŃ SPRZEDAWCĄ" BackColor="#FF9D3C"
-                         Font-Size="X-Large" Width="300px" CssClass="btn btn-default" />
+                         Font-Size="X-Large" Width="300px" CssClass="btn btn-default" OnClick="upgradeAcc_Click" />
                     
 
                     <br />
                     <br />
+
+                <asp:Panel ID="deleteAccPanel" runat="server" Width="500px" Visible="false">
+
+                    <asp:Label ID="deleteAccLabel" runat="server" Text="Potwierdz operacje wpisujac haslo: " Font-Size="Large"></asp:Label>
+                    <br />
+                    
+                    <asp:TextBox ID="deleteAccT_Box" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                     Text="" Font-Size="X-Large" BackColor="#FF9D3C" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                    <br />
+
+                    <asp:Button ID="deleteAccOk" runat="server" BorderStyle="Solid" Height="60px" Text="USUN KONTO" CssClass="btn btn-default"
+                    Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="deleteAcc_ok_Click" />
+
+                    <asp:Button ID="deleteAccCancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
+                    Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="deleteAcc_cancel_Click" />
+                    <br />  
+
+                </asp:Panel>
+
                     <asp:Button ID="delete_acc" runat="server" BorderStyle="Solid" Height="60px" Text="USUŃ KONTO" BackColor="#FF9D3C"
-                         Font-Size="X-Large" Width="300px" CssClass="btn btn-default" />
+                         Font-Size="X-Large" Width="300px" CssClass="btn btn-default" OnClick="deleteAcc_Click" />
                 
 
                 

@@ -229,6 +229,96 @@ namespace ProjektBieda.Account {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
+        /// Kontrolka ustawieniaKontaMsg.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ustawieniaKontaMsg;
+        
+        /// <summary>
+        /// Kontrolka changePassword.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel changePassword;
+        
+        /// <summary>
+        /// Kontrolka oldPassLabel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label oldPassLabel;
+        
+        /// <summary>
+        /// Kontrolka oldPassT_Box.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox oldPassT_Box;
+        
+        /// <summary>
+        /// Kontrolka newPassLabel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label newPassLabel;
+        
+        /// <summary>
+        /// Kontrolka newPassT_Box.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox newPassT_Box;
+        
+        /// <summary>
+        /// Kontrolka confirmPassLabel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label confirmPassLabel;
+        
+        /// <summary>
+        /// Kontrolka confirmPassT_Box.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox confirmPassT_Box;
+        
+        /// <summary>
+        /// Kontrolka change_pass_ok.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button change_pass_ok;
+        
+        /// <summary>
+        /// Kontrolka change_pass_cancel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button change_pass_cancel;
+        
+        /// <summary>
         /// Kontrolka change_pass.
         /// </summary>
         /// <remarks>
@@ -238,6 +328,60 @@ namespace ProjektBieda.Account {
         protected global::System.Web.UI.WebControls.Button change_pass;
         
         /// <summary>
+        /// Kontrolka upgradeAccPanel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel upgradeAccPanel;
+        
+        /// <summary>
+        /// Kontrolka numerKontaLabel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label numerKontaLabel;
+        
+        /// <summary>
+        /// Kontrolka numerKontaT_Box.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox numerKontaT_Box;
+        
+        /// <summary>
+        /// Kontrolka geszeft.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox geszeft;
+        
+        /// <summary>
+        /// Kontrolka upgradeAcc_ok.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button upgradeAcc_ok;
+        
+        /// <summary>
+        /// Kontrolka upgradeAcc_cancel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button upgradeAcc_cancel;
+        
+        /// <summary>
         /// Kontrolka upgrade.
         /// </summary>
         /// <remarks>
@@ -245,6 +389,51 @@ namespace ProjektBieda.Account {
         /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button upgrade;
+        
+        /// <summary>
+        /// Kontrolka deleteAccPanel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel deleteAccPanel;
+        
+        /// <summary>
+        /// Kontrolka deleteAccLabel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label deleteAccLabel;
+        
+        /// <summary>
+        /// Kontrolka deleteAccT_Box.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deleteAccT_Box;
+        
+        /// <summary>
+        /// Kontrolka deleteAccOk.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button deleteAccOk;
+        
+        /// <summary>
+        /// Kontrolka deleteAccCancel.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button deleteAccCancel;
         
         /// <summary>
         /// Kontrolka delete_acc.

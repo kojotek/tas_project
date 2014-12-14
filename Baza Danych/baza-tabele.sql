@@ -99,3 +99,6 @@ create table POWIADOMIENIE
 	tresc text not null, 
 	data date not null default getdate()
 )
+
+select * from Sprzedawca
+
