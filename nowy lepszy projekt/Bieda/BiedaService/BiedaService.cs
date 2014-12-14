@@ -193,7 +193,7 @@ namespace MyWCFServices
         public string RegisterUser(string login, string haslo, string imie, string nazwisko, 
         string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie)
         {
-            if (connect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV") == false)
+            if (connect() == false)
             {
                 return "Blad polaczenia z baza danych";
             }
