@@ -7,13 +7,6 @@
     <br/>
     <br/>
 
-    <asp:Panel ID="Panel1" runat="server" Width="1036px">
-        <asp:TextBox ID="ErrorMsg" runat="server" BorderStyle="None" Height="28px" ReadOnly="True" Visible="False" Width="212px" TextMode="MultiLine">donna mamma es chujoczita</asp:TextBox>
-                    
-        
-                    
-     </asp:Panel>
-
     <br/>
     
     <asp:Table ID="Table1" runat="server" Width="1036px" Height="1036px" CellPadding="30" CellSpacing="0">

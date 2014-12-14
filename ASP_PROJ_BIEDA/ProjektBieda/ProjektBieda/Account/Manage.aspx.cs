@@ -358,8 +358,7 @@ namespace ProjektBieda.Account
             }
             catch (SqlException elol)
             {
-                ErrorMsg.Text = cmd.CommandText;
-                ErrorMsg.Visible = true;
+
             }
             finally
             {

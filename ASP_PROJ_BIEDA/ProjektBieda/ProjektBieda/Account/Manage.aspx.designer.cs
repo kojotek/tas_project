@@ -13,24 +13,6 @@ namespace ProjektBieda.Account {
     public partial class Manage {
         
         /// <summary>
-        /// Kontrolka Panel1.
-        /// </summary>
-        /// <remarks>
-        /// Pole generowane automatycznie.
-        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
-        
-        /// <summary>
-        /// Kontrolka ErrorMsg.
-        /// </summary>
-        /// <remarks>
-        /// Pole generowane automatycznie.
-        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ErrorMsg;
-        
-        /// <summary>
         /// Kontrolka Table1.
         /// </summary>
         /// <remarks>
