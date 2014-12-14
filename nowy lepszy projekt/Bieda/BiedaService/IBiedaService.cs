@@ -14,13 +14,16 @@ namespace MyWCFServices
         [OperationContract]
         String GetMessage(String name);
         [OperationContract]
-        string GetMessage2( String user, String pass );
+        string GetMessage2(String user, String pass);
+        [OperationContract]
+        List<string> getAuctionInfo(int id);
+        [OperationContract]
+        bool isAuctionOver(int id);
     }
 
     public interface helpfullThings
     {
-        bool connect(string serverName, string database, string userId, string password);
+        bool connect();
         void disconnect();
-
     }
 }

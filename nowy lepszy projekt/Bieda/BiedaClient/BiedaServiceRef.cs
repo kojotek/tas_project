@@ -20,6 +20,12 @@ public interface IBiedaService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/GetMessage2", ReplyAction="http://tempuri.org/IBiedaService/GetMessage2Response")]
     string GetMessage2(string user, string pass);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionInfo", ReplyAction="http://tempuri.org/IBiedaService/getAuctionInfoResponse")]
+    string[] getAuctionInfo(int id);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/isAuctionOver", ReplyAction="http://tempuri.org/IBiedaService/isAuctionOverResponse")]
+    bool isAuctionOver(int id);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -64,5 +70,15 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     public string GetMessage2(string user, string pass)
     {
         return base.Channel.GetMessage2(user, pass);
+    }
+    
+    public string[] getAuctionInfo(int id)
+    {
+        return base.Channel.getAuctionInfo(id);
+    }
+    
+    public bool isAuctionOver(int id)
+    {
+        return base.Channel.isAuctionOver(id);
     }
 }

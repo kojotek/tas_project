@@ -20,8 +20,12 @@ namespace MyWCFServices
         
         
 //CONNECT - TWORZENIE POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
-        public bool connect(string serverName, string database, string userId, string password)
+        public bool connect()
         {
+            string serverName = "mssql.wmi.amu.edu.pl";
+            string database = "dtas_s383964";
+            string userId = "s383964";
+            string password = "674lCgcV";
 
             try
             {
@@ -52,6 +56,86 @@ namespace MyWCFServices
 //DISCONNECT - ZRYWA POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
         
         
+
+
+
+
+//getAuctionInfo/////////////////////////////////////////////////////////////////////////////////////////
+        public List<string> getAuctionInfo(int id)
+        {
+            connect();
+            List<string> lista = new List<string>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("select * from AUKCJA where id_aukcji = " + id.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    lista.Add( dr["id_aukcji"].ToString() );
+                    lista.Add( dr["login"].ToString() );
+                    lista.Add( dr["nazwa_produktu"].ToString() );
+                    lista.Add( String.Format("{0:F2}", float.Parse(dr["cena_startowa"].ToString())) + " zł" );
+                    lista.Add( String.Format("{0:F2}", float.Parse(dr["cena_wysylki"].ToString())) + " zł" );
+                    lista.Add( dr["data_zakonczenia"].ToString() );
+                    lista.Add(dr["opis"].ToString());
+                }
+            }
+            finally
+            {
+                disconnect();
+            }
+
+            return lista;
+
+        }
+//getAuctionInfo/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+//isAuctionOver/////////////////////////////////////////////////////////////////////////////////////////
+        public bool isAuctionOver(int id)
+        {
+            connect();
+
+            bool wynik = true;
+            string temp = "dupa";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT CASE WHEN EXISTS (SELECT * FROM aukcja WHERE id_aukcji = " + id.ToString() + " AND getDate()<data_zakonczenia) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    temp = dr[0].ToString();
+                }
+            }
+            finally
+            {
+                disconnect();
+            }
+            
+            if ( String.Compare(temp, "True") == 0 )
+                wynik = false;
+            else
+                wynik = true;
+
+            return wynik;
+        }
+//isAuctionOver/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
         public String GetMessage(String name)
         {
             return "Kojotki witaja, " + name + "! Czuj sie jak u siebie!";
@@ -61,15 +145,11 @@ namespace MyWCFServices
 
         public string GetMessage2( string user, string pass )
         {
-            string serverName = "mssql.wmi.amu.edu.pl";
-            string database = "dtas_s383964";
-            string userId = "s383964";
-            string password = "674lCgcV";
 
             SqlCommand cmd = null;
             SqlDataReader dr = null;
 
-            if ( connect( serverName, database,userId, password ) == false )
+            if ( connect() == false )
             {
                 return "Błąd";
             }
