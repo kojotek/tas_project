@@ -16,4 +16,11 @@ namespace MyWCFServices
         [OperationContract]
         string GetMessage2( String user, String pass );
     }
+
+    public interface helpfullThings
+    {
+        bool connect(string serverName, string database, string userId, string password);
+        void disconnect();
+
+    }
 }

@@ -8,13 +8,55 @@ using System.Data.SqlClient;
 
 namespace MyWCFServices
 {
-    public class BiedaService: IBiedaService
+    public class BiedaService: IBiedaService, helpfullThings
     {
 
+        
+//POLA/////////////////////////////////////////////////////////////////////////////
+        SqlConnection conn = null;
+//POLA/////////////////////////////////////////////////////////////////////////////
+        
+        
+        
+        
+//CONNECT - TWORZENIE POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
+        public bool connect(string serverName, string database, string userId, string password)
+        {
+
+            try
+            {
+                conn = new SqlConnection("Server=" + serverName + ";Database=" + database + ";User Id=" + userId + ";Password=" + password + ";"); conn.Open();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return false;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+
+            return true;
+        }
+//CONNECT - TWORZENIE POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
+
+
+
+
+
+//DISCONNECT - ZRYWA POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
+        public void disconnect()
+        {
+            conn.Close();
+        }
+//DISCONNECT - ZRYWA POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
+        
+        
         public String GetMessage(String name)
         {
             return "Kojotki witaja, " + name + "! Czuj sie jak u siebie!";
         }
+
 
 
         public string GetMessage2( string user, string pass )
@@ -24,33 +66,13 @@ namespace MyWCFServices
             string userId = "s383964";
             string password = "674lCgcV";
 
-
-            SqlConnection conn = null; 
             SqlCommand cmd = null;
             SqlDataReader dr = null;
-            //List<string> toReturn = new List<string>();
-            //toReturn.Add("lol");
-            //return toReturn;
 
-            try
+            if ( connect( serverName, database,userId, password ) == false )
             {
-                conn = new SqlConnection("Server=" + serverName + ";Database=" + database + ";User Id=" + userId + ";Password=" + password + ";"); conn.Open();
+                return "Błąd";
             }
-            catch (InvalidOperationException ex)
-            {
-              //  toReturn.Add("pierwszy fail");
-                return "InvalidOperationException";
-            }
-            catch (SqlException ex)
-            {
-                //toReturn.Add("drugi fail");
-                return "sqlException";
-            }
-
-            //return ("tu je dobrze");
-            //finally
-            //{
-
 
             string wynik = null;
             
@@ -72,10 +94,8 @@ namespace MyWCFServices
                             }
 
                         }
-
                 }
                 wynik = "lel, dziala " + wynik;
-
 
             }
 
@@ -84,7 +104,7 @@ namespace MyWCFServices
                 return "sqlException2";
             }
 
-            finally { conn.Close(); }
+            finally { disconnect(); }
 
             return wynik;
         }
