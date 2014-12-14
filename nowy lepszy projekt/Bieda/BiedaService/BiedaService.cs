@@ -16,9 +16,6 @@ namespace MyWCFServices
         SqlConnection conn = null;
 //POLA/////////////////////////////////////////////////////////////////////////////
         
-        
-        
-        
 //CONNECT - TWORZENIE POŁĄCZENIA Z BAZĄ DANYCH/////////////////////////////////////////////////////////////
         public bool connect(string serverName, string database, string userId, string password)
         {
@@ -109,7 +106,46 @@ namespace MyWCFServices
             return wynik;
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////RegisterUser////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        public string RegisterUser(string login, string haslo, string imie, string nazwisko, 
+        string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie)
+        {
+            if (connect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV") == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            string result = "git";
+
+            try
+            {
+                cmd = new SqlCommand(
+                "EXEC DODAJ_KLIENTA " +
+                "\'" + telefon + "\'," +
+                "\'" + email + "\'," +
+                "\'" + kraj + "\'," +
+                "\'" + miasto + "\'," +
+                "\'" + kod + "\'," +
+                "\'" + ulica + "\'," +
+                "\'" + dom + "\'," +
+                "\'" + mieszkanie + "\'," +
+                "\'" + imie + "\'," +
+                "\'" + nazwisko + "\'," +
+                "\'" + login + "\'," +
+                "\'" + haslo + "\'", conn);
+                cmd.ExecuteReader();
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();      
+            }
+
+            return result;
+        }
 
 
 
