@@ -97,7 +97,7 @@ create table POWIADOMIENIE
 	id int not null primary key identity(1,1),
 	login varchar(20) FOREIGN KEY REFERENCES KLIENT(login),
 	tresc text not null, 
-	data date not null default getdate()
+	data datetime not null default getdate()
 )
 
 select * from Sprzedawca
