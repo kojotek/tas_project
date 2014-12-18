@@ -24,15 +24,15 @@ namespace MyWCFServices
             dic.Add("nr_konta", new RegexData("^([0-9]{26})$", "musi zawierac 26 cyfr", 26));
             dic.Add("kraj", new RegexData("^([A-Z][a-z]+(([A-z]+)|\\s)*)$", "musi skladac sie z liter oraz zaczynac od wielkiej litery", 50));
             dic.Add("miasto", new RegexData("^([A-Z][a-z]+(([A-z]+)|\\s)*)$", "musi skladac sie z liter oraz zaczynac od wielkiej litery", 50));
-            dic.Add("ulica", new RegexData("", "", 50));
-            dic.Add("budynek", new RegexData("", "", 10));
-            dic.Add("mieszkanie", new RegexData("", "", 10));
-            dic.Add("imie", new RegexData("", "", 50));
-            dic.Add("nazwisko", new RegexData("", "", 50));
-            dic.Add("login", new RegexData("", "", 20));
-            dic.Add("haslo", new RegexData("", "", 20));
-            dic.Add("kod", new RegexData("", "", 6));
-            dic.Add("kod", new RegexData("", "", 6));
+            dic.Add("ulica", new RegexData("^(.+)$", "niemoze byc puste", 50));
+            dic.Add("budynek", new RegexData("^([0-9]+\\w*)$", "musi zaczynac sie od cyfry", 10));
+            dic.Add("mieszkanie", new RegexData("^([0-9]+\\w*)$", "musi zaczynac sie od cyfry", 10));
+            dic.Add("imie", new RegexData("^([A-Z][a-z]+)$", "musi zaczynac sie z wielkiej litery i skladac sie z liter", 50));
+            dic.Add("nazwisko", new RegexData("^([A-Z][a-z]+(\\s[A-z]+)*)$", "musi zaczynac sie z wielkiej litery i skladac sie z liter", 50));
+            dic.Add("login", new RegexData("^(\\w{3,})$", "musi miec przynajmniej 3 znaki", 20));
+            dic.Add("haslo", new RegexData("^(\\w{6,})$", "musi miec przynajmniej 6 znakow oraz zawierac cyfre", 20));
+            //dic.Add("kod", new RegexData("", "", 6));
+            //dic.Add("kod", new RegexData("", "", 6));
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,62 +135,6 @@ namespace MyWCFServices
             return wynik;
         }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////GetMessage//////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public String GetMessage(String name)
-        {
-            return "Kojotki witaja, " + name + "! Czuj sie jak u siebie!";
-        }
-
-
-
-        public string GetMessage2( string user, string pass )
-        {
-
-            SqlCommand cmd = null;
-            SqlDataReader dr = null;
-
-            if ( connect() == false )
-            {
-                return "Błąd";
-            }
-
-            string wynik = null;
-            
-            try
-            {
-                cmd = new SqlCommand("select * from KLIENT where login = \'" + user + "\' and haslo = \'" + pass + "\'", conn);
-                dr = cmd.ExecuteReader();
-
-                if (dr != null)
-                {
-                    wynik = dr.HasRows.ToString();
-
-                    if (dr.HasRows == true)
-                        while (dr.Read())
-                        {
-                            for (int i = 0; i < dr.FieldCount; i++)
-                            {
-                                wynik = dr[0].ToString();
-                            }
-
-                        }
-                }
-                wynik = "lel, dziala " + wynik;
-
-            }
-
-            catch (SqlException elol)
-            {
-                return "sqlException2";
-            }
-
-            finally { disconnect(); }
-
-            return wynik;
-        }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////RegisterUser////////////////////////////////////////////////////////

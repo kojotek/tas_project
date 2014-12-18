@@ -15,14 +15,17 @@
 public interface IBiedaService
 {
     
-    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/GetMessage", ReplyAction="http://tempuri.org/IBiedaService/GetMessageResponse")]
-    string GetMessage(string name);
-    
-    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/GetMessage2", ReplyAction="http://tempuri.org/IBiedaService/GetMessage2Response")]
-    string GetMessage2(string user, string pass);
-    
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/RegisterUser", ReplyAction="http://tempuri.org/IBiedaService/RegisterUserResponse")]
     string RegisterUser(string login, string haslo, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionInfo", ReplyAction="http://tempuri.org/IBiedaService/getAuctionInfoResponse")]
+    string[] getAuctionInfo(int id);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/isAuctionOver", ReplyAction="http://tempuri.org/IBiedaService/isAuctionOverResponse")]
+    bool isAuctionOver(int id);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/CheckRegex", ReplyAction="http://tempuri.org/IBiedaService/CheckRegexResponse")]
+    string CheckRegex(string klucz, string wartosc);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -59,18 +62,23 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     {
     }
     
-    public string GetMessage(string name)
-    {
-        return base.Channel.GetMessage(name);
-    }
-    
-    public string GetMessage2(string user, string pass)
-    {
-        return base.Channel.GetMessage2(user, pass);
-    }
-    
     public string RegisterUser(string login, string haslo, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie)
     {
         return base.Channel.RegisterUser(login, haslo, imie, nazwisko, email, telefon, kraj, miasto, kod, ulica, dom, mieszkanie);
+    }
+    
+    public string[] getAuctionInfo(int id)
+    {
+        return base.Channel.getAuctionInfo(id);
+    }
+    
+    public bool isAuctionOver(int id)
+    {
+        return base.Channel.isAuctionOver(id);
+    }
+    
+    public string CheckRegex(string klucz, string wartosc)
+    {
+        return base.Channel.CheckRegex(klucz, wartosc);
     }
 }

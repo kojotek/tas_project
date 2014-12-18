@@ -1,0 +1,12 @@
+Microsoft (R) Service Model Metadata Tool
+[Microsoft (R) Windows (R) Communication Foundation, Version 3.0.4506.2152]
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Attempting to download metadata from 'http://localhost:1931/BiedaService.svc?wsdl' using WS-Metadata Exchange or DISCO.
+Microsoft (R) Service Model Metadata Tool
+[Microsoft (R) Windows (R) Communication Foundation, Version 3.0.4506.2152]
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+
+
+If you would like more help, type "svcutil /?"

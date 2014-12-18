@@ -14,9 +14,6 @@ namespace BiedaClient
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BiedaServiceClient client = new BiedaServiceClient();
-            string dr =  client.GetMessage2("damianek", "damianek1");
-            Label1.Text = dr;
         }
     }
 }
