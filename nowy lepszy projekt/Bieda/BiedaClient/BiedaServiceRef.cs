@@ -26,6 +26,24 @@ public interface IBiedaService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/CheckRegex", ReplyAction="http://tempuri.org/IBiedaService/CheckRegexResponse")]
     string CheckRegex(string klucz, string wartosc);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/LoginIn", ReplyAction="http://tempuri.org/IBiedaService/LoginInResponse")]
+    string LoginIn(string login, string pass);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/ChangePass", ReplyAction="http://tempuri.org/IBiedaService/ChangePassResponse")]
+    string ChangePass(string login, string newPass);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/UpgradeAcc", ReplyAction="http://tempuri.org/IBiedaService/UpgradeAccResponse")]
+    string UpgradeAcc(string login, string numerKonta);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/DeleteAcc", ReplyAction="http://tempuri.org/IBiedaService/DeleteAccResponse")]
+    string DeleteAcc(string login);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/LoadAccInfo", ReplyAction="http://tempuri.org/IBiedaService/LoadAccInfoResponse")]
+    string[] LoadAccInfo(string login);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/ChangeUserInfo", ReplyAction="http://tempuri.org/IBiedaService/ChangeUserInfoResponse")]
+    string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -80,5 +98,35 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     public string CheckRegex(string klucz, string wartosc)
     {
         return base.Channel.CheckRegex(klucz, wartosc);
+    }
+    
+    public string LoginIn(string login, string pass)
+    {
+        return base.Channel.LoginIn(login, pass);
+    }
+    
+    public string ChangePass(string login, string newPass)
+    {
+        return base.Channel.ChangePass(login, newPass);
+    }
+    
+    public string UpgradeAcc(string login, string numerKonta)
+    {
+        return base.Channel.UpgradeAcc(login, numerKonta);
+    }
+    
+    public string DeleteAcc(string login)
+    {
+        return base.Channel.DeleteAcc(login);
+    }
+    
+    public string[] LoadAccInfo(string login)
+    {
+        return base.Channel.LoadAccInfo(login);
+    }
+    
+    public string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie)
+    {
+        return base.Channel.ChangeUserInfo(login, imie, nazwisko, email, telefon, kraj, miasto, kod, ulica, dom, mieszkanie);
     }
 }

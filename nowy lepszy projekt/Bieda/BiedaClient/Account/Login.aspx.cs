@@ -7,14 +7,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using BiedaClient.Models;
-using System.Data.SqlClient;
-using System.Data.Sql;
-using System.Data;
 
 namespace BiedaClient.Account
 {
     public partial class Login : Page
     {
+        BiedaServiceClient client = new BiedaServiceClient();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             RegisterHyperLink.NavigateUrl = "Register";
@@ -25,58 +24,16 @@ namespace BiedaClient.Account
             }
         }
 
-        protected bool SprawdzJegomoscia(string user, string pass)
-        {
-            string serverName = "mssql.wmi.amu.edu.pl";
-            string database = "dtas_s383964";
-            string userId = "s383964";
-            string password = "674lCgcV";
-
-            bool cacy = false;
-
-            SqlConnection conn = null; SqlCommand cmd = null;
-            try { conn = new SqlConnection("Server=" + serverName + ";Database=" + database + ";User Id=" + userId + ";Password=" + password + ";"); conn.Open(); }
-            catch (InvalidOperationException ex) { System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Klient\")</SCRIPT>"); }
-            catch (SqlException ex) { System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"serwer!\")</SCRIPT>"); }
-            finally
-            {
-                try
-                {
-                    cmd = new SqlCommand
-                    ("select login from KLIENT where login = \'" + user + "\' and haslo = \'" + pass + "\' and data_do is null", conn);
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    while(dr.Read())
-                    {
-                        if (dr["login"].ToString() == user) { cacy = true; }
-                        else { cacy = false; }
-                    }
-                    
-                }
-
-                catch (SqlException elol)
-                {
-                    FailureText.Text = "MS SQL ERROR";
-                    ErrorMessage.Visible = true;
-                }
-
-                finally
-                {
-                    conn.Close();
-                }
-            }
-
-            return cacy;
-        }
-
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)
             {
-                //Validate the user password
                 var manager = new UserManager();
                 ApplicationUser user = manager.Find(UserName.Text, Password.Text);
-                if (SprawdzJegomoscia(UserName.Text, Password.Text))
+
+                string wynik = client.LoginIn(UserName.Text, Password.Text);
+
+                if (wynik == "git")
                 {
                     Session["zalogowand"] = UserName.Text; 
                     
@@ -96,14 +53,19 @@ namespace BiedaClient.Account
                             IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                         }
 
-                        else { FailureText.Text = "ASP AUTHENTIFICATION ERROR"; }
-                        ErrorMessage.Visible = true;
+                        else 
+                        { 
+                            ErrorMsg.Text = "CRITICAL ERROR IN ASP AUTHENTIFICATION SYSTEM!!!";
+                            ErrorMsg.Visible = true;
+                            ErrorMsg.ForeColor = System.Drawing.Color.Red;
+                        }     
                     }
                 }
                 else
                 {
-                    FailureText.Text = "Invalid username or password.";
-                    ErrorMessage.Visible = true;
+                    ErrorMsg.Text = wynik;
+                    ErrorMsg.Visible = true;
+                    ErrorMsg.ForeColor = System.Drawing.Color.Red;
                 }
             }
         }

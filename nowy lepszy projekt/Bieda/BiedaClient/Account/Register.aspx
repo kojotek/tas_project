@@ -2,7 +2,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 <br />
 <br />
-<h4>Załóż własne konto w czterech prostych krokach!</h4>
+<br />
 
 <asp:Table ID="Table1" runat="server" Width="1036px" Height="1039px" CellPadding="30" CellSpacing="0">
     <asp:TableRow runat="server" >
@@ -29,7 +29,7 @@
                 Text="" Font-Size="X-Large" BackColor="#FFBC79" CssClass="form-control" TextMode="Password"></asp:TextBox>
                 <br />
                 <asp:Button ID="next1" runat="server" BorderStyle="Solid" Height="60px" Text="DALEJ" CssClass="btn btn-default"
-                Font-Size="X-Large" Width="300px" BackColor="#FFBC79" OnClick="next1_Click" />
+                Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="next1_Click" />
                 <br />
                 <asp:Label ID="Panel1ErrorMsg" runat="server" Text="" Font-Size="Large" Visible="false"></asp:Label>
                     
@@ -64,8 +64,10 @@
                 <asp:TextBox ID="telefon" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
                 Text="" Font-Size="X-Large" BackColor="#FF9D3C" CssClass="form-control"></asp:TextBox>
                 <br />
-                <a href="#GoToPanel3"><asp:Button ID="next2" runat="server" BorderStyle="Solid" Height="60px" Text="DALEJ" CssClass="btn btn-default"
-                Font-Size="X-Large" Width="300px" BackColor="#FF9D3C" OnClick="next2_Click" /></a>
+                <asp:Button ID="next2" runat="server" BorderStyle="Solid" Height="60px" Text="DALEJ" CssClass="btn btn-default"
+                Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="next2_Click" />
+                <asp:Button ID="back1" runat="server" BorderStyle="Solid" Height="60px" Text="WROC" CssClass="btn btn-default"
+                Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="back_Click" />
                 <br />
                 <asp:Label ID="Panel2ErrorMsg" runat="server" Text="" Font-Size="Large" Visible="false"></asp:Label>
             
@@ -113,7 +115,9 @@
                 Text="" Font-Size="X-Large" BackColor="#FF9D3C" CssClass="form-control"></asp:TextBox>
                 <br />
                 <asp:Button ID="next3" runat="server" BorderStyle="Solid" Height="60px" Text="DALEJ" CssClass="btn btn-default"
-                Font-Size="X-Large" Width="300px" BackColor="#FF9D3C" OnClick="next3_Click" />
+                Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="next3_Click" />
+                <asp:Button ID="back2" runat="server" BorderStyle="Solid" Height="60px" Text="WROC" CssClass="btn btn-default"
+                Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="back_Click" />
                 <br />
                 <asp:Label ID="Panel3ErrorMsg" runat="server" Text="" Font-Size="Large" Visible="false"></asp:Label>
             
@@ -137,7 +141,9 @@
                 <br />
                 <br />
                 <asp:Button ID="register" runat="server" BorderStyle="Solid" Height="60px" Text="ZAREJESTRUJ" CssClass="btn btn-default"
-                Font-Size="X-Large" Width="300px" BackColor="#FFBC79" OnClick="register_Click" />
+                Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="register_Click" />
+                <asp:Button ID="back3" runat="server" BorderStyle="Solid" Height="60px" Text="WROC" CssClass="btn btn-default"
+                Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="back_Click" />
                 <br />
                 <asp:Label ID="Panel4ErrorMsg" runat="server" Text="" Font-Size="Large" Visible="false"></asp:Label>
              

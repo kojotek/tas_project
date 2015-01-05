@@ -19,20 +19,21 @@ namespace MyWCFServices
         public BiedaService()
         {
             //uzupelnienie slownika dla funkcji CheckRegex
-            dic.Add("telefon", new RegexData("^([0-9]{9})$", "musi zawierac 9 cyfr", 9));
-            dic.Add("email", new RegexData("^(\\w+@\\w+\\.\\w+)$", "nieprawidlowy email", 50));
-            dic.Add("nr_konta", new RegexData("^([0-9]{26})$", "musi zawierac 26 cyfr", 26));
-            dic.Add("kraj", new RegexData("^([A-Z][a-z]+(([A-z]+)|\\s)*)$", "musi skladac sie z liter oraz zaczynac od wielkiej litery", 50));
-            dic.Add("miasto", new RegexData("^([A-Z][a-z]+(([A-z]+)|\\s)*)$", "musi skladac sie z liter oraz zaczynac od wielkiej litery", 50));
-            dic.Add("ulica", new RegexData("^(.+)$", "niemoze byc puste", 50));
-            dic.Add("budynek", new RegexData("^([0-9]+\\w*)$", "musi zaczynac sie od cyfry", 10));
-            dic.Add("mieszkanie", new RegexData("^([0-9]+\\w*)$", "musi zaczynac sie od cyfry", 10));
-            dic.Add("imie", new RegexData("^([A-Z][a-z]+)$", "musi zaczynac sie z wielkiej litery i skladac sie z liter", 50));
-            dic.Add("nazwisko", new RegexData("^([A-Z][a-z]+(\\s[A-z]+)*)$", "musi zaczynac sie z wielkiej litery i skladac sie z liter", 50));
-            dic.Add("login", new RegexData("^(\\w{3,})$", "musi miec przynajmniej 3 znaki", 20));
-            dic.Add("haslo", new RegexData("^(\\w{6,})$", "musi miec przynajmniej 6 znakow oraz zawierac cyfre", 20));
-            //dic.Add("kod", new RegexData("", "", 6));
-            //dic.Add("kod", new RegexData("", "", 6));
+            dic.Add("telefon", new RegexData("^([0-9]{9})$", "numer telefonu musi zawierac 9 cyfr", 9));
+            dic.Add("email", new RegexData("^(\\w+@\\w+\\.\\w+)$", "nieprawidlowy adres email", 50));
+            dic.Add("nr_konta", new RegexData("^([0-9]{26})$", "numer konta musi zawierac 26 cyfr", 26));
+            dic.Add("kraj", new RegexData("^([A-Z][a-z]+(([A-z]+)|\\s)*)$", "kraj musi skladac sie z liter oraz zaczynac od wielkiej litery", 50));
+            dic.Add("miasto", new RegexData("^([A-Z][a-z]+(([A-z]+)|\\s)*)$", "miasto musi skladac sie z liter oraz zaczynac od wielkiej litery", 50));
+            dic.Add("ulica", new RegexData("^(.+)$", "nazwa ulica niemoze byc pusta", 50));
+            dic.Add("budynek", new RegexData("^([0-9]+\\w*)$", "numer budynku musi zaczynac sie od cyfry", 10));
+            dic.Add("mieszkanie", new RegexData("^([0-9]+\\w*|)$", "numer mieszkania musi zaczynac sie od cyfry (dopuszczalny jest brak numeru mieszkania)", 10));
+            dic.Add("imie", new RegexData("^([A-Z][a-z]+)$", "imie musi zaczynac sie z wielkiej litery i skladac sie z liter", 50));
+            dic.Add("nazwisko", new RegexData("^([A-Z][a-z]+(\\s[A-z]+)*)$", "nazwisko musi zaczynac sie z wielkiej litery i skladac sie z liter", 50));
+            dic.Add("login", new RegexData("^(\\w{3,})$", "login musi miec przynajmniej 3 znaki", 20));
+            dic.Add("haslo1", new RegexData("^(\\w{6,})$", "haslo musi miec przynajmniej 6 znakow", 20));
+            dic.Add("haslo2", new RegexData("[0-9]", "haslo musi zawierac cyfre", 20));
+            dic.Add("kod", new RegexData("^([0-9][0-9]( |-)[0-9][0-9][0-9])$", "kod musi skladac sie z samych cyfr (dopuszczalne formaty XX-XXX oraz XX XXX)", 6));
+
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +141,7 @@ namespace MyWCFServices
         //////////////////////////////////////////////RegisterUser////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public string RegisterUser(string login, string haslo, string imie, string nazwisko, 
+        public string RegisterUser(string login, string haslo, string imie, string nazwisko,
         string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie)
         {
             if (connect() == false)
@@ -171,15 +172,235 @@ namespace MyWCFServices
             }
             catch (SqlException blad)
             {
-                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();      
+                //result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+                result = cmd.CommandText;
             }
 
+            disconnect();
             return result;
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////RegisterUser////////////////////////////////////////////////////////
+        //////////////////////////////////////////////LoginIn/////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string LoginIn(string login, string pass)
+        {
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            string result = "Błędny login lub hasło";
+
+            try
+            {
+                cmd = new SqlCommand
+                ("select login from KLIENT where login = \'" + login + "\' and haslo = \'" + pass + "\' and data_do is null", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    if (dr["login"].ToString() == login) { result = "git"; }
+                }
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////ChangePass//////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string ChangePass(string login, string newPass)
+        {
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            string result = "git";
+
+            try
+            {
+                cmd = new SqlCommand("EXEC ZMIEN_HASLO " + "\'" + login + "\'," + "\'" + newPass + "\'", conn);
+                cmd.ExecuteReader();
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////UpgradeAcc//////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string UpgradeAcc(string login, string numerKonta)
+        {
+            string result = CheckRegex("nr_konta", numerKonta);
+
+            if (result != "git")
+            {
+                return result;
+            }
+
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            result = "git";
+
+            try
+            {
+                cmd = new SqlCommand("EXEC DODAJ_SPRZEDAWCE " + "\'" + login + "\'," + "\'" + numerKonta + "\'", conn);
+                cmd.ExecuteReader();
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+                //result = cmd.CommandText;
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////DeleteAcc///////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string DeleteAcc(string login)
+        {
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            string result = "git";
+
+            try
+            {
+                cmd = new SqlCommand("EXEC USUN_KONTO " + "\'" + login + "\'", conn);
+                cmd.ExecuteReader();
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////LoadAccInfo/////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public List<string> LoadAccInfo(string login)
+        {
+            List<string> result = new List<string>();
+            result.Add("git");
+
+            if (connect() == false)
+            {
+                result[0] = "Blad polaczenia z baza danych";
+                return result;
+            }
+
+            SqlCommand cmd = null;
+
+            try
+            {
+                cmd = new SqlCommand("select * from KLIENT INNER JOIN DANE on klient.id_dane = dane.id_dane where klient.login = \'" + login + "\'", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    result.Add(dr["login"].ToString());
+                    result.Add(dr["data_od"].ToString());
+                    result.Add(dr["imie"].ToString());
+                    result.Add(dr["nazwisko"].ToString());
+                    result.Add(dr["telefon"].ToString());
+                    result.Add(dr["email"].ToString());
+                    result.Add(dr["kraj"].ToString());
+                    result.Add(dr["miasto"].ToString());
+                    result.Add(dr["kod"].ToString());
+                    result.Add(dr["ulica"].ToString());
+                    result.Add(dr["budynek"].ToString());
+                    result.Add(dr["mieszkanie"].ToString());
+                }
+            }
+            catch (SqlException blad)
+            {
+                result[0] = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////ChangeUserInfo//////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj,
+                                     string miasto, string kod, string ulica, string dom, string mieszkanie)
+        {
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            string result = "git";
+
+            try
+            {
+                cmd = new SqlCommand(
+                "EXEC EDYTUJ_DANE " +
+                "\'" + telefon + "\'," +
+                "\'" + email + "\'," +
+                "\'" + kraj + "\'," +
+                "\'" + miasto + "\'," +
+                "\'" + kod + "\'," +
+                "\'" + ulica + "\'," +
+                "\'" + dom + "\'," +
+                "\'" + mieszkanie + "\'," +
+                "\'" + imie + "\'," +
+                "\'" + nazwisko + "\'," +
+                "\'" + login + "\'", conn);
+                cmd.ExecuteReader();
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////CheckRegex//////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //Check Regular Expression - sprawdza warunek zmiennej typu varchar z tabeli w bazie danych,
+        //kluczem jest nazwa zmiennej z bazy, wartosc to tekst ktory ma zostac sprawdzony
+        //dostepne zmienne mozna podejrzec w konstruktorze klasy WCF-a, tam tez mozna je dopisywac
 
         struct RegexData
         {

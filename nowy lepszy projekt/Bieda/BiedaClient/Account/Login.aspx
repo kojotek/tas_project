@@ -6,57 +6,69 @@
     
     <br />
     <br />
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
-                <div class="form-horizontal">
-                    <h4>Zaloguj się użytkowniku.</h4>
-                    <br />
-                    <br />
-                      <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="FailureText" />
-                        </p>
-                    </asp:PlaceHolder>
-                    <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
-                        <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                CssClass="text-danger" ErrorMessage="The user name field is required." />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
-                        <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                <asp:CheckBox runat="server" ID="RememberMe" />
-                                <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-                <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Zarejestruj się</asp:HyperLink>
-                    jeśli niemasz u nas konta.
-                </p>
-            </section>
-        </div>
+    <br />
 
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-            </section>
-        </div>
-    </div>
+    <asp:Table ID="Table1" runat="server" Width="1036px" Height="1039px" CellPadding="30" CellSpacing="0">
+    <asp:TableRow runat="server" >
+        <asp:TableCell runat="server" BackColor="#FFBC79">
+            <asp:Panel ID="Panel1" runat="server" Height="500px" Width="500px">
+
+                <asp:Label ID="Panel1Title" runat="server" Text="Zaloguj sie użytkowniku:" Width="500px" Font-Size="XX-Large"></asp:Label>
+                <br />
+                <br />
+                <asp:Label ID="Label1" runat="server" Text="Login: " Font-Size="Large"></asp:Label>
+                <br />
+                <asp:TextBox ID="UserName" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                Text="" Font-Size="X-Large" BackColor="#FFBC79" CssClass="form-control"></asp:TextBox>
+                <br />
+                <asp:Label ID="Label2" runat="server" Text="Haslo: " Font-Size="Large"></asp:Label>
+                <br />
+                <asp:TextBox ID="Password" runat="server" BorderStyle="Solid" Width="500px" Height="40px"
+                Text="" Font-Size="X-Large"  BackColor="#FFBC79" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                <br />
+                <asp:Button ID="zaloguj" runat="server" BorderStyle="Solid" Height="60px" Text="ZALOGUJ" CssClass="btn btn-default"
+                Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="LogIn" />
+                <br />
+                <asp:Label ID="ErrorMsg" runat="server" Text="" Font-Size="Large" Visible="false"></asp:Label>
+                <br />
+                <asp:CheckBox runat="server" ID="RememberMe" />
+                <asp:Label runat="server" AssociatedControlID="RememberMe">Zapamiętaj mnie</asp:Label>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p>
+                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Zarejestruj się</asp:HyperLink> jeśli niemasz u nas konta.
+                </p>
+                    
+            </asp:Panel>
+        </asp:TableCell>
+        
+        <asp:TableCell runat="server" BackColor="#FF9D3C">
+            <asp:Panel ID="Panel2" runat="server" Height="500px" Width="500px">
+                 
+            </asp:Panel>
+        </asp:TableCell>
+    </asp:TableRow>
+
+    <asp:TableRow runat="server">
+        <asp:TableCell runat="server" BackColor="#FF9D3C">
+            <asp:Panel ID="Panel3" runat="server" Height="500px" Width="500px">
+
+            </asp:Panel>
+        </asp:TableCell>
+
+        <asp:TableCell runat="server" BackColor="#FFBC79">
+            <asp:Panel ID="Panel4" runat="server" Height="500px" Width="500px">
+        
+            </asp:Panel>
+        </asp:TableCell>
+    </asp:TableRow>
+    
+    </asp:Table>
+              
 </asp:Content>

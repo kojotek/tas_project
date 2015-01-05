@@ -7,23 +7,97 @@ using System.Web;
 using System.Web.UI;
 using BiedaClient.Models;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data.Sql;
-using System.Data;
+
 namespace BiedaClient.Account
 {
     public partial class Register : Page
     {
-
         BiedaServiceClient client = new BiedaServiceClient();
+
+        protected void back_Click(object sender, EventArgs e)
+        {
+            if(Panel2_1.Visible == true && Panel3_1.Visible == true && Panel4_1.Visible == true)
+            {
+                Panel4_1.Visible = false;
+
+                next3.Visible = true;
+                back2.Visible = true;
+
+                kraj.ReadOnly = false;
+                miasto.ReadOnly = false;
+                kod.ReadOnly = false;
+                ulica.ReadOnly = false;
+                dom.ReadOnly = false;
+                mieszkanie.ReadOnly = false;
+            }
+            else if (Panel2_1.Visible == true && Panel3_1.Visible == true && Panel4_1.Visible == false)
+            {
+                Panel3_1.Visible = false;
+
+                next2.Visible = true;
+                back1.Visible = true;
+
+                imie.ReadOnly = false;
+                nazwisko.ReadOnly = false;
+                email.ReadOnly = false;
+                telefon.ReadOnly = false;
+            }
+            else if (Panel2_1.Visible == true && Panel3_1.Visible == false && Panel4_1.Visible == false)
+            {
+                Panel2_1.Visible = false;
+
+                next1.Visible = true;
+
+                login.ReadOnly = false;
+                haslo.ReadOnly = false;
+                powtorz_haslo.ReadOnly = false;
+            }
+        }
 
         protected void next1_Click(object sender, EventArgs e)
         {
             if (login.Text != "" && haslo.Text != "" && powtorz_haslo.Text != "")
             {
-                next1.Visible = false;
-                Panel1ErrorMsg.Visible = false;
-                Panel2_1.Visible = true;
+                bool git = true;
+                string[,] dane = new string[2,3] {{"login", "haslo1", "haslo2"}, {login.Text, haslo.Text, haslo.Text}};
+
+                for(int i = 0; i < dane.Length/2; i++)
+                {
+                    string result = client.CheckRegex(dane[0, i], dane[1, i]);
+
+                    if( result != "git")
+                    {
+                        Panel1ErrorMsg.Text = result;
+                        git = false;
+                    }
+                }
+                
+                if(git == true)
+                {
+                    if(haslo.Text == powtorz_haslo.Text)
+                    {
+                        next1.Visible = false;
+                        Panel1ErrorMsg.Visible = false;
+                        Panel2_1.Visible = true; 
+                        
+                        //blokowanie edycji poprzednich danych
+                        login.ReadOnly = true;
+                        haslo.ReadOnly = true;
+                        powtorz_haslo.ReadOnly = true;
+
+                    }
+                    else
+                    {
+                        Panel1ErrorMsg.Text = "haslo i powtorzone haslo musza byc takie same!";
+                        Panel1ErrorMsg.Visible = true;
+                        Panel1ErrorMsg.ForeColor = System.Drawing.Color.Red;
+                    }      
+                }
+                else
+                {
+                    Panel1ErrorMsg.Visible = true;
+                    Panel1ErrorMsg.ForeColor = System.Drawing.Color.Red;
+                }     
             }
             else
             {
@@ -37,11 +111,38 @@ namespace BiedaClient.Account
         {
             if (imie.Text != "" && nazwisko.Text != "" && email.Text != "" && telefon.Text != "")
             {
-                next2.Visible = false;
-                Panel2ErrorMsg.Visible = false;
-                Panel3_1.Visible = true;
+                bool git = true;
+                string[,] dane = new string[2, 4] { { "imie", "nazwisko", "email", "telefon" }, { imie.Text, nazwisko.Text, email.Text, telefon.Text } };
 
-                //Panel3ErrorMsg.Focus();
+                for (int i = 0; i < dane.Length / 2; i++)
+                {
+                    string result = client.CheckRegex(dane[0, i], dane[1, i]);
+
+                    if (result != "git")
+                    {
+                        Panel2ErrorMsg.Text = result;
+                        git = false;
+                    }
+                }
+
+                if(git == true)
+                {
+                    next2.Visible = false;
+                    back1.Visible = false;
+                    Panel2ErrorMsg.Visible = false;
+                    Panel3_1.Visible = true;
+
+                    //blokowanie edycji poprzednich danych
+                    imie.ReadOnly = true;
+                    nazwisko.ReadOnly = true;
+                    email.ReadOnly = true;
+                    telefon.ReadOnly = true;
+                }
+                else
+                {
+                    Panel2ErrorMsg.Visible = true;
+                    Panel2ErrorMsg.ForeColor = System.Drawing.Color.Red;
+                } 
             }
             else
             {
@@ -55,9 +156,40 @@ namespace BiedaClient.Account
         {
             if (kraj.Text != "" && miasto.Text != "" && kod.Text != "" && ulica.Text != "" && dom.Text != "")
             {
-                next3.Visible = false;
-                Panel3ErrorMsg.Visible = false;
-                Panel4_1.Visible = true;
+                bool git = true;
+                string[,] dane = new string[2, 6] { { "kraj", "miasto", "kod", "ulica", "budynek", "mieszkanie" }, { kraj.Text, miasto.Text, kod.Text, ulica.Text, dom.Text, mieszkanie.Text } };
+
+                for (int i = 0; i < dane.Length / 2; i++)
+                {
+                    string result = client.CheckRegex(dane[0, i], dane[1, i]);
+
+                    if (result != "git")
+                    {
+                        Panel3ErrorMsg.Text = result;
+                        git = false;
+                    }
+                }
+
+                if (git == true)
+                {
+                    next3.Visible = false;
+                    back2.Visible = false;
+                    Panel3ErrorMsg.Visible = false;
+                    Panel4_1.Visible = true;
+
+                    //blokowanie edycji poprzednich danych
+                    kraj.ReadOnly = true;
+                    miasto.ReadOnly = true;
+                    kod.ReadOnly = true;
+                    ulica.ReadOnly = true;
+                    dom.ReadOnly = true;
+                    mieszkanie.ReadOnly = true;
+                }
+                else
+                {
+                    Panel3ErrorMsg.Visible = true;
+                    Panel3ErrorMsg.ForeColor = System.Drawing.Color.Red;
+                } 
             }
             else
             {
@@ -72,7 +204,7 @@ namespace BiedaClient.Account
         {
             if(reg_check.Checked && bot_check.Checked)
             {
-                string result = client.RegisterUser(login.Text, haslo.Text, imie.Text, nazwisko.Text,
+                string result = client.RegisterUser(login.Text, haslo.Attributes["value"], imie.Text, nazwisko.Text,
                 email.Text, telefon.Text, kraj.Text, miasto.Text, kod.Text, ulica.Text, dom.Text, mieszkanie.Text);
 
                 if (result == "git")
@@ -97,6 +229,18 @@ namespace BiedaClient.Account
         protected void Page_Load(object sender, EventArgs e)
         {
                 Page.MaintainScrollPositionOnPostBack = true;
+
+                if (IsPostBack)
+                {
+                    if (!(String.IsNullOrEmpty(haslo.Text.Trim())))
+                    {
+                        haslo.Attributes["value"] = haslo.Text;
+                    }
+                    if (!(String.IsNullOrEmpty(powtorz_haslo.Text.Trim())))
+                    {
+                        powtorz_haslo.Attributes["value"] = powtorz_haslo.Text;
+                    }
+                }
         }
     }
 }

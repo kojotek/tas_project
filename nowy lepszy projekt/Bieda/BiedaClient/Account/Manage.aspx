@@ -1,13 +1,13 @@
-﻿<%@ Page Title="Manage Account" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Manage.aspx.cs" Inherits="BiedaClient.Account.Manage" %>
+﻿<%@ Page Title="Manage Account" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Manage.aspx.cs" Inherits="BiedaClient.Account.Manage"%>
 
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    
-    <br/>
-    <br/>
 
     <br/>
+    <br/>
+    <br/>
+    <asp:Label ID="ErrorMsg" runat="server" Text="Error" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
     
     <asp:Table ID="Table1" runat="server" Width="1036px" Height="1036px" CellPadding="30" CellSpacing="0">
 

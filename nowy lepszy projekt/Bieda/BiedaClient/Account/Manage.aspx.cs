@@ -6,41 +6,60 @@ using System.Web;
 using System.Linq;
 using BiedaClient.Models;
 using System.Data.SqlClient;
-using System.Data.Sql;
-using System.Data;
 
 namespace BiedaClient.Account
 {
     public partial class Manage : System.Web.UI.Page
     {
-        SqlConnection conn;
+        BiedaServiceClient client = new BiedaServiceClient();
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////PageLoad////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public void SqlConnect(string serverName, string database, string userId, string password)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            conn = null;
+            if (!Page.IsPostBack)
+            {
+                LoadUserInfo();
+            }
 
-            try
+            Page.MaintainScrollPositionOnPostBack = true;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////LoadUserInfo////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        protected void LoadUserInfo()
+        {
+            List<string> lista = new List<string>(client.LoadAccInfo(Context.User.Identity.GetUserName()));
+      
+            if(lista[0] == "git")
             {
-                conn = new SqlConnection("Server=" + serverName + ";Database=" + database + ";User Id=" + userId + ";Password=" + password + ";");
-                conn.Open();
+                login.Text = lista[1];
+                data_od.Text = lista[2];
+                imie.Text = lista[3];
+                nazwisko.Text = lista[4];
+                telefon.Text = lista[5];
+                email.Text = lista[6];
+                kraj.Text = lista[7];
+                miasto.Text = lista[8];
+                kod.Text = lista[9];
+                ulica.Text = lista[10];
+                budynek.Text = lista[11];
+                mieszkanie.Text = lista[12];         
             }
-            catch (InvalidOperationException ex)
+            else
             {
-                System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Błąd klienta\")</SCRIPT>");
-                conn.Close();
-            }
-            catch (SqlException ex)
-            {
-                System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Błąd serwera SQL\")</SCRIPT>");
-                conn.Close();
+                ErrorMsg.Text = lista[0];
+                ErrorMsg.Visible = true;
             }
         }
 
-        protected void endConnection()
-        {
-            conn.Close();
-        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////ChangePass//////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         protected void changePass_Click(object sender, EventArgs e)
         {
@@ -49,6 +68,14 @@ namespace BiedaClient.Account
             delete_acc.Visible = false;
             changePassword.Visible = true;
             ustawieniaKontaMsg.Visible = false;
+        }
+
+        protected void changePass_cancel_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = true;
+            upgrade.Visible = true;
+            delete_acc.Visible = true;
+            changePassword.Visible = false;
         }
 
         protected void changePass_ok_Click(object sender, EventArgs e)
@@ -60,7 +87,9 @@ namespace BiedaClient.Account
 
                 if (result.Succeeded)
                 {
-                    if (SQL_changePass())
+                    string wynik = client.ChangePass(Context.User.Identity.GetUserName(), newPassT_Box.Text);
+
+                    if (wynik == "git")
                     {
                         ustawieniaKontaMsg.Text = "Pomyslna zmiana hasla";
                         ustawieniaKontaMsg.Visible = true;
@@ -74,7 +103,14 @@ namespace BiedaClient.Account
                         delete_acc.Visible = true;
                         changePassword.Visible = false;
                     }
-                    else manager.ChangePassword(Context.User.Identity.GetUserId(), newPassT_Box.Text, oldPassT_Box.Text);
+                    else 
+                    { 
+                        manager.ChangePassword(Context.User.Identity.GetUserId(), newPassT_Box.Text, oldPassT_Box.Text);
+
+                        ustawieniaKontaMsg.Text = wynik;
+                        ustawieniaKontaMsg.Visible = true;
+                        ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+                    }
                 }
                 else
                 {
@@ -91,41 +127,9 @@ namespace BiedaClient.Account
             }
         }
 
-        protected void changePass_cancel_Click(object sender, EventArgs e)
-        {
-            change_pass.Visible = true;
-            upgrade.Visible = true;
-            delete_acc.Visible = true;
-            changePassword.Visible = false;
-        }
-
-        protected bool SQL_changePass()
-        {
-            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
-
-            SqlCommand cmd = null;
-
-            try
-            {
-                cmd = new SqlCommand(
-                "EXEC ZMIEN_HASLO " +
-                "\'" + Context.User.Identity.GetUserName() + "\'," +
-                "\'" + newPassT_Box.Text + "\'" , conn);
-                
-                cmd.ExecuteReader();
-            }
-            catch (Exception)
-            {
-                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych";
-                ustawieniaKontaMsg.Visible = true;
-                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
-                return false;
-            }
-
-            endConnection();
-
-            return true;
-        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////UpgradeAcc//////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         protected void upgradeAcc_Click(object sender, EventArgs e)
         {
@@ -136,11 +140,21 @@ namespace BiedaClient.Account
             ustawieniaKontaMsg.Visible = false;
         }
 
+        protected void upgradeAcc_cancel_Click(object sender, EventArgs e)
+        {
+            change_pass.Visible = true;
+            upgrade.Visible = true;
+            delete_acc.Visible = true;
+            upgradeAccPanel.Visible = false;
+        }
+
         protected void upgradeAcc_ok_Click(object sender, EventArgs e)
         {
             if(geszeft.Checked)
             {
-                if(SQL_upgradeAcc())
+                string wynik = client.UpgradeAcc(Context.User.Identity.GetUserName(), numerKontaT_Box.Text);
+
+                if(wynik == "git")
                 {
                     ustawieniaKontaMsg.Text = "Twoje konto zostalo ulepszone!";
                     ustawieniaKontaMsg.Visible = true;
@@ -151,6 +165,12 @@ namespace BiedaClient.Account
                     delete_acc.Visible = true;
                     upgradeAccPanel.Visible = false;
                 }
+                else
+                {
+                    ustawieniaKontaMsg.Text = wynik;
+                    ustawieniaKontaMsg.Visible = true;
+                    ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
+                }
             }
             else
             {
@@ -160,41 +180,9 @@ namespace BiedaClient.Account
             }
         }
 
-        protected void upgradeAcc_cancel_Click(object sender, EventArgs e)
-        {
-            change_pass.Visible = true;
-            upgrade.Visible = true;
-            delete_acc.Visible = true;
-            upgradeAccPanel.Visible = false;
-        }
-
-        protected bool SQL_upgradeAcc()
-        {
-            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
-
-            SqlCommand cmd = null;
-
-            try
-            {
-                cmd = new SqlCommand(
-                "EXEC DODAJ_SPRZEDAWCE " +
-                "\'" + Context.User.Identity.GetUserName() + "\'," +
-                "\'" + numerKontaT_Box.Text + "\'", conn);
-
-                cmd.ExecuteReader();
-            }
-            catch (Exception)
-            {
-                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych lub niewlasciwy numer konta";
-                ustawieniaKontaMsg.Visible = true;
-                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
-                return false;
-            }
-
-            endConnection();
-
-            return true;
-        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////DeleteAcc///////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         protected void deleteAcc_Click(object sender, EventArgs e)
         {
@@ -202,29 +190,6 @@ namespace BiedaClient.Account
             upgrade.Visible = false;
             delete_acc.Visible = false;
             deleteAccPanel.Visible = true;
-        }
-
-        protected void deleteAcc_ok_Click(object sender, EventArgs e)
-        {
-
-            if(SQL_checkPass())
-            {
-                change_pass.Visible = true;
-                upgrade.Visible = true;
-                delete_acc.Visible = true;
-                deleteAccPanel.Visible = false;
-
-                SQL_DeleteAcc();
-
-                Context.GetOwinContext().Authentication.SignOut();
-                Response.Redirect("~/Default.aspx");
-            }
-            else
-            {
-                ustawieniaKontaMsg.Text = "Bledne haslo";
-                ustawieniaKontaMsg.Visible = true;
-                ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
-            }
         }
 
         protected void deleteAcc_cancel_Click(object sender, EventArgs e)
@@ -235,152 +200,60 @@ namespace BiedaClient.Account
             deleteAccPanel.Visible = false;
         }
 
-        protected bool SQL_checkPass()
+        protected void deleteAcc_ok_Click(object sender, EventArgs e)
         {
-            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
+            string wynik = client.LoginIn(Context.User.Identity.GetUserName(), deleteAccT_Box.Text);
 
-            SqlCommand cmd = null;
-            bool cacy = false;
-
-            try
+            if(wynik == "git")
             {
-                cmd = new SqlCommand
-                    ("select login from KLIENT where login = \'" + Context.User.Identity.GetUserName()
-                    + "\' and haslo = \'" + deleteAccT_Box.Text + "\' and data_do is null", conn);
-                SqlDataReader dr = cmd.ExecuteReader();
+                change_pass.Visible = true;
+                upgrade.Visible = true;
+                delete_acc.Visible = true;
+                deleteAccPanel.Visible = false;
 
-                while (dr.Read())
+                wynik = client.DeleteAcc(Context.User.Identity.GetUserName());
+
+                if(wynik == "git")
                 {
-                    if (dr["login"].ToString() == Context.User.Identity.GetUserName()) { cacy = true; }
-                    else { cacy = false; }
+                    Context.GetOwinContext().Authentication.SignOut();
+                    Response.Redirect("~/Default.aspx");
+                }
+                else
+                {
+                    ustawieniaKontaMsg.Text = wynik;
+                    ustawieniaKontaMsg.Visible = true;
+                    ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
                 }
             }
-            catch (Exception)
+            else if(wynik == "Błędny login lub hasło")
             {
-                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych";
+                ustawieniaKontaMsg.Text = "Błędne hasło";
                 ustawieniaKontaMsg.Visible = true;
                 ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
             }
-
-            endConnection();
-
-            return cacy;
-        }
-
-        protected bool SQL_DeleteAcc()
-        {
-            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
-
-            SqlCommand cmd = null;
-
-            try
+            else
             {
-                cmd = new SqlCommand(
-                "EXEC USUN_KONTO " +
-                "\'" + Context.User.Identity.GetUserName() + "\'", conn);
-
-                cmd.ExecuteReader();
-            }
-            catch (Exception)
-            {
-                ustawieniaKontaMsg.Text = "Blad polaczenia z baza danych";
+                ustawieniaKontaMsg.Text = wynik;
                 ustawieniaKontaMsg.Visible = true;
                 ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Red;
-                return false;
             }
-
-            endConnection();
-
-            return true;
         }
 
-        protected void LoadUserInfo()
-        {
-            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
-
-            SqlCommand cmd = new SqlCommand("select * from KLIENT INNER JOIN DANE on klient.id_dane = dane.id_dane where klient.login = \'"
-                + Context.User.Identity.GetUserName() + "\'", conn);
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            try
-            {
-                while (dr.Read())
-                {
-                    login.Text = dr["login"].ToString();
-                    data_od.Text = dr["data_od"].ToString();
-
-                    imie.Text = dr["imie"].ToString();
-                    nazwisko.Text = dr["nazwisko"].ToString();
-                    telefon.Text = dr["telefon"].ToString();
-                    email.Text = dr["email"].ToString();
-
-                    kraj.Text = dr["kraj"].ToString();
-                    miasto.Text = dr["miasto"].ToString();
-                    kod.Text = dr["kod"].ToString();
-                    ulica.Text = dr["ulica"].ToString();
-                    budynek.Text = dr["budynek"].ToString();
-                    mieszkanie.Text = dr["mieszkanie"].ToString();
-                }
-            }
-            catch (Exception)
-            {
-                System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=\"\"JavaScript\"\">alert(\"Błąd wczytywania danych z serwera SQL\")</SCRIPT>");
-            }
-
-            dr.Close();
-            endConnection();
-        }
-
-
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////EditUserInfo////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         protected void ChangeUserInfo()
         {
-            SqlConnect("mssql.wmi.amu.edu.pl", "dtas_s383964", "s383964", "674lCgcV");
+            string wynik = client.ChangeUserInfo(login.Text, imie.Text, nazwisko.Text, email.Text, 
+            telefon.Text, kraj.Text, miasto.Text, kod.Text, ulica.Text, budynek.Text, mieszkanie.Text);
 
-            SqlCommand cmd = null;
-            
-            try
+            if(wynik != "git")
             {
-                cmd = new SqlCommand(
-                "EXEC EDYTUJ_DANE " +
-                "\'" + telefon.Text + "\'," +
-                "\'" + email.Text + "\'," +
-                "\'" + kraj.Text + "\'," +
-                "\'" + miasto.Text + "\'," +
-                "\'" + kod.Text + "\'," +
-                "\'" + ulica.Text + "\'," +
-                "\'" + budynek.Text + "\'," +
-                "\'" + mieszkanie.Text + "\'," +
-                "\'" + imie.Text + "\'," +
-                "\'" + nazwisko.Text + "\'," +
-                "\'" + login.Text + "\'", conn);
-                cmd.ExecuteReader();
+                ErrorMsg.Text = wynik;
+                ErrorMsg.Visible = true;
             }
-            catch (SqlException elol)
-            {
-
-            }
-            finally
-            {
-            }
-
-
-            endConnection();
         }
-
-
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!Page.IsPostBack)
-            {
-                LoadUserInfo();
-            }
-
-            Page.MaintainScrollPositionOnPostBack = true;
-        }
-
-
 
         protected void edit1_Click(object sender, EventArgs e)
         {
