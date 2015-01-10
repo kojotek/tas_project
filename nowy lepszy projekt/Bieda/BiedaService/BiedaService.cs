@@ -441,5 +441,119 @@ namespace MyWCFServices
 
             return "git";
         }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////getMessages/////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public List<string> getMessages(string login)
+        {
+            List<string> result = new List<string>();
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                result[0] = "Blad polaczenia z baza danych";
+                return result;
+            }
+
+            try
+            {
+                cmd = new SqlCommand("select * from POWIADOMIENIE where login = '" + login + "'", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    result.Add(dr["data"].ToString());
+                    result.Add(dr["tresc"].ToString());
+                }
+            }
+            catch (SqlException blad)
+            {
+                result[0] = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////getAuctionWinner////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public string getAuctionWinner(int id)
+        {
+            string result = "BRAK.OFERT";
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                result = "BLAD.POLACZENIA";
+                return result;
+            }
+
+            try
+            {
+                cmd = new SqlCommand("select * from oferta where kwota = (select max(kwota) from oferta where id_aukcji = " + id.ToString() + ") and id_aukcji = " + id.ToString() , conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    result = dr["login"].ToString();
+                }
+            }
+            catch (SqlException blad)
+            {
+                result = "BLAD.BAZY";
+            }
+
+            disconnect();
+            return result;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////getAuctionHighestOffer//////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        public string getAuctionHighestOffer(int id)
+        {
+            string result = "BRAK.OFERT";
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                result = "BLAD.POLACZENIA";
+                return result;
+            }
+
+            try
+            {
+                cmd = new SqlCommand("select kwota from oferta where kwota = (select max(kwota) from oferta where id_aukcji = " + id.ToString() + ") and id_aukcji = " + id.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    result = dr["login"].ToString();
+                }
+            }
+            catch (SqlException blad)
+            {
+                result = "BLAD.BAZY";
+            }
+
+            disconnect();
+            return result;
+        }
+
+
     }
 }

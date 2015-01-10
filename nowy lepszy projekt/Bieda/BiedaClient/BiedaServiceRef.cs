@@ -44,6 +44,15 @@ public interface IBiedaService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/ChangeUserInfo", ReplyAction="http://tempuri.org/IBiedaService/ChangeUserInfoResponse")]
     string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getMessages", ReplyAction="http://tempuri.org/IBiedaService/getMessagesResponse")]
+    string[] getMessages(string login);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionWinner", ReplyAction="http://tempuri.org/IBiedaService/getAuctionWinnerResponse")]
+    string getAuctionWinner(int id);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionHighestOffer", ReplyAction="http://tempuri.org/IBiedaService/getAuctionHighestOfferResponse")]
+    string getAuctionHighestOffer(int id);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -128,5 +137,20 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     public string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie)
     {
         return base.Channel.ChangeUserInfo(login, imie, nazwisko, email, telefon, kraj, miasto, kod, ulica, dom, mieszkanie);
+    }
+    
+    public string[] getMessages(string login)
+    {
+        return base.Channel.getMessages(login);
+    }
+    
+    public string getAuctionWinner(int id)
+    {
+        return base.Channel.getAuctionWinner(id);
+    }
+    
+    public string getAuctionHighestOffer(int id)
+    {
+        return base.Channel.getAuctionHighestOffer(id);
     }
 }

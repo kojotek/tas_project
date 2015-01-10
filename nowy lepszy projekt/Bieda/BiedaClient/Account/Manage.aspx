@@ -38,12 +38,6 @@
                     <asp:TextBox ID="data_od" runat="server" BorderStyle="None" Width="500px" Height="40px"
                      Text="sdkjfdskfjsdfd" Font-Size="X-Large" ReadOnly="True" BackColor="#FFBC79" CssClass="form-control"></asp:TextBox>
                     
-                   
-
-                
-
-                    
-                   
 
                 </asp:Panel>
             
@@ -116,7 +110,7 @@
         <asp:TableRow runat="server">
 
             <asp:TableCell runat="server" BackColor="#FF9D3C">
-                <asp:Panel ID="Panel4" runat="server" Height="700px" Width="500px">
+                <asp:Panel ID="Panel4" runat="server">
                     <asp:Label ID="Label3" runat="server" Text="Ustawienia Konta" Width="500px" Font-Size="XX-Large" ></asp:Label>
                     
 
@@ -206,18 +200,17 @@
                     <asp:Button ID="deleteAccCancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
                     Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="deleteAcc_cancel_Click" />
                     <br />  
-
+                    
                 </asp:Panel>
 
                     <asp:Button ID="delete_acc" runat="server" BorderStyle="Solid" Height="60px" Text="USUŃ KONTO" BackColor="#FF9D3C"
                          Font-Size="X-Large" Width="300px" CssClass="btn btn-default" OnClick="deleteAcc_Click" />
+                    <br />  
+                    <br />  
+                    <asp:Table ID="Table2" runat="server" BackColor="#FF9933" Font-Bold="true" Font-Size="11" ForeColor="Black" GridLines="None" HorizontalAlign="Left" BorderStyle="Solid" BorderColor="#FFBC79" BorderWidth="8" CellPadding="4" CellSpacing="1"></asp:Table>
                 
-
-                
-
-                
-
                 </asp:Panel>
+
             
 
 </asp:TableCell>

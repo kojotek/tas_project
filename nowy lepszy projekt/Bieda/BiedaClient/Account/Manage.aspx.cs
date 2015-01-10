@@ -6,6 +6,9 @@ using System.Web;
 using System.Linq;
 using BiedaClient.Models;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
+
+
 
 namespace BiedaClient.Account
 {
@@ -25,6 +28,44 @@ namespace BiedaClient.Account
             }
 
             Page.MaintainScrollPositionOnPostBack = true;
+
+            List<string> msg = new List<string>(client.getMessages(Context.User.Identity.GetUserName()));
+
+            bool switcher = true;
+            List<KeyValuePair<string, string>> pary = new List<KeyValuePair<string, string>>();
+            string helper = "";
+
+            foreach( string s in msg )
+            {
+                if(switcher)
+                {
+                    helper = s;
+                }
+                else
+                {
+                    pary.Add(new KeyValuePair<string, string>(helper, s));
+                }
+                switcher = !switcher;
+            }
+
+            bool sw = true;
+
+            foreach( KeyValuePair<string, string> p in pary )
+            {
+                TableCell c = new TableCell();
+                c.Text = p.Key;
+                TableCell c2 = new TableCell();
+                c2.Text = p.Value;
+                TableRow r = new TableRow();
+                r.Controls.Add(c);
+                r.Controls.Add(c2);
+                if (sw) { r.BackColor = System.Drawing.Color.FromName("#FFBC79"); }
+                else { r.BackColor = System.Drawing.Color.FromName("#FF9D3C"); }
+                sw = !sw;
+                Table2.Controls.Add(r);
+            }
+
+
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -30,8 +30,16 @@ namespace BiedaClient
             if ( client.isAuctionOver(numer) )
             {
                 LabelName.Text += " (ZAKOŃCZONA)";
+                zlozOferte.Visible = false;
+                oferta.Visible = false;
             }
 
+        }
+
+        protected void zlozOferte_Click(object sender, EventArgs e)
+        {
+            BiedaServiceClient client = new BiedaServiceClient();
+            //client.
         }
 
     }

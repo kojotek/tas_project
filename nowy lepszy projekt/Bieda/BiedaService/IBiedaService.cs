@@ -42,6 +42,15 @@ namespace MyWCFServices
         
         [OperationContract]
         string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie);
+
+        [OperationContract]
+        List<string> getMessages(string login);
+
+        [OperationContract]
+        string getAuctionWinner(int id);
+
+        [OperationContract]
+        string getAuctionHighestOffer(int id);
     }
 
     public interface helpfullThings
