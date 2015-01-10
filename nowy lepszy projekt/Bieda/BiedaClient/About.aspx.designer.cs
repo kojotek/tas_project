@@ -22,6 +22,15 @@ namespace BiedaClient {
         protected global::System.Web.UI.WebControls.Panel Panel1;
         
         /// <summary>
+        /// kontrolka control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label kontrolka;
+        
+        /// <summary>
         /// LabelTime control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,24 @@ namespace BiedaClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelName;
+        
+        /// <summary>
+        /// Labeltemp3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Labeltemp3;
+        
+        /// <summary>
+        /// LabelActualPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelActualPrice;
         
         /// <summary>
         /// Labeltemp1 control.
@@ -110,6 +137,42 @@ namespace BiedaClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button zlozOferte;
+        
+        /// <summary>
+        /// opinia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox opinia;
+        
+        /// <summary>
+        /// dodajOcene control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button dodajOcene;
+        
+        /// <summary>
+        /// ocena control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ocena;
+        
+        /// <summary>
+        /// opiniaError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label opiniaError;
         
         /// <summary>
         /// LabelTemp4 control.

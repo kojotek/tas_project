@@ -575,12 +575,13 @@ namespace MyWCFServices
 
                 while (dr.Read())
                 {
-                    result = dr["login"].ToString();
+                    result = dr["kwota"].ToString();
                 }
             }
             catch (SqlException blad)
             {
                 result = "BLAD.BAZY";
+                return result;
             }
 
             disconnect();
@@ -625,6 +626,74 @@ namespace MyWCFServices
             return result;
         }
 
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////AuctionAllreadyCommented/////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public bool AuctionAllreadyCommented(int id)
+        {
+            bool result = false;
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                return false;
+            }
+
+            try
+            {
+                cmd = new SqlCommand("select ocena_sprzedawcy from aukcja where id_aukcji = " + id.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    if (dr["ocena_sprzedawcy"].ToString() != "")
+                        { result = true; }
+                    else
+                        { result = false; }
+                }
+            }
+            catch (SqlException blad)
+            {
+                return false;
+            }
+
+            disconnect();
+            return result;
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////addComment///////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public bool addComment(int id_aukcji, string login, string comment, int ocena)
+        {
+            bool result = false;
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                return false;
+            }
+
+            try
+            {
+                cmd = new SqlCommand("UPDATE AUKCJA set ocena_sprzedawcy = " + ocena.ToString() + ", komentarz_dla_sprzedawcy = '" + comment + "' where id_aukcji = " + id_aukcji.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                result = true;
+            }
+            catch (SqlException blad)
+            {
+                return false;
+            }
+
+            disconnect();
+            return result;
+        }
 
     }
 }

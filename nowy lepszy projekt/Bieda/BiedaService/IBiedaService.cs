@@ -57,6 +57,12 @@ namespace MyWCFServices
 
         [OperationContract]
         string getAuctionHighestOffer(int id);
+
+        [OperationContract]
+        bool AuctionAllreadyCommented(int id);
+
+        [OperationContract]
+        bool addComment(int id_aukcji, string login, string comment, int ocena);
     }
 
     public interface helpfullThings

@@ -59,6 +59,12 @@ public interface IBiedaService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionHighestOffer", ReplyAction="http://tempuri.org/IBiedaService/getAuctionHighestOfferResponse")]
     string getAuctionHighestOffer(int id);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/AuctionAllreadyCommented", ReplyAction="http://tempuri.org/IBiedaService/AuctionAllreadyCommentedResponse")]
+    bool AuctionAllreadyCommented(int id);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/addComment", ReplyAction="http://tempuri.org/IBiedaService/addCommentResponse")]
+    bool addComment(int id_aukcji, string login, string comment, int ocena);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -168,5 +174,15 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     public string getAuctionHighestOffer(int id)
     {
         return base.Channel.getAuctionHighestOffer(id);
+    }
+    
+    public bool AuctionAllreadyCommented(int id)
+    {
+        return base.Channel.AuctionAllreadyCommented(id);
+    }
+    
+    public bool addComment(int id_aukcji, string login, string comment, int ocena)
+    {
+        return base.Channel.addComment(id_aukcji, login, comment, ocena);
     }
 }
