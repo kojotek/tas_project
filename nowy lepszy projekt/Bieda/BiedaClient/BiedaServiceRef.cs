@@ -30,11 +30,17 @@ public interface IBiedaService
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/LoginIn", ReplyAction="http://tempuri.org/IBiedaService/LoginInResponse")]
     string LoginIn(string login, string pass);
     
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/IsSeller", ReplyAction="http://tempuri.org/IBiedaService/IsSellerResponse")]
+    string IsSeller(string login);
+    
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/ChangePass", ReplyAction="http://tempuri.org/IBiedaService/ChangePassResponse")]
     string ChangePass(string login, string newPass);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/UpgradeAcc", ReplyAction="http://tempuri.org/IBiedaService/UpgradeAccResponse")]
     string UpgradeAcc(string login, string numerKonta);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/EditBankAccount", ReplyAction="http://tempuri.org/IBiedaService/EditBankAccountResponse")]
+    string EditBankAccount(string login, string numerKonta);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/DeleteAcc", ReplyAction="http://tempuri.org/IBiedaService/DeleteAccResponse")]
     string DeleteAcc(string login);
@@ -114,6 +120,11 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
         return base.Channel.LoginIn(login, pass);
     }
     
+    public string IsSeller(string login)
+    {
+        return base.Channel.IsSeller(login);
+    }
+    
     public string ChangePass(string login, string newPass)
     {
         return base.Channel.ChangePass(login, newPass);
@@ -122,6 +133,11 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     public string UpgradeAcc(string login, string numerKonta)
     {
         return base.Channel.UpgradeAcc(login, numerKonta);
+    }
+    
+    public string EditBankAccount(string login, string numerKonta)
+    {
+        return base.Channel.EditBankAccount(login, numerKonta);
     }
     
     public string DeleteAcc(string login)

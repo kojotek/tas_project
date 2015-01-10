@@ -85,6 +85,60 @@ namespace BiedaClient.Account {
         protected global::System.Web.UI.WebControls.TextBox data_od;
         
         /// <summary>
+        /// nr_konta_label control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label nr_konta_label;
+        
+        /// <summary>
+        /// nr_konta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nr_konta;
+        
+        /// <summary>
+        /// przepychacz control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel przepychacz;
+        
+        /// <summary>
+        /// edit0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button edit0;
+        
+        /// <summary>
+        /// edit0_ok control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button edit0_ok;
+        
+        /// <summary>
+        /// edit0_cancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button edit0_cancel;
+        
+        /// <summary>
         /// Panel3 control.
         /// </summary>
         /// <remarks>
@@ -319,6 +373,24 @@ namespace BiedaClient.Account {
         protected global::System.Web.UI.WebControls.Button change_pass;
         
         /// <summary>
+        /// upgradePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel upgradePanel;
+        
+        /// <summary>
+        /// upgrade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button upgrade;
+        
+        /// <summary>
         /// upgradeAccPanel control.
         /// </summary>
         /// <remarks>
@@ -373,13 +445,13 @@ namespace BiedaClient.Account {
         protected global::System.Web.UI.WebControls.Button upgradeAcc_cancel;
         
         /// <summary>
-        /// upgrade control.
+        /// delete_acc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button upgrade;
+        protected global::System.Web.UI.WebControls.Button delete_acc;
         
         /// <summary>
         /// deleteAccPanel control.
@@ -425,15 +497,6 @@ namespace BiedaClient.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button deleteAccCancel;
-        
-        /// <summary>
-        /// delete_acc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button delete_acc;
         
         /// <summary>
         /// Table2 control.

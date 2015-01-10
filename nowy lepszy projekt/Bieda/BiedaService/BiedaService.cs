@@ -215,6 +215,40 @@ namespace MyWCFServices
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////IsSeller////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string IsSeller(string login)
+        {
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            string result = "Brak dostepu";
+
+            try
+            {
+                cmd = new SqlCommand
+                ("select login from SPRZEDAWCA where login = \'" + login + "\' and data_do is null", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    if (dr["login"].ToString() == login) { result = "git"; }
+                }
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////ChangePass//////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -266,6 +300,42 @@ namespace MyWCFServices
             try
             {
                 cmd = new SqlCommand("EXEC DODAJ_SPRZEDAWCE " + "\'" + login + "\'," + "\'" + numerKonta + "\'", conn);
+                cmd.ExecuteReader();
+            }
+            catch (SqlException blad)
+            {
+                result = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+                //result = cmd.CommandText;
+            }
+
+            disconnect();
+            return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////EditBankAccount/////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public string EditBankAccount(string login, string numerKonta)
+        {
+            string result = CheckRegex("nr_konta", numerKonta);
+
+            if (result != "git")
+            {
+                return result;
+            }
+
+            if (connect() == false)
+            {
+                return "Blad polaczenia z baza danych";
+            }
+
+            SqlCommand cmd = null;
+            result = "git";
+
+            try
+            {
+                cmd = new SqlCommand("EXEC EDYTUJ_NR_KONTA " + "\'" + login + "\'," + "\'" + numerKonta + "\'", conn);
                 cmd.ExecuteReader();
             }
             catch (SqlException blad)
@@ -342,6 +412,7 @@ namespace MyWCFServices
                     result.Add(dr["ulica"].ToString());
                     result.Add(dr["budynek"].ToString());
                     result.Add(dr["mieszkanie"].ToString());
+                    result.Add(dr["nr_konta"].ToString());
                 }
             }
             catch (SqlException blad)

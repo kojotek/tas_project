@@ -27,12 +27,18 @@ namespace MyWCFServices
        
         [OperationContract]
         string LoginIn(string login, string pass);
+
+        [OperationContract]
+        string IsSeller(string login);
         
         [OperationContract]
         string ChangePass(string login, string newPass);
         
         [OperationContract]
         string UpgradeAcc(string login, string numerKonta);
+
+        [OperationContract]
+        string EditBankAccount(string login, string numerKonta);
         
         [OperationContract]
         string DeleteAcc(string login);

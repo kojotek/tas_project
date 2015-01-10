@@ -25,6 +25,14 @@ namespace BiedaClient.Account
             if (!Page.IsPostBack)
             {
                 LoadUserInfo();
+
+                if (client.IsSeller(Context.User.Identity.GetUserName()) == "git")
+                {
+                    nr_konta.Visible = true;
+                    nr_konta_label.Visible = true;
+                    edit0.Visible = true;
+                    upgrade.Visible = false;
+                }
             }
 
             Page.MaintainScrollPositionOnPostBack = true;
@@ -89,7 +97,8 @@ namespace BiedaClient.Account
                 kod.Text = lista[9];
                 ulica.Text = lista[10];
                 budynek.Text = lista[11];
-                mieszkanie.Text = lista[12];         
+                mieszkanie.Text = lista[12];
+                nr_konta.Text = lista[13];
             }
             else
             {
@@ -175,7 +184,7 @@ namespace BiedaClient.Account
         protected void upgradeAcc_Click(object sender, EventArgs e)
         {
             change_pass.Visible = false;
-            upgrade.Visible = false;
+            upgradePanel.Visible = false;
             delete_acc.Visible = false;
             upgradeAccPanel.Visible = true;
             ustawieniaKontaMsg.Visible = false;
@@ -184,7 +193,7 @@ namespace BiedaClient.Account
         protected void upgradeAcc_cancel_Click(object sender, EventArgs e)
         {
             change_pass.Visible = true;
-            upgrade.Visible = true;
+            upgradePanel.Visible = true;
             delete_acc.Visible = true;
             upgradeAccPanel.Visible = false;
         }
@@ -202,9 +211,11 @@ namespace BiedaClient.Account
                     ustawieniaKontaMsg.ForeColor = System.Drawing.Color.Green;
 
                     change_pass.Visible = true;
-                    upgrade.Visible = true;
+                    upgradePanel.Visible = true;
                     delete_acc.Visible = true;
                     upgradeAccPanel.Visible = false;
+
+                    Response.Redirect("Manage.aspx");
                 }
                 else
                 {
@@ -444,7 +455,42 @@ namespace BiedaClient.Account
             mieszkanie.ReadOnly = true;
         }
 
+        protected void edit0_Click(object sender, EventArgs e)
+        {
+            edit0.Visible = false;
+            edit0_ok.Visible = true;
+            edit0_cancel.Visible = true;
 
+            nr_konta.BorderStyle = System.Web.UI.WebControls.BorderStyle.Solid;
+            nr_konta.ReadOnly = false;
+        }
+
+
+        protected void edit0_ok_Click(object sender, EventArgs e)
+        {
+            client.EditBankAccount(Context.User.Identity.GetUserName(), nr_konta.Text);
+            LoadUserInfo();
+
+            edit0.Visible = true;
+            edit0_ok.Visible = false;
+            edit0_cancel.Visible = false;
+
+            nr_konta.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+            nr_konta.ReadOnly = true;
+        }
+
+
+        protected void edit0_cancel_Click(object sender, EventArgs e)
+        {
+            LoadUserInfo();
+
+            edit0.Visible = true;
+            edit0_ok.Visible = false;
+            edit0_cancel.Visible = false;
+
+            nr_konta.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+            nr_konta.ReadOnly = true;
+        }
     }
 }
 
