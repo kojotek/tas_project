@@ -7,7 +7,7 @@
     <br/>
     <br/>
     <br/>
-    <asp:Label ID="ErrorMsg" runat="server" Text="Error" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
+    <asp:Label ID="ErrorMsg" runat="server" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
 
     <asp:Table ID="Table1" runat="server" Width="1036px" Height="1036px" CellPadding="30" CellSpacing="0">
 

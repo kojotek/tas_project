@@ -35,6 +35,8 @@ namespace BiedaClient.Account
                 }
             }
 
+            ErrorMsg.Visible = false;
+
             Page.MaintainScrollPositionOnPostBack = true;
 
 
@@ -259,7 +261,7 @@ namespace BiedaClient.Account
         //////////////////////////////////////////////EditUserInfo////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        protected void ChangeUserInfo()
+        protected string ChangeUserInfo()
         {
             string wynik = client.ChangeUserInfo(login.Text, imie.Text, nazwisko.Text, email.Text, 
             telefon.Text, kraj.Text, miasto.Text, kod.Text, ulica.Text, budynek.Text, mieszkanie.Text);
@@ -268,7 +270,11 @@ namespace BiedaClient.Account
             {
                 ErrorMsg.Text = wynik;
                 ErrorMsg.Visible = true;
+
+                return "niegit";
             }
+
+            return "git";
         }
 
         protected void edit1_Click(object sender, EventArgs e)
@@ -292,26 +298,27 @@ namespace BiedaClient.Account
 
 
         protected void edit1_ok_Click(object sender, EventArgs e)
-        {
-            ChangeUserInfo();
-            LoadUserInfo();
+        {  
+            if(ChangeUserInfo() == "git")
+            {
+                LoadUserInfo();
 
+                edit1.Visible = true;
+                edit1_ok.Visible = false;
+                edit1_cancel.Visible = false;
 
-            edit1.Visible = true;
-            edit1_ok.Visible = false;
-            edit1_cancel.Visible = false;
+                imie.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                imie.ReadOnly = true;
 
-            imie.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            imie.ReadOnly = true;
+                nazwisko.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                nazwisko.ReadOnly = true;
 
-            nazwisko.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            nazwisko.ReadOnly =true;
+                telefon.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                telefon.ReadOnly = true;
 
-            telefon.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            telefon.ReadOnly = true;
-
-            email.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            email.ReadOnly = true;
+                email.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                email.ReadOnly = true;
+            }     
         }
 
 
@@ -363,32 +370,33 @@ namespace BiedaClient.Account
 
 
         protected void edit2_ok_Click(object sender, EventArgs e)
-        {
-            ChangeUserInfo();
-            LoadUserInfo();
+        {           
+            if (ChangeUserInfo() == "git")
+            {
+                LoadUserInfo();
 
+                edit2.Visible = true;
+                edit2_ok.Visible = false;
+                edit2_cancel.Visible = false;
 
-            edit2.Visible = true;
-            edit2_ok.Visible = false;
-            edit2_cancel.Visible = false;
+                kraj.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                kraj.ReadOnly = true;
 
-            kraj.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            kraj.ReadOnly = true;
+                miasto.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                miasto.ReadOnly = true;
 
-            miasto.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            miasto.ReadOnly = true;
+                kod.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                kod.ReadOnly = true;
 
-            kod.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            kod.ReadOnly = true;
+                ulica.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                ulica.ReadOnly = true;
 
-            ulica.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            ulica.ReadOnly = true;
+                budynek.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                budynek.ReadOnly = true;
 
-            budynek.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            budynek.ReadOnly = true;
-
-            mieszkanie.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            mieszkanie.ReadOnly = true;
+                mieszkanie.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                mieszkanie.ReadOnly = true;
+            }    
         }
 
 
@@ -432,15 +440,24 @@ namespace BiedaClient.Account
 
         protected void edit0_ok_Click(object sender, EventArgs e)
         {
-            client.EditBankAccount(Context.User.Identity.GetUserName(), nr_konta.Text);
-            LoadUserInfo();
+            string wynik = client.EditBankAccount(Context.User.Identity.GetUserName(), nr_konta.Text);
 
-            edit0.Visible = true;
-            edit0_ok.Visible = false;
-            edit0_cancel.Visible = false;
+            if (wynik == "git")
+            {
+                LoadUserInfo();
 
-            nr_konta.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
-            nr_konta.ReadOnly = true;
+                edit0.Visible = true;
+                edit0_ok.Visible = false;
+                edit0_cancel.Visible = false;
+
+                nr_konta.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+                nr_konta.ReadOnly = true;
+            }
+            else
+            {
+                ErrorMsg.Text = wynik;
+                ErrorMsg.Visible = true;
+            }
         }
 
 

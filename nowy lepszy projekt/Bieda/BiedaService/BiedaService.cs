@@ -254,6 +254,13 @@ namespace MyWCFServices
 
         public string ChangePass(string login, string newPass)
         {
+            string r1 = CheckRegex(newPass, "haslo1");
+            string r2 = CheckRegex(newPass, "haslo2");
+
+            if (r1 != "git") { return r1; }
+            if (r2 != "git") { return r2; }
+            
+
             if (connect() == false)
             {
                 return "Blad polaczenia z baza danych";
@@ -431,6 +438,19 @@ namespace MyWCFServices
         public string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj,
                                      string miasto, string kod, string ulica, string dom, string mieszkanie)
         {
+            string[] fieldList = { login, imie, nazwisko, email, telefon, kraj, miasto, kod, ulica, dom, mieszkanie};
+            string[] fieldNames = { "login", "imie", "nazwisko", "email", "telefon", "kraj", "miasto", "kod", "ulica", "budynek", "mieszkanie" };
+
+            for (int i = 0; i < fieldList.Length; i++ )
+            {
+                string wynik = CheckRegex(fieldNames[i], fieldList[i]);
+
+                if(wynik != "git")
+                {
+                    return wynik;
+                }
+            }
+
             if (connect() == false)
             {
                 return "Blad polaczenia z baza danych";
