@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization;
 
 
 namespace MyWCFServices
@@ -713,6 +714,65 @@ namespace MyWCFServices
 
             disconnect();
             return result;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////getAuctions/////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////BLEDY!!!!!!!!!!!!!!!!!////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public List<string> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        {
+            //List<string> result = new List<string>();
+            IList<AuctionDataContract> result = new List<AuctionDataContract>();
+
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                //result[0] = "Blad polaczenia z baza danych";
+                //return result;
+                return new List<string>();
+            }
+
+            try
+            {
+                cmd = new SqlCommand("EXEC wyszukiwanie '" + haslo + "'," + kategoria.ToString() + "," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    //result.Add(dr["login"].ToString());
+                    //result.Add(dr["data_zakonczenia"].ToString());
+                    //result.Add(dr["nazwa_produktu"].ToString());
+                    //result.Add(dr["cena_startowa"].ToString());
+                    //result.Add(dr["cena_wysylki"].ToString());
+                    //result.Add(dr["ocena_sprzedawcy"].ToString());
+                    //result.Add(dr["cena"].ToString());
+
+                    var e = new AuctionDataContract();
+                    result.Add(e);
+
+                    e.Login = dr["login"].ToString();
+                    e.DataZakonczenia = dr["data_zakonczenia"].ToString();
+                    e.NazwaProduktu = dr["nazwa_produktu"].ToString();
+                    e.CenaStartowa = dr["cena_startowa"].ToString();
+                    e.CenaWysylki = dr["cena_wysylki"].ToString();
+                    e.OcenaSprzedawcy = dr["ocena_sprzedawcy"].ToString();
+                    e.Cena = dr["cena"].ToString();
+                }
+            }
+            catch (SqlException blad)
+            {
+                //result[0] = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+            }
+
+            disconnect();
+            return new List<string>();
         }
 
     }

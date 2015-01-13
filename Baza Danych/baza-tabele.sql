@@ -55,6 +55,8 @@ insert into KATEGORIA VALUES(1, 'AGD', 0)
 insert into KATEGORIA VALUES(1, 'sport', 0)
 insert into KATEGORIA VALUES(1, 'komputery', 0)
 
+select * from kategoria
+
 CREATE TABLE AUKCJA 
 (
 	id_aukcji int not null IDENTITY(1,1) PRIMARY KEY,
