@@ -226,11 +226,6 @@
                     
                 </asp:Panel>
 
-                    
-                    <br />  
-                    <br />  
-                    
-                    <asp:Table ID="Table2" runat="server" BackColor="#FF9933" Font-Bold="true" Font-Size="11" ForeColor="Black" GridLines="None" HorizontalAlign="Left" BorderStyle="Solid" BorderColor="#FFBC79" BorderWidth="8" CellPadding="4" CellSpacing="1"></asp:Table>
 
                 </asp:Panel>
 
