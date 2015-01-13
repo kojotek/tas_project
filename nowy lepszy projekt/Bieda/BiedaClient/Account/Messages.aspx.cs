@@ -22,6 +22,9 @@ namespace BiedaClient.Account
             List<KeyValuePair<string, string>> pary = new List<KeyValuePair<string, string>>();
             string helper = "";
 
+            Panel1.Visible = false;
+            NoMessage.Visible = true;
+
             foreach (string s in msg)
             {
                 if (switcher)
@@ -33,6 +36,9 @@ namespace BiedaClient.Account
                     pary.Add(new KeyValuePair<string, string>(helper, s));
                 }
                 switcher = !switcher;
+
+                Panel1.Visible = true;
+                NoMessage.Visible = false;
             }
 
             bool sw = true;

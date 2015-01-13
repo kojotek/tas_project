@@ -634,7 +634,7 @@ namespace MyWCFServices
 
                 while (dr.Read())
                 {
-                    result = dr["login"].ToString();
+                    result = dr["kwota"].ToString();
                 }
             }
             catch (SqlException blad)
