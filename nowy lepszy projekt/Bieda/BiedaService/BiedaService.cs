@@ -53,6 +53,7 @@ namespace MyWCFServices
             try
             {
                 conn = new SqlConnection("Server=" + serverName + ";Database=" + database + ";User Id=" + userId + ";Password=" + password + ";"); conn.Open();
+                //zrobić pule polaczen przyznawanych uzytkownikom(pool)
             }
             catch (InvalidOperationException ex)
             {
@@ -476,6 +477,8 @@ namespace MyWCFServices
                 "\'" + nazwisko + "\'," +
                 "\'" + login + "\'", conn);
                 cmd.ExecuteReader();
+
+                //cmd.Prepare - sprawdz ta funkcje powinna nieprzepuszczac glupot ktore moga wysypac baze 
             }
             catch (SqlException blad)
             {
