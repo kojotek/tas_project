@@ -723,23 +723,16 @@ namespace MyWCFServices
         //////////////////////////////////////////////getAuctions/////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////BLEDY!!!!!!!!!!!!!!!!!////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        public List<string> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        public List<AuctionDataContract> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
         {
             //List<string> result = new List<string>();
-            IList<AuctionDataContract> result = new List<AuctionDataContract>();
+            List<AuctionDataContract> result = new List<AuctionDataContract>();
 
             SqlCommand cmd = null;
 
             if (connect() == false)
             {
-                //result[0] = "Blad polaczenia z baza danych";
-                //return result;
-                return new List<string>();
+                return null;
             }
 
             try
@@ -749,17 +742,8 @@ namespace MyWCFServices
 
                 while (dr.Read())
                 {
-                    //result.Add(dr["login"].ToString());
-                    //result.Add(dr["data_zakonczenia"].ToString());
-                    //result.Add(dr["nazwa_produktu"].ToString());
-                    //result.Add(dr["cena_startowa"].ToString());
-                    //result.Add(dr["cena_wysylki"].ToString());
-                    //result.Add(dr["ocena_sprzedawcy"].ToString());
-                    //result.Add(dr["cena"].ToString());
-
                     var e = new AuctionDataContract();
-                    result.Add(e);
-
+                    
                     e.Login = dr["login"].ToString();
                     e.DataZakonczenia = dr["data_zakonczenia"].ToString();
                     e.NazwaProduktu = dr["nazwa_produktu"].ToString();
@@ -767,15 +751,18 @@ namespace MyWCFServices
                     e.CenaWysylki = dr["cena_wysylki"].ToString();
                     e.OcenaSprzedawcy = dr["ocena_sprzedawcy"].ToString();
                     e.Cena = dr["cena"].ToString();
+
+                    result.Add(e);
                 }
             }
             catch (SqlException blad)
             {
                 //result[0] = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
+                return null;
             }
 
             disconnect();
-            return new List<string>();
+            return result;
         }
 
     }
