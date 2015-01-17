@@ -16,6 +16,7 @@
                 <asp:Label ID="LabelLogin" runat="server" Text="Label" Font-Bold="false" Font-Size="10"></asp:Label>
                 <br />
                 <asp:Label ID="LabelName" runat="server" Text="Label" Font-Bold="True" Font-Underline="True" Font-Size="25pt" Width="500px"></asp:Label><br />
+                <asp:Label ID="LabelState" runat="server" Text="Label" Font-Bold="True" Font-Underline="True" Font-Size="14pt" Width="500px"></asp:Label><br />
                 <br />
                 <br />
                 <asp:Label ID="Labeltemp3" runat="server" Text="Obecna Cena:" Font-Bold="True" Font-Size="12pt"></asp:Label>

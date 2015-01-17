@@ -16,7 +16,7 @@ namespace BiedaClient
     public partial class About : Page
     {
 
-        int numer = 36;
+        int numer = 19;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,6 +33,16 @@ namespace BiedaClient
                     ListItem li = new ListItem((a + 1).ToString());
                     ocena.Items.Add(li);
                 }
+            }
+
+
+            if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
+            {
+                LabelState.Text = "Twoja oferta jest najlepsza.";
+            }
+            else
+            {
+                LabelState.Text = "Przebij najlepszą ofertę, by przejąć prowadzenie w licytacji.";
             }
 
             
@@ -59,8 +69,9 @@ namespace BiedaClient
             else
             {
                 LabelName.Text += " (ZAKOŃCZONA)";
-                 if ( client.getAuctionWinner(numer) == Context.User.Identity.GetUserName() )
+                if ( client.getAuctionWinner(numer) == Context.User.Identity.GetUserName() )
                 {
+
                     if (!client.AuctionAllreadyCommented(numer) && kontrolka.Text == "false")
                     {
                         opinia.Visible = true;

@@ -599,7 +599,7 @@ namespace MyWCFServices
 
                 while (dr.Read())
                 {
-                    result = dr["kwota"].ToString();
+                    result = dr["login"].ToString();
                 }
             }
             catch (SqlException blad)
@@ -698,6 +698,7 @@ namespace MyWCFServices
         {
             bool result = false;
             SqlCommand cmd = null;
+            SqlCommand cmd2 = null;
 
             if (connect() == false)
             {
@@ -716,8 +717,42 @@ namespace MyWCFServices
             }
 
             disconnect();
+            addCommentMessage(id_aukcji, login);
+
             return result;
         }
+
+
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////addCommentMessage////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public bool addCommentMessage(int id_aukcji, string login)
+        {
+            bool result = false;
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                return false;
+            }
+
+            try
+            {
+                cmd = new SqlCommand("exec powiadomienie_o_komentarzu '" + login + "', " + id_aukcji.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                result = true;
+            }
+            catch (SqlException blad)
+            {
+                return false;
+            }
+
+            disconnect();
+            return result;
+        }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////getAuctions/////////////////////////////////////////////////////////

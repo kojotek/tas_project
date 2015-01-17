@@ -65,6 +65,9 @@ namespace MyWCFServices
         bool addComment(int id_aukcji, string login, string comment, int ocena);
 
         [OperationContract]
+        bool addCommentMessage(int id_aukcji, string login);
+
+        [OperationContract]
         List<AuctionDataContract> getAuctions(string haslo = "", int kategoria = 1, int sposob_sort = 1, int rosnaco = 1);
 
     }
