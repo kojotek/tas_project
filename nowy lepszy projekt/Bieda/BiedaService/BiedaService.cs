@@ -622,12 +622,12 @@ namespace MyWCFServices
 
         public string getAuctionHighestOffer(int id)
         {
-            string result = "BRAK.OFERT";
+            string result = "Brak ofert";
             SqlCommand cmd = null;
 
             if (connect() == false)
             {
-                result = "BLAD.POLACZENIA";
+                result = "Błąd połączenia z bazą danych";
                 return result;
             }
 
@@ -643,7 +643,7 @@ namespace MyWCFServices
             }
             catch (SqlException blad)
             {
-                result = "BLAD.BAZY";
+                result = "Błąd połączenia z bazą danych";
             }
 
             disconnect();
@@ -752,6 +752,8 @@ namespace MyWCFServices
             disconnect();
             return result;
         }
+
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

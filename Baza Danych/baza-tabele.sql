@@ -102,5 +102,3 @@ create table POWIADOMIENIE
 	data datetime not null default getdate()
 )
 
-select * from Sprzedawca
-

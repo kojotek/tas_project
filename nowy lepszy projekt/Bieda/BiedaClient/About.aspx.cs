@@ -16,13 +16,38 @@ namespace BiedaClient
     public partial class About : Page
     {
 
-        int numer = 19;
+        Int32 numer;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             BiedaServiceClient client = new BiedaServiceClient();
+
+
+
+
+            zlozOferte.Visible = false;
+            oferta.Visible = false;
+            opinia.Visible = false;
+            dodajOcene.Visible = false;
+            ocena.Visible = false;
+
+            
+            
+            string parameter = Request.QueryString["numer"];
+
+            if (!String.IsNullOrEmpty(parameter)){
+                numer = Convert.ToInt32(parameter);
+            }
+            else{
+                return;
+            }
+
+
+
+
             List<string> lista = new List<string>(client.getAuctionInfo(numer));
+
+            
 
             if(!Page.IsPostBack)
             {
@@ -36,14 +61,46 @@ namespace BiedaClient
             }
 
 
-            if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
+
+
+            if (Context.User.Identity.IsAuthenticated)
             {
-                LabelState.Text = "Twoja oferta jest najlepsza.";
+                if (!client.isAuctionOver(numer))
+                {
+                    if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
+                    {
+                        LabelState.Text = "Twoja oferta jest najlepsza.";
+                    }
+                    else
+                    {
+                        LabelState.Text = "Przebij najlepszą ofertę, by przejąć prowadzenie w licytacji.";
+                    }
+                }
+                else
+                {
+                    if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
+                    {
+                        LabelState.Text = "Jesteś zwycięzcą tej aukcji.";
+                    }
+                    else
+                    {
+                        LabelState.Text = "Ta aukcja już się zakończyła.";
+                    }
+                }
             }
             else
             {
-                LabelState.Text = "Przebij najlepszą ofertę, by przejąć prowadzenie w licytacji.";
+                if (!client.isAuctionOver(numer))
+                {
+                    LabelState.Text = "Zaloguj się, by wziąć udział w licytacji.";
+                }
+                else
+                {
+                    LabelState.Text = "Ta aukcja już się zakończyła.";
+                }
             }
+
+
 
             
             LabelLogin.Text = "Aukcja użytkownika " + lista[1];
@@ -52,21 +109,20 @@ namespace BiedaClient
             LabelSendPrice.Text = lista[4];
             LabelTime.Text = "Zakończenie aukcji: " + lista[5];
             TextBoxDescription.Text = lista[6];
-
             LabelActualPrice.Text = client.getAuctionHighestOffer(numer);
 
-            zlozOferte.Visible = false;
-            oferta.Visible = false;
-            opinia.Visible = false;
-            dodajOcene.Visible = false;
-            ocena.Visible = false;
 
-            if ( !client.isAuctionOver(numer) )
+
+
+            if (!client.isAuctionOver(numer) && client.getAuctionWinner(numer) != Context.User.Identity.GetUserName() && Context.User.Identity.IsAuthenticated )
             {
                 zlozOferte.Visible = true;
                 oferta.Visible = true;
             }
-            else
+
+
+
+            if (client.isAuctionOver(numer) )
             {
                 LabelName.Text += " (ZAKOŃCZONA)";
                 if ( client.getAuctionWinner(numer) == Context.User.Identity.GetUserName() )

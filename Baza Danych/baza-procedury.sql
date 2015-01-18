@@ -317,15 +317,29 @@ as
 BEGIN
 BEGIN TRANSACTION a
 	BEGIN TRY
-
-		IF((select ISNULL(MAX(kwota),0) from OFERTA where id_aukcji = @id_aukcji) <= @kwota and
-		   (select cena_startowa from AUKCJA where id_aukcji = @id_aukcji) <= @kwota)
+		
+		IF((select ISNULL(MAX(kwota),0) from OFERTA where id_aukcji = @id_aukcji) < @kwota and
+		   (select cena_startowa from AUKCJA where id_aukcji = @id_aukcji) < @kwota)
 		BEGIN
+		
+			IF((select COUNT(kwota) from OFERTA where id_aukcji = @id_aukcji) >= 1 )
+			BEGIN
+				declare @poprzedniNajlepszy varchar(100);
+				set @poprzedniNajlepszy = ( select login from oferta where id_aukcji = @id_aukcji AND kwota = ( select max(kwota) from oferta where id_aukcji = @id_aukcji ) )
+				
+				IF( @poprzedniNajlepszy <> @login_klienta )
+				BEGIN
+					exec powiadomienie_o_przebiciu @poprzedniNajlepszy, @id_aukcji;
+				END
+			END
 
 			INSERT INTO OFERTA(id_aukcji, login, kwota) 
 			VALUES(@id_aukcji, @login_klienta, @kwota)
 
+			exec powiadomienie_o_ofercie @login_klienta, @id_aukcji, @kwota;
+
 		END
+		
 		
 		ELSE print 'podana kwota jest mniejsza od najwy¿szej oferty lub ceny startowej!'
 
@@ -360,7 +374,7 @@ GO
 drop procedure powiadomienie_o_ofercie
 
 CREATE PROCEDURE powiadomienie_o_ofercie 
-(@sprzedawca varchar(30), @kupujacy varchar(30), @aukcja int, @kwota money)
+(@kupujacy varchar(30), @aukcja int, @kwota money)
 AS 
 	BEGIN
 
@@ -369,6 +383,8 @@ AS
 	BEGIN TRY
 		declare @nazwa_aukcji varchar(100);
 		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+		declare @sprzedawca varchar(100);
+		set @sprzedawca = (select login from aukcja where id_aukcji = @aukcja);
 
 		insert into POWIADOMIENIE( login, tresc )
 		values ( @sprzedawca, 'Uzytkownik ' + @kupujacy + ' zlozyl oferte ' + convert(varchar(30), @kwota, 1) + ' zl w aukcji "' + @nazwa_aukcji + '"' );
@@ -390,7 +406,7 @@ END
 drop procedure powiadomienie_o_wygranej
 
 CREATE PROCEDURE powiadomienie_o_wygranej
-(@sprzedawca varchar(30), @kupujacy varchar(30), @aukcja int)
+(@kupujacy varchar(30), @aukcja int)
 AS 
 	BEGIN
 
@@ -399,9 +415,11 @@ AS
 	BEGIN TRY
 		declare @nazwa_aukcji varchar(100);
 		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
+		declare @sprzedawca varchar(100);
+		set @sprzedawca = (select login from aukcja where id_aukcji = @aukcja);
 
 		insert into POWIADOMIENIE( login, tresc )
-		values ( @kupujacy, 'Gratulacje! Twoja oferta w aukcji "' + @nazwa_aukcji + '" okazala sie najlepsza! Skontaktuj sie z uzytkownikiem ' + @sprzedawca + ', w celu ustalenia szczególów.' );
+		values ( @kupujacy, 'Gratulacje! Twoja oferta w aukcji "' + @nazwa_aukcji + '" okazala sie najlepsza! Skontaktuj sie z uzytkownikiem ' + @sprzedawca + ', w celu ustalenia szczegó³ów zap³aty i przesy³ki.' );
 	END TRY
 
 	BEGIN CATCH
@@ -411,6 +429,7 @@ AS
 	COMMIT TRANSACTION a
 
 END
+
 
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -461,7 +480,7 @@ AS
 		set @nazwa_aukcji = (select nazwa_produktu from aukcja where id_aukcji = @aukcja);
 
 		insert into POWIADOMIENIE( login, tresc )
-		values ( @kupujacy, 'Ktos wlasnie przebil twoja oferte w aukcji "' +@nazwa_aukcji + '". Zlóz nowa oferte, by dalej brac udzial w licytacji.' );
+		values ( @kupujacy, 'Ktos wlaœnie przebi³ twoj¹ ofertê w aukcji "' + @nazwa_aukcji + '". Z³ó¿ now¹ ofertê, by dalej braæ udzia³ w licytacji.' );
 	END TRY
 
 	BEGIN CATCH
