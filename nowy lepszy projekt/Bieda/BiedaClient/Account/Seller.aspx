@@ -1,8 +1,10 @@
-﻿<%@ Page Title="Seller" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Seller.aspx.cs" Inherits="BiedaClient.Account.WebForm1" Async="true"%>
+﻿<%@ Page Title="Seller" Language="C#" MasterPageFile="~/Site.Master" 
+    AutoEventWireup="true" CodeBehind="Seller.aspx.cs" Inherits="BiedaClient.Account.WebForm1" Async="true"%>
 
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    
 
     <br />
     <br />

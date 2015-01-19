@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using BiedaClient.Models;
 using System.Data.SqlClient;
+using MyWCFServices;
 
 namespace BiedaClient
 {
@@ -22,14 +23,14 @@ namespace BiedaClient
             //client.getAuctions("", 1, 1, 1);
             //)
             //var test = client.getAuctions("", 1, 1, 1);
-            string[] test = client.getAuctions("8000 beko", 3, 0, 0);
+            IList<AuctionData> test = client.getAuctions("8000 beko", 3, 0, 0);
 
             bool sw = true;
 
-            foreach (string s in test)
+            foreach (var item in test)
             {
                 TableCell a = new TableCell();
-                a.Text = s;
+                a.Text = item.NazwaProduktu;
                 a.Width = 200;
 
                 TableRow r = new TableRow();

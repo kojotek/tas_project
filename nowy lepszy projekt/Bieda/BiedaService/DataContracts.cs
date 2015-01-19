@@ -6,9 +6,42 @@ using System.Web;
 
 namespace MyWCFServices
 {
+    [DataContract]
+    public class AuctionCategory
+    {
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public int Id { get; set; }
+    }
        
     [DataContract]
-    public class AuctionDataContract
+    public class Auction
+    {
+        [DataMember]
+        public int id_aukcji { get; set; }
+        [DataMember]
+        public int id_kategoria { get; set; }
+        [DataMember]
+        public string login { get; set; }
+        [DataMember]
+        public DateTime data_zakonczenia { get; set; }
+        [DataMember]
+        public string opis { get; set; }
+        [DataMember]
+        public string nazwa_produktu { get; set; }
+        [DataMember]
+        public decimal cena_startowa { get; set; }
+        [DataMember]
+        public decimal cena_wysylki { get; set; }
+        [DataMember]
+        public int ocena_sprzedawcy { get; set; }
+        [DataMember]
+        public string komentarz_dla_sprzedawcy { get; set; }
+    }
+
+    [DataContract]
+    public class AuctionData
     {
         [DataMember]
         public string Login { get; set; }
@@ -24,5 +57,7 @@ namespace MyWCFServices
         public string OcenaSprzedawcy { get; set; }
         [DataMember]
         public string Cena { get; set; }
+
+        
     }
 }

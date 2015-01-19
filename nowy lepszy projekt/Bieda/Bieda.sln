@@ -29,6 +29,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HostDevServer", "http://loc
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiedaClient", "BiedaClient\BiedaClient.csproj", "{54F161EF-9A1D-4709-ADA8-B6C408058956}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D16D8AF3-8E1F-41EF-A71A-32605E2921E5} = {D16D8AF3-8E1F-41EF-A71A-32605E2921E5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

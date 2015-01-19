@@ -10,9 +10,9 @@ using System.Runtime.Serialization;
 
 namespace MyWCFServices
 {
-    public class BiedaService: IBiedaService, helpfullThings
+    public class BiedaService : IBiedaService, helpfullThings
     {
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////Konstruktor//////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -87,12 +87,12 @@ namespace MyWCFServices
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    lista.Add( dr["id_aukcji"].ToString() );
-                    lista.Add( dr["login"].ToString() );
-                    lista.Add( dr["nazwa_produktu"].ToString() );
-                    lista.Add( String.Format("{0:F2}", float.Parse(dr["cena_startowa"].ToString())) + " zł" );
-                    lista.Add( String.Format("{0:F2}", float.Parse(dr["cena_wysylki"].ToString())) + " zł" );
-                    lista.Add( dr["data_zakonczenia"].ToString() );
+                    lista.Add(dr["id_aukcji"].ToString());
+                    lista.Add(dr["login"].ToString());
+                    lista.Add(dr["nazwa_produktu"].ToString());
+                    lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_startowa"].ToString())) + " zł");
+                    lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_wysylki"].ToString())) + " zł");
+                    lista.Add(dr["data_zakonczenia"].ToString());
                     lista.Add(dr["opis"].ToString());
                 }
             }
@@ -129,8 +129,8 @@ namespace MyWCFServices
             {
                 disconnect();
             }
-            
-            if ( String.Compare(temp, "True") == 0 )
+
+            if (String.Compare(temp, "True") == 0)
                 wynik = false;
             else
                 wynik = true;
@@ -261,7 +261,7 @@ namespace MyWCFServices
 
             if (r1 != "git") { return r1; }
             if (r2 != "git") { return r2; }
-            
+
 
             if (connect() == false)
             {
@@ -440,14 +440,14 @@ namespace MyWCFServices
         public string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj,
                                      string miasto, string kod, string ulica, string dom, string mieszkanie)
         {
-            string[] fieldList = { login, imie, nazwisko, email, telefon, kraj, miasto, kod, ulica, dom, mieszkanie};
+            string[] fieldList = { login, imie, nazwisko, email, telefon, kraj, miasto, kod, ulica, dom, mieszkanie };
             string[] fieldNames = { "login", "imie", "nazwisko", "email", "telefon", "kraj", "miasto", "kod", "ulica", "budynek", "mieszkanie" };
 
-            for (int i = 0; i < fieldList.Length; i++ )
+            for (int i = 0; i < fieldList.Length; i++)
             {
                 string wynik = CheckRegex(fieldNames[i], fieldList[i]);
 
-                if(wynik != "git")
+                if (wynik != "git")
                 {
                     return wynik;
                 }
@@ -517,17 +517,17 @@ namespace MyWCFServices
         {
             RegexData data = new RegexData();
 
-            try 
-            { 
-                data = dic[klucz]; 
+            try
+            {
+                data = dic[klucz];
             }
             catch { return "bledny klucz"; }
 
             if (data.maxLength < wartosc.Length) { return "wprowadzana wartosc jest za dluga"; }
 
-            try 
-            { 
-                if(!Regex.IsMatch(wartosc, data.reg))
+            try
+            {
+                if (!Regex.IsMatch(wartosc, data.reg))
                 {
                     return data.info;
                 }
@@ -594,7 +594,7 @@ namespace MyWCFServices
 
             try
             {
-                cmd = new SqlCommand("select * from oferta where kwota = (select max(kwota) from oferta where id_aukcji = " + id.ToString() + ") and id_aukcji = " + id.ToString() , conn);
+                cmd = new SqlCommand("select * from oferta where kwota = (select max(kwota) from oferta where id_aukcji = " + id.ToString() + ") and id_aukcji = " + id.ToString(), conn);
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 while (dr.Read())
@@ -675,9 +675,9 @@ namespace MyWCFServices
                 while (dr.Read())
                 {
                     if (dr["ocena_sprzedawcy"].ToString() != "")
-                        { result = true; }
+                    { result = true; }
                     else
-                        { result = false; }
+                    { result = false; }
                 }
             }
             catch (SqlException blad)
@@ -723,7 +723,7 @@ namespace MyWCFServices
         }
 
 
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////addCommentMessage////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -760,10 +760,10 @@ namespace MyWCFServices
         //////////////////////////////////////////////getAuctions/////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public List<AuctionDataContract> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        public List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
         {
             //List<string> result = new List<string>();
-            List<AuctionDataContract> result = new List<AuctionDataContract>();
+            List<AuctionData> result = new List<AuctionData>();
 
             SqlCommand cmd = null;
 
@@ -779,8 +779,8 @@ namespace MyWCFServices
 
                 while (dr.Read())
                 {
-                    var e = new AuctionDataContract();
-                    
+                    var e = new AuctionData();
+
                     e.Login = dr["login"].ToString();
                     e.DataZakonczenia = dr["data_zakonczenia"].ToString();
                     e.NazwaProduktu = dr["nazwa_produktu"].ToString();
@@ -802,5 +802,175 @@ namespace MyWCFServices
             return result;
         }
 
-    }
+
+        public IList<int> getAuctionIdList()
+        {
+            var result = new List<int>();
+
+            if (connect())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT id_aukcji FROM AUKCJA", conn);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        int item = Convert.ToInt32(dr["id_aukcji"]);
+                        result.Add(item);
+                    }
+                }
+                catch (SqlException)
+                {
+                }
+
+                disconnect();
+            }
+
+            return result;
+        }
+
+        public IList<AuctionCategory> getAuctionCategoryList()
+        {
+            var result = new List<AuctionCategory>();
+
+            if (connect())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT id_kategoria, Nazwa FROM KATEGORIA", conn);
+                    SqlDataReader dr = cmd.ExecuteReader();
+                                                  
+                    while (dr.Read())
+                    {                           
+                        var item = new AuctionCategory();
+                        item.Id = Convert.ToInt32(dr["id_kategoria"]);
+                        item.Name = Convert.ToString(dr["Nazwa"]);
+                        result.Add(item);
+                    }
+                }
+                catch (SqlException)
+                {
+                }
+
+                disconnect();
+            }
+
+            return result;
+        }
+
+        public IList<int> getAuctionIdListByCategory(int categoryId)
+        {
+            var result = new List<int>();
+
+            if (connect())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT id_aukcji FROM AUKCJA WHERE kategoria_id=@categoryId", conn);
+                    cmd.Parameters.AddWithValue("@categoryId", categoryId);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {         
+                        int item = (int)(dr["id_aukcji"]);
+                        result.Add(item);
+                    }
+                }
+                catch (SqlException)
+                {
+                }
+
+                disconnect();
+            }
+
+            return result;
+        }
+
+        public Auction getAuctionById(int auctionId)
+        {
+            Auction result = new Auction();
+
+            if (connect())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("select * from AUKCJA where id_aukcji = @auctionId", conn);
+                    cmd.Parameters.AddWithValue("@auctionId", auctionId);
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        result.id_aukcji = Convert.ToInt32(dr["id_aukcji"]);
+                        result.login = Convert.ToString(dr["login"]);
+                        result.nazwa_produktu = Convert.ToString(dr["nazwa_produktu"]);
+                        result.cena_startowa = Convert.ToDecimal(dr["cena_startowa"]);
+                        result.cena_wysylki = Convert.ToDecimal(dr["cena_wysylki"]);
+                        result.data_zakonczenia = Convert.ToDateTime(dr["data_zakonczenia"]);
+                        result.opis = Convert.ToString(dr["opis"]);
+                    }
+                }
+                finally 
+                {
+                }
+                disconnect();
+            }
+            return result;
+        }
+
+        public void createAuction(string userLogin, string categoryName, string productName, string productDesc, 
+            decimal pricePerUnit, decimal priceDelivery, int lifeTimeDays)
+        {     
+            if (connect())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("EXEC DODAJ_AUKCJE @categoryName, @userLogin, @lifeTimeDays, @productDesc, @productName, @pricePerUnit, @priceDelivery", conn);
+                    cmd.Parameters.AddWithValue("@categoryName", categoryName);
+                    cmd.Parameters.AddWithValue("@userLogin",userLogin);
+                    cmd.Parameters.AddWithValue("@lifeTimeDays",lifeTimeDays);
+                    cmd.Parameters.AddWithValue("@productDesc",productDesc);
+                    cmd.Parameters.AddWithValue("@productName",productName);
+                    cmd.Parameters.AddWithValue("@pricePerUnit",pricePerUnit);
+                    cmd.Parameters.AddWithValue("@priceDelivery",priceDelivery);
+                    cmd.ExecuteNonQuery(); //mozna by zwracac inta jako id aukcji, pytajac o ostatnia aukcje uzytkownika, jezeli NonQuery > 0
+                }
+                catch (SqlException)
+                {
+                }
+
+                disconnect();
+            }
+        }
+
+
+        public IList<int> getAuctionListbyUserId(string login)
+        {
+            var result = new List<int>();
+
+            if (connect())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT id_aukcji FROM AUKCJA WHERE login=@login", conn);
+                    cmd.Parameters.AddWithValue("@login", login);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        int item = (int)(dr["id_aukcji"]);
+                        result.Add(item);
+                    }
+                }
+                catch (SqlException)
+                {
+                }
+
+                disconnect();
+            }
+
+            return result;
+
+        }
+
+    }               
 }

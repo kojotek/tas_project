@@ -11,19 +11,20 @@ namespace MyWCFServices
     [ServiceContract]
     public interface IBiedaService
     {
-        [OperationContract]
-        string RegisterUser(string login, string haslo, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie); 
-     
-        [OperationContract]
-        List<string> getAuctionInfo(int id);   
-     
-        [OperationContract]
-        bool isAuctionOver(int id);
         //Check Regular Expression - sprawdza warunek zmiennej typu varchar z tabeli w bazie danych,
         //kluczem jest nazwa zmiennej z bazy, wartosc to tekst ktory ma zostac sprawdzony       
        
         [OperationContract]
-        string CheckRegex(string klucz, string wartosc);
+        string CheckRegex(string klucz, string wartosc);  
+
+        [OperationContract]
+        List<string> getMessages(string login);
+
+        #region AccountManagment
+
+        [OperationContract]
+        string RegisterUser(string login, string haslo, string imie, string nazwisko, string email, 
+            string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie);  
        
         [OperationContract]
         string LoginIn(string login, string pass);
@@ -33,7 +34,7 @@ namespace MyWCFServices
         
         [OperationContract]
         string ChangePass(string login, string newPass);
-        
+
         [OperationContract]
         string UpgradeAcc(string login, string numerKonta);
 
@@ -41,22 +42,57 @@ namespace MyWCFServices
         string EditBankAccount(string login, string numerKonta);
         
         [OperationContract]
-        string DeleteAcc(string login);
+        string DeleteAcc(string login); 
         
         [OperationContract]
-        List<string> LoadAccInfo(string login);
+        List<string> LoadAccInfo(string login);   
         
         [OperationContract]
         string ChangeUserInfo(string login, string imie, string nazwisko, string email, string telefon, string kraj, string miasto, string kod, string ulica, string dom, string mieszkanie);
 
-        [OperationContract]
-        List<string> getMessages(string login);
+
+
+        #endregion
+                             
+        #region AuctionManagment
 
         [OperationContract]
         string getAuctionWinner(int id);
 
         [OperationContract]
         string getAuctionHighestOffer(int id);
+                                                 
+        [OperationContract]
+        List<string> getAuctionInfo(int id);  
+ 
+        [OperationContract]
+        bool isAuctionOver(int id); 
+
+        [OperationContract]
+        IList<int> getAuctionIdList();        
+                                      
+        [OperationContract]
+        IList<AuctionCategory> getAuctionCategoryList();  
+
+        [OperationContract]
+        IList<int> getAuctionIdListByCategory(int categoryId);
+
+        [OperationContract]
+        void createAuction(string userLogin, string categoryName, string productName, string productDesc, 
+            decimal pricePerUnit, decimal priceDelivery, int lifeTimeDays);
+                          
+        [OperationContract]
+        List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco);
+
+        [OperationContract]
+        Auction getAuctionById(int auctionId);
+
+        [OperationContract]
+        IList<int> getAuctionListbyUserId(string userId);
+
+        #endregion      
+
+        #region AuctionFinalizationManagment
 
         [OperationContract]
         bool AuctionAllreadyCommented(int id);
@@ -67,8 +103,7 @@ namespace MyWCFServices
         [OperationContract]
         bool addCommentMessage(int id_aukcji, string login);
 
-        [OperationContract]
-        List<AuctionDataContract> getAuctions(string haslo = "", int kategoria = 1, int sposob_sort = 1, int rosnaco = 1);
+        #endregion
 
     }
 

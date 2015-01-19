@@ -11,7 +11,7 @@ namespace BiedaClient.Account
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        BiedaServiceClient client = new BiedaServiceClient();
+        protected BiedaServiceClient client = new BiedaServiceClient();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,8 +20,10 @@ namespace BiedaClient.Account
                 if(client.IsSeller(Context.User.Identity.GetUserName()) == "git")
                 {
                     NoAccess.Visible = false;
-                    Access.Visible = true;
+                    Response.Redirect("~/Auction/AuctionCreator");
+                    //Access.Visible = true;
                 }
+
             }    
         }
     }
