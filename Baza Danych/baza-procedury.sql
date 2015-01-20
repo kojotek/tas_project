@@ -335,13 +335,14 @@ BEGIN TRANSACTION a
 
 			INSERT INTO OFERTA(id_aukcji, login, kwota) 
 			VALUES(@id_aukcji, @login_klienta, @kwota)
+			PRINT 'OK'
 
 			exec powiadomienie_o_ofercie @login_klienta, @id_aukcji, @kwota;
 
 		END
 		
 		
-		ELSE print 'podana kwota jest mniejsza od najwy¿szej oferty lub ceny startowej!'
+		ELSE print 'NIEOK'
 
 	END TRY
 

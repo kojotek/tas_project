@@ -654,6 +654,44 @@ namespace MyWCFServices
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////addOffer////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        public string addOffer(int id_aukcji, string login, float kwota)
+        {
+            string result = "NieOk";
+            SqlCommand cmd = null;
+
+            if (connect() == false)
+            {
+                result = "Błąd połączenia z bazą danych";
+                return result;
+            }
+
+            try
+            {
+                cmd = new SqlCommand( "exec DODAJ_OFERTE "+ id_aukcji.ToString() +", '" + login + "', " + kwota.ToString() , conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    result = dr["kwota"].ToString();
+                }
+            }
+            catch (SqlException blad)
+            {
+                result = "Błąd połączenia z bazą danych";
+            }
+
+            disconnect();
+            return result;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////AuctionAllreadyCommented/////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
