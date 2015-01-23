@@ -61,6 +61,9 @@ namespace MyWCFServices
 
         [OperationContract]
         string getAuctionHighestOffer(int id);
+
+        [OperationContract]
+        string addOffer(int id_aukcji, string login, string kwota);
                                                  
         [OperationContract]
         List<string> getAuctionInfo(int id);  
