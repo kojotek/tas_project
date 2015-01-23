@@ -840,6 +840,35 @@ namespace MyWCFServices
             return result;
         }
 
+        /*public List<string> getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        {
+            connect();
+            List<string> lista = new List<string>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("select * from AUKCJA where id_aukcji = " + id.ToString(), conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    lista.Add(dr["id_aukcji"].ToString());
+                    lista.Add(dr["login"].ToString());
+                    lista.Add(dr["nazwa_produktu"].ToString());
+                    lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_startowa"].ToString())) + " zł");
+                    lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_wysylki"].ToString())) + " zł");
+                    lista.Add(dr["data_zakonczenia"].ToString());
+                    lista.Add(dr["opis"].ToString());
+                }
+            }
+            finally
+            {
+                disconnect();
+            }
+
+            return lista;
+
+        }*/
+
 
         public IList<int> getAuctionIdList()
         {
