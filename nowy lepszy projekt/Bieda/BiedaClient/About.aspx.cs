@@ -109,9 +109,7 @@ namespace BiedaClient
             LabelSendPrice.Text = lista[4];
             LabelTime.Text = "Zakończenie aukcji: " + lista[5];
             TextBoxDescription.Text = lista[6];
-            LabelActualPrice.Text = client.getAuctionHighestOffer(numer);
-
-
+            LabelActualPrice.Text =  client.getAuctionHighestOffer(numer) + " zł";
 
 
             if (!client.isAuctionOver(numer) && client.getAuctionWinner(numer) != Context.User.Identity.GetUserName() && Context.User.Identity.IsAuthenticated )
@@ -142,6 +140,10 @@ namespace BiedaClient
 
         protected void zlozOferte_Click(object sender, EventArgs e)
         {
+            BiedaServiceClient client = new BiedaServiceClient();
+
+            opiniaError.Visible = true;
+            opiniaError.Text = client.addOffer( numer, User.Identity.GetUserName(), oferta.Text );
 
         }
 

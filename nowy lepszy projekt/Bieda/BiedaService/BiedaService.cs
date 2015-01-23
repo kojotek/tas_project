@@ -659,10 +659,11 @@ namespace MyWCFServices
 
 
 
-        public string addOffer(int id_aukcji, string login, float kwota)
+        public string addOffer(int id_aukcji, string login, string kwota)
         {
-            string result = "NieOk";
             SqlCommand cmd = null;
+
+            string result = "git";
 
             if (connect() == false)
             {
@@ -672,18 +673,18 @@ namespace MyWCFServices
 
             try
             {
-                cmd = new SqlCommand( "exec DODAJ_OFERTE "+ id_aukcji.ToString() +", '" + login + "', " + kwota.ToString() , conn);
-                SqlDataReader dr = cmd.ExecuteReader();
+                cmd = new SqlCommand( "exec DODAJ_OFERTE "+ id_aukcji.ToString() +", '" + login + "', " + kwota , conn);
 
-                while (dr.Read())
-                {
-                    result = dr["kwota"].ToString();
-                }
+                int ilosc = cmd.ExecuteNonQuery();
+
+                if(ilosc <= 0) {result = "podana kwota jest za niska";}
             }
             catch (SqlException blad)
             {
-                result = "Błąd połączenia z bazą danych";
+                result = "Błąd wykonania w bazie danych";
             }
+
+
 
             disconnect();
             return result;
