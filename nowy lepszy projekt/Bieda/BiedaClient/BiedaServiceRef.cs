@@ -409,6 +409,9 @@ public interface IBiedaService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionInfo", ReplyAction="http://tempuri.org/IBiedaService/getAuctionInfoResponse")]
     string[] getAuctionInfo(int id);
+
+    [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IBiedaService/getAuctionList", ReplyAction = "http://tempuri.org/IBiedaService/getAuctionListResponse")]
+    string[] getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/isAuctionOver", ReplyAction="http://tempuri.org/IBiedaService/isAuctionOverResponse")]
     bool isAuctionOver(int id);
@@ -547,6 +550,11 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     {
         return base.Channel.getAuctionInfo(id);
     }
+
+    public string[] getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco)
+    {
+        return base.Channel.getAuctionList(haslo, kategoria, sposob_sort, rosnaco);
+    }
     
     public bool isAuctionOver(int id)
     {
@@ -601,5 +609,10 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     public bool addCommentMessage(int id_aukcji, string login)
     {
         return base.Channel.addCommentMessage(id_aukcji, login);
+    }
+
+    internal string addOffer(int numer, string p1, string p2)
+    {
+        throw new System.NotImplementedException();
     }
 }

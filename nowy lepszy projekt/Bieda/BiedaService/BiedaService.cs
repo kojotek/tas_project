@@ -799,7 +799,7 @@ namespace MyWCFServices
         //////////////////////////////////////////////getAuctions/////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        /*public List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
         {
             //List<string> result = new List<string>();
             List<AuctionData> result = new List<AuctionData>();
@@ -839,26 +839,34 @@ namespace MyWCFServices
 
             disconnect();
             return result;
-        }
+        }*/
 
-        /*public List<string> getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        public List<string> getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco)
         {
             connect();
             List<string> lista = new List<string>();
 
             try
             {
-                SqlCommand cmd = new SqlCommand("select * from AUKCJA where id_aukcji = " + id.ToString(), conn);
+               // SqlCommand cmd = new SqlCommand("EXEC wyszukiwanie '" + haslo + "'," + kategoria.ToString() + "," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
+                SqlCommand cmd = new SqlCommand("EXEC wyszukiwanie '@hasło',@kategoria,@sposob_sort,@rosnaco", conn);
+                    //SqlCommand cmd = new SqlCommand("EXEC DODAJ_AUKCJE @categoryName, @userLogin, @lifeTimeDays, @productDesc, @productName, @pricePerUnit, @priceDelivery", conn);
+                    cmd.Parameters.AddWithValue("@hasło", haslo);
+                    cmd.Parameters.AddWithValue("@kategoria",kategoria);
+                    cmd.Parameters.AddWithValue("@sposob_sort",sposob_sort);
+                    cmd.Parameters.AddWithValue("@rosnaco", rosnaco);
+                    cmd.ExecuteNonQuery();
+
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    lista.Add(dr["id_aukcji"].ToString());
                     lista.Add(dr["login"].ToString());
+                    lista.Add(dr["data_zakonczenia"].ToString());
                     lista.Add(dr["nazwa_produktu"].ToString());
                     lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_startowa"].ToString())) + " zł");
                     lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_wysylki"].ToString())) + " zł");
-                    lista.Add(dr["data_zakonczenia"].ToString());
-                    lista.Add(dr["opis"].ToString());
+                    lista.Add(dr["ocena_sprzedawcy"].ToString());
+                    lista.Add(dr["cena"].ToString());
                 }
             }
             finally
@@ -868,7 +876,7 @@ namespace MyWCFServices
 
             return lista;
 
-        }*/
+        }
 
 
         public IList<int> getAuctionIdList()

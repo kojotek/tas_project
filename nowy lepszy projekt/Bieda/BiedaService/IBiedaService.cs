@@ -84,8 +84,11 @@ namespace MyWCFServices
         void createAuction(string userLogin, string categoryName, string productName, string productDesc, 
             decimal pricePerUnit, decimal priceDelivery, int lifeTimeDays);
                           
+        /*[OperationContract]
+        List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco);*/
+
         [OperationContract]
-        List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco);
+        List<string> getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco); 
 
         [OperationContract]
         Auction getAuctionById(int auctionId);

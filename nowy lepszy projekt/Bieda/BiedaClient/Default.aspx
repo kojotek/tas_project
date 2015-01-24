@@ -18,7 +18,7 @@
 
         <asp:TableCell runat="server">
             <asp:Button ID="Button0" runat="server" Text="Wyszukaj aukcje:" Font-Size="X-Large" Font-Names="Calibri" CssClass="btn btn-default"
-                BackColor="#FF9933" BorderWidth="4"></asp:Button>
+                BackColor="#FF9933" BorderWidth="4" OnClick="Search"></asp:Button>
         </asp:TableCell>
 
     </asp:TableRow>
