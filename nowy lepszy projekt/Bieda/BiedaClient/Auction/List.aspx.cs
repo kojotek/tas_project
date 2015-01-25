@@ -11,17 +11,16 @@ namespace BiedaClient.Auction
 {
     public partial class AuctionList : System.Web.UI.Page
     {
-        protected int rowIndex = 0;
-        protected int rowCount = 20;
-        protected BiedaServiceClient biedaWebService = new BiedaServiceClient();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //if (IsPostBack)
+            //    return;
         }
 
         protected void AuctionListNextPage(object sender, EventArgs e)
         {
+            var rowCount = Convert.ToInt32(Request.QueryString["row_count"]);
+            var rowIndex = Convert.ToInt32(Request.QueryString["row_index"]);
             rowIndex += rowCount;
             StringBuilder sb = new StringBuilder();
             sb.Append("~/Auction/List?")
@@ -32,13 +31,15 @@ namespace BiedaClient.Auction
 
         protected void AuctionListPrevPage(object sender, EventArgs e)
         {
+            var rowCount = Convert.ToInt32(Request.QueryString["row_count"]);
+            var rowIndex = Convert.ToInt32(Request.QueryString["row_index"]);
             rowIndex -= rowCount;
             rowIndex = rowIndex > 0 ? rowIndex : 0;
             StringBuilder sb = new StringBuilder();
             sb.Append("~/Auction/List?")
                 .Append("row_index=").Append(rowIndex)
                 .Append("&row_count=").Append(rowCount);
-            Response.Redirect("~/Auction/List");
+            Response.Redirect(sb.ToString());
         }
     }
 }

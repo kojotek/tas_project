@@ -20,7 +20,7 @@ namespace BiedaClient.Account
                 if(client.IsSeller(Context.User.Identity.GetUserName()) == "git")
                 {
                     NoAccess.Visible = false;
-                    Response.Redirect("~/Auction/AuctionCreator");
+                    Response.Redirect("~/Auction/Create");
                     //Access.Visible = true;
                 }
 

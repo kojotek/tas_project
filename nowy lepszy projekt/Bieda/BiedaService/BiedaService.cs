@@ -1019,6 +1019,7 @@ namespace MyWCFServices
                         result.cena_startowa = Convert.ToDecimal(dr["cena_startowa"]);
                         result.cena_wysylki = Convert.ToDecimal(dr["cena_wysylki"]);
                         result.data_zakonczenia = Convert.ToDateTime(dr["data_zakonczenia"]);
+                        result.id_kategoria = Convert.ToInt32(dr["id_kategoria"]);
                         result.opis = Convert.ToString(dr["opis"]);
                     }
                 }
