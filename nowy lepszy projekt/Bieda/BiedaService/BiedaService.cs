@@ -841,23 +841,22 @@ namespace MyWCFServices
             return result;
         }*/
 
-        public List<string> getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco)
+        public List<string> getAuctionList(string haslo, string kategoria, int sposob_sort, int rosnaco)
         {
-            connect();
+            if (connect() == false)
+            {
+                return null;
+            }
+
             List<string> lista = new List<string>();
+
+            SqlCommand cmd = null;
 
             try
             {
-               // SqlCommand cmd = new SqlCommand("EXEC wyszukiwanie '" + haslo + "'," + kategoria.ToString() + "," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
-                SqlCommand cmd = new SqlCommand("EXEC wyszukiwanie '@hasło',@kategoria,@sposob_sort,@rosnaco", conn);
-                    //SqlCommand cmd = new SqlCommand("EXEC DODAJ_AUKCJE @categoryName, @userLogin, @lifeTimeDays, @productDesc, @productName, @pricePerUnit, @priceDelivery", conn);
-                    cmd.Parameters.AddWithValue("@hasło", haslo);
-                    cmd.Parameters.AddWithValue("@kategoria",kategoria);
-                    cmd.Parameters.AddWithValue("@sposob_sort",sposob_sort);
-                    cmd.Parameters.AddWithValue("@rosnaco", rosnaco);
-                    cmd.ExecuteNonQuery();
-
+                cmd = new SqlCommand("EXEC wyszukiwanie \'" + haslo + "\', \'" + kategoria + "\'," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
                 SqlDataReader dr = cmd.ExecuteReader();
+
                 while (dr.Read())
                 {
                     lista.Add(dr["login"].ToString());

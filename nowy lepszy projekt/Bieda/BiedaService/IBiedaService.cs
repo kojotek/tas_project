@@ -88,7 +88,7 @@ namespace MyWCFServices
         List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco);*/
 
         [OperationContract]
-        List<string> getAuctionList(string haslo, int kategoria, int sposob_sort, int rosnaco); 
+        List<string> getAuctionList(string haslo, string kategoria, int sposob_sort, int rosnaco); 
 
         [OperationContract]
         Auction getAuctionById(int auctionId);
