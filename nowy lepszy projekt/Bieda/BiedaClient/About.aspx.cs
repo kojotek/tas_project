@@ -28,6 +28,7 @@ namespace BiedaClient
             zlozOferte.Visible = false;
             oferta.Visible = false;
             opinia.Visible = false;
+            opiniaError.Visible = false;
             dodajOcene.Visible = false;
             ocena.Visible = false;
 
@@ -103,7 +104,9 @@ namespace BiedaClient
 
 
             
-            LabelLogin.Text = "Aukcja użytkownika " + lista[1];
+            LabelLogin.Text = "Aukcja użytkownika ";
+            link.Text = lista[1];
+            link.NavigateUrl = "AboutUser?usr=" + lista[1];
             LabelName.Text =  "(" + lista[0] + ") " + lista[2];
             LabelPrice.Text = lista[3];
             LabelSendPrice.Text = lista[4];
@@ -137,6 +140,9 @@ namespace BiedaClient
 
         }
 
+        
+
+
 
         protected void zlozOferte_Click(object sender, EventArgs e)
         {
@@ -144,6 +150,12 @@ namespace BiedaClient
 
             opiniaError.Visible = true;
             opiniaError.Text = client.addOffer( numer, User.Identity.GetUserName(), oferta.Text );
+
+            if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
+            {
+                    oferta.Visible = false;
+                    zlozOferte.Visible = false;
+            }
 
         }
 

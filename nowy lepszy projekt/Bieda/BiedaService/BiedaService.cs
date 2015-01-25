@@ -34,6 +34,7 @@ namespace MyWCFServices
             dic.Add("haslo1", new RegexData("^(\\w{6,})$", "haslo musi miec przynajmniej 6 znakow", 20));
             dic.Add("haslo2", new RegexData("[0-9]", "haslo musi zawierac cyfre", 20));
             dic.Add("kod", new RegexData("^([0-9][0-9]( |-)[0-9][0-9][0-9])$", "kod musi skladac sie z samych cyfr (dopuszczalne formaty XX-XXX oraz XX XXX)", 6));
+            dic.Add("kwota", new RegexData("^(0|[1-9]\\d*)([.,]\\d\\d?)?$", "Niepoprawny format kwoty", 50));
 
         }
 
@@ -663,7 +664,13 @@ namespace MyWCFServices
         {
             SqlCommand cmd = null;
 
-            string result = "git";
+            string r1 = CheckRegex("kwota", kwota);
+            if( r1 != "git" )
+            {
+                return r1;
+            }
+
+            string result = "Dodano twoją ofertę!";
 
             if (connect() == false)
             {
@@ -677,13 +684,12 @@ namespace MyWCFServices
 
                 int ilosc = cmd.ExecuteNonQuery();
 
-                if(ilosc <= 0) {result = "podana kwota jest za niska";}
+                if(ilosc <= 0) {result = "Podana kwota jest za niska.";}
             }
             catch (SqlException blad)
             {
                 result = "Błąd wykonania w bazie danych";
             }
-
 
 
             disconnect();
@@ -790,6 +796,37 @@ namespace MyWCFServices
 
             disconnect();
             return result;
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////getUserInfo//////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public List<string> getUserInfo(string login)
+        {
+            connect();
+            List<string> lista = new List<string>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("select imie, nazwisko, telefon, email from dane inner join klient on dane.id_dane = klient.id_dane where login = '"+ login +"'", conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    lista.Add(dr["imie"].ToString());
+                    lista.Add(dr["nazwisko"].ToString());
+                    lista.Add(dr["telefon"].ToString());
+                    lista.Add(dr["email"].ToString());
+                }
+            }
+            finally
+            {
+                disconnect();
+            }
+
+            return lista;
+
         }
 
 

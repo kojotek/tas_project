@@ -303,6 +303,7 @@ public interface IBiedaService
     void createAuction(string userLogin, string categoryName, string productName, string productDesc, decimal pricePerUnit, decimal priceDelivery, int lifeTimeDays);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionList", ReplyAction="http://tempuri.org/IBiedaService/getAuctionListResponse")]
+
     string[] getAuctionList(string haslo, string kategoria, int sposob_sort, int rosnaco);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getAuctionById", ReplyAction="http://tempuri.org/IBiedaService/getAuctionByIdResponse")]
@@ -319,6 +320,9 @@ public interface IBiedaService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/addCommentMessage", ReplyAction="http://tempuri.org/IBiedaService/addCommentMessageResponse")]
     bool addCommentMessage(int id_aukcji, string login);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBiedaService/getUserInfo", ReplyAction="http://tempuri.org/IBiedaService/getUserInfoResponse")]
+    string[] getUserInfo(string login);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -484,4 +488,10 @@ public partial class BiedaServiceClient : System.ServiceModel.ClientBase<IBiedaS
     {
         return base.Channel.addCommentMessage(id_aukcji, login);
     }
+    
+    public string[] getUserInfo(string login)
+    {
+        return base.Channel.getUserInfo(login);
+    }
+
 }

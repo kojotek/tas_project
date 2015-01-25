@@ -15,6 +15,7 @@
         <asp:TableRow runat="server" >
             <asp:TableCell runat="server" Width="700">
                 <asp:Label ID="LabelLogin" runat="server" Text="Label" Font-Bold="false" Font-Size="10"></asp:Label>
+                <asp:HyperLink ID="link" runat="server"></asp:HyperLink>
                 <br />
                 <asp:Label ID="LabelName" runat="server" Text="Label" Font-Bold="True" Font-Underline="True" Font-Size="25pt" Width="500px"></asp:Label><br />
                 <asp:Label ID="LabelState" runat="server" Text="Label" Font-Bold="True" Font-Underline="True" Font-Size="14pt" Width="500px"></asp:Label><br />
@@ -33,12 +34,12 @@
                 <asp:Label ID="LabelSendPrice" runat="server" Text="Label" Font-Bold="True" Font-Size="12pt"></asp:Label><br />
             </asp:TableCell>
             <asp:TableCell runat="server" HorizontalAlign="Left">
-                <asp:TextBox ID="oferta" runat="server" BorderStyle="Solid" Width="300px" Height="60px"
+                <asp:TextBox ID="oferta" runat="server" BorderStyle="Solid" Width="230px" Height="60px"
                 Text="kwota" Font-Size="X-Large" BackColor="#FFBC79" CssClass="form-control"></asp:TextBox>
                 <br />
                 <asp:Button ID="zlozOferte" runat="server" BorderStyle="Solid" Height="60px" Text="ZŁÓŻ OFERTĘ" CssClass="btn btn-default" Font-Size="X-Large" Width="300px" BackColor="#FFBC79" OnClick="zlozOferte_Click" />
                 <asp:TextBox ID="opinia" runat="server" BorderStyle="Solid" Width="300px" Height="60px"
-                Text="opinia" Font-Size="12" BackColor="#FFBC79" CssClass="form-control"></asp:TextBox>
+                Text="opinia" Font-Size="12" BackColor="#FFBC79" CssClass="form-control" ></asp:TextBox>
                 <br />
                 <asp:Button ID="dodajOcene" runat="server" BorderStyle="Solid" Height="60px" Text="Dodaj Opinie" CssClass="btn btn-default" Font-Size="X-Large" Width="250px" BackColor="#FFBC79" OnClick="dodajOpinie_Click" />
                 <asp:DropDownList runat="server" ID="ocena" Height="60" Width="50" Font-Size="Larger"></asp:DropDownList>

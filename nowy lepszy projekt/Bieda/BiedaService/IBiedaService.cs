@@ -111,6 +111,9 @@ namespace MyWCFServices
 
         #endregion
 
+        [OperationContract]
+        List<string> getUserInfo(string login);
+
     }
 
     public interface helpfullThings
