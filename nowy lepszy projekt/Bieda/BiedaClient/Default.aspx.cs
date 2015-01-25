@@ -52,9 +52,15 @@ namespace BiedaClient
             List<string> lista = new List<string>(client.getAuctionList( haslo, kategoria, sortuj, kierunek));
 
             Table1.Visible = false;
-
-            for (int i = 0; i < lista.Count; i = i + 7)
+            /*
+            HyperLink hl = new HyperLink();
+            hl.NavigateUrl = "About";
+            r.Controls.Add(hl);
+            */
+            for (int i = 0; i < lista.Count; i = i + 8)
             {
+                string link = "About?numer=" + lista[7];
+
                 TableCell c1 = new TableCell();
                 c1.BackColor = System.Drawing.Color.FromName("#FFCC66");
                 Label l1 = new Label();
@@ -73,7 +79,8 @@ namespace BiedaClient
 
                 TableCell c3 = new TableCell();
                 c3.BackColor = System.Drawing.Color.FromName("#FFFF99");
-                Label l3 = new Label();
+                HyperLink l3 = new HyperLink();
+                l3.NavigateUrl = link;
                 l3.Font.Size = FontUnit.Large;
                 l3.Font.Bold = true;
                 l3.Text = lista[i + 2];
@@ -111,6 +118,9 @@ namespace BiedaClient
                 l7.Text = lista[i + 6];
 
                 TableRow r = new TableRow();
+                r.Attributes.Add("onClick","rowClick");
+                r.BorderColor = System.Drawing.Color.Black;
+                r.BorderWidth = 3;
                 r.Controls.Add(c1);
                 r.Controls.Add(c2);
                 r.Controls.Add(c3);
@@ -121,7 +131,9 @@ namespace BiedaClient
 
                 Table1.Controls.Add(r);
                 Table1.Visible = true;
-            }               
+            }  
+             
         }
+
     }
 }
