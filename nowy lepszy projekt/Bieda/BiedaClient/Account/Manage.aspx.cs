@@ -26,27 +26,34 @@ namespace BiedaClient.Account
             {
                 LoadUserInfo();
 
-                if (client.IsSeller(Context.User.Identity.GetUserName()) == "git")
-                {
-                    nr_konta.Visible = true;
-                    nr_konta_label.Visible = true;
-                    edit0.Visible = true;
-                    upgrade.Visible = false;
-                }
+                CheckIfSellerMode();
             }
 
-            ErrorMsg.Visible = false;
+            ErrorMsgEdit0.Visible = false;
+            ErrorMsgEdit1.Visible = false;
+            ErrorMsgEdit2.Visible = false;
 
             Page.MaintainScrollPositionOnPostBack = true;
 
 
         }
 
+        protected void CheckIfSellerMode()
+        {
+            if (client.IsSeller(Context.User.Identity.GetUserName()) == "git")
+            {
+                nr_konta.Visible = true;
+                nr_konta_label.Visible = true;
+                edit0.Visible = true;
+                upgrade.Visible = false;
+            }
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////LoadUserInfo////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        protected void LoadUserInfo()
+        protected string LoadUserInfo()
         {
             List<string> lista = new List<string>(client.LoadAccInfo(Context.User.Identity.GetUserName()));
       
@@ -68,9 +75,10 @@ namespace BiedaClient.Account
             }
             else
             {
-                ErrorMsg.Text = lista[0];
-                ErrorMsg.Visible = true;
+                return lista[0];
             }
+
+            return "git";
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +100,8 @@ namespace BiedaClient.Account
             upgrade.Visible = true;
             delete_acc.Visible = true;
             changePassword.Visible = false;
+            ustawieniaKontaMsg.Visible = false;
+            Response.Redirect("Manage.aspx");
         }
 
         protected void changePass_ok_Click(object sender, EventArgs e)
@@ -162,6 +172,7 @@ namespace BiedaClient.Account
             upgradePanel.Visible = true;
             delete_acc.Visible = true;
             upgradeAccPanel.Visible = false;
+            ustawieniaKontaMsg.Visible = false;
         }
 
         protected void upgradeAcc_ok_Click(object sender, EventArgs e)
@@ -216,6 +227,8 @@ namespace BiedaClient.Account
             upgrade.Visible = true;
             delete_acc.Visible = true;
             deleteAccPanel.Visible = false;
+            ustawieniaKontaMsg.Visible = false;
+            Response.Redirect("Manage.aspx");
         }
 
         protected void deleteAcc_ok_Click(object sender, EventArgs e)
@@ -268,10 +281,7 @@ namespace BiedaClient.Account
 
             if(wynik != "git")
             {
-                ErrorMsg.Text = wynik;
-                ErrorMsg.Visible = true;
-
-                return "niegit";
+                return wynik;
             }
 
             return "git";
@@ -299,7 +309,9 @@ namespace BiedaClient.Account
 
         protected void edit1_ok_Click(object sender, EventArgs e)
         {  
-            if(ChangeUserInfo() == "git")
+            string wynik = ChangeUserInfo();
+
+            if(wynik == "git")
             {
                 LoadUserInfo();
 
@@ -318,7 +330,12 @@ namespace BiedaClient.Account
 
                 email.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
                 email.ReadOnly = true;
-            }     
+            }
+            else
+            {
+                ErrorMsgEdit1.Text = wynik;
+                ErrorMsgEdit1.Visible = true;
+            }
         }
 
 
@@ -370,8 +387,10 @@ namespace BiedaClient.Account
 
 
         protected void edit2_ok_Click(object sender, EventArgs e)
-        {           
-            if (ChangeUserInfo() == "git")
+        {
+            string wynik = ChangeUserInfo();
+
+            if (wynik == "git")
             {
                 LoadUserInfo();
 
@@ -396,7 +415,12 @@ namespace BiedaClient.Account
 
                 mieszkanie.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
                 mieszkanie.ReadOnly = true;
-            }    
+            }
+            else
+            {
+                ErrorMsgEdit2.Text = wynik;
+                ErrorMsgEdit2.Visible = true;
+            }
         }
 
 
@@ -455,8 +479,8 @@ namespace BiedaClient.Account
             }
             else
             {
-                ErrorMsg.Text = wynik;
-                ErrorMsg.Visible = true;
+                ErrorMsgEdit0.Text = wynik;
+                ErrorMsgEdit0.Visible = true;
             }
         }
 

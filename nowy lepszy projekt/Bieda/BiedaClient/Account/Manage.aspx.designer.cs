@@ -13,15 +13,6 @@ namespace BiedaClient.Account {
     public partial class Manage {
         
         /// <summary>
-        /// ErrorMsg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorMsg;
-        
-        /// <summary>
         /// Table1 control.
         /// </summary>
         /// <remarks>
@@ -139,6 +130,15 @@ namespace BiedaClient.Account {
         protected global::System.Web.UI.WebControls.Button edit0_cancel;
         
         /// <summary>
+        /// ErrorMsgEdit0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorMsgEdit0;
+        
+        /// <summary>
         /// Panel3 control.
         /// </summary>
         /// <remarks>
@@ -254,6 +254,15 @@ namespace BiedaClient.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button edit1_cancel;
+        
+        /// <summary>
+        /// ErrorMsgEdit1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorMsgEdit1;
         
         /// <summary>
         /// Panel4 control.
@@ -650,5 +659,14 @@ namespace BiedaClient.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button edit2_cancel;
+        
+        /// <summary>
+        /// ErrorMsgEdit2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorMsgEdit2;
     }
 }

@@ -8,7 +8,7 @@
     <br/>
     <br/>
     <br/>
-    <asp:Label ID="ErrorMsg" runat="server" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
+    
 
     <asp:Table ID="Table1" runat="server" Width="1036px" Height="1036px" CellPadding="30" CellSpacing="0">
 
@@ -58,6 +58,8 @@
 
                     <asp:Button ID="edit0_cancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
                     Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="edit0_cancel_Click" />
+                    <br/>
+                    <asp:Label ID="ErrorMsgEdit0" runat="server" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
                     
 
                 </asp:Panel>
@@ -120,6 +122,8 @@
 
                     <asp:Button ID="edit1_cancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
                     Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FF9D3C" OnClick="edit1_cancel_Click" />
+                    <br/>
+                    <asp:Label ID="ErrorMsgEdit1" runat="server" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
                     
          </asp:Panel>
         
@@ -308,6 +312,8 @@
 
                     <asp:Button ID="edit2_cancel" runat="server" BorderStyle="Solid" Height="60px" Text="ANULUJ" CssClass="btn btn-default"
                     Visible = "false" Font-Size="X-Large" Width="200px" BackColor="#FFBC79" OnClick="edit2_cancel_Click" />
+                    <br/>
+                    <asp:Label ID="ErrorMsgEdit2" runat="server" Font-Size="Large" ForeColor="#FF3300" Visible="false"></asp:Label>
                 
 
                 

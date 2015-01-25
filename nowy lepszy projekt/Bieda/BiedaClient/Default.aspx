@@ -3,10 +3,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
 
-     <div class="jumbotron">
-         <h1>BIEDA.pl</h1>
-         <p class="lead">BIEDA.pl to fantastyczny serwis aukcyjny dla ludzi bez pieniędzy.</p>
-     </div>
+    <asp:Image ID="Image1" runat="server" ImageUrl="~/logo.jpg"/>
+
+    <asp:Panel ID="Panel1" runat="server" Height="20px"></asp:Panel>
     
     <%-- FORMULARZ WYSZUKIWANIA --%>
 

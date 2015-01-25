@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title></title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -46,30 +46,29 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                    <a class="navbar-brand" runat="server" href="~/">Aukcje</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
+
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                                <li><a runat="server" href="~/Account/Register">Rejestracja</a></li>
+                                <li><a runat="server" href="~/Account/Login">Logowanie</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Zarządzaj swoim kontem">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li><a runat="server" href="~/Account/Manage" title="Zarządzaj swoim kontem">Witaj, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                 <li><a runat="server" href="~/Account/Messages">Powiadomienia</a></li>
                                     <li><a runat="server" href="~/Account/Seller">Wystaw Aukcje</a></li>
                                     <li><a runat="server" href="~/Auction/List">Lista aukcji</a></li>
                                 
                                 
                                 <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Wyloguj" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
                             </ul>
                         </LoggedInTemplate>
@@ -83,7 +82,7 @@
             <footer>
                 <br/>
                 <asp:Panel ID="Panel1" Width="1120px" Height="50px" BackColor="#333333" runat="server">
-                <p style="padding: 10px; color: #dddddd; font-size: x-large">&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p style="padding: 10px; color: #dddddd; font-size: x-large">&copy; <%: DateTime.Now.Year %> - Bieda.pl</p>
                 </asp:Panel>
             </footer>
         </div>

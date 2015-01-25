@@ -40,7 +40,7 @@ namespace BiedaClient
                 case "sport": kategoria = "4"; break;
                 case "komputery": kategoria = "5"; break;
 
-                default: kategoria = null; break;
+                default: kategoria = "null"; break;
             }
 
             //sortowanie trzeba dorobic, narazie ustawilem domyslnie 0

@@ -836,47 +836,6 @@ namespace MyWCFServices
         //////////////////////////////////////////////getAuctions/////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /*public List<AuctionData> getAuctions(string haslo, int kategoria, int sposob_sort, int rosnaco)
-        {
-            //List<string> result = new List<string>();
-            List<AuctionData> result = new List<AuctionData>();
-
-            SqlCommand cmd = null;
-
-            if (connect() == false)
-            {
-                return null;
-            }
-
-            try
-            {
-                cmd = new SqlCommand("EXEC wyszukiwanie '" + haslo + "'," + kategoria.ToString() + "," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    var e = new AuctionData();
-
-                    e.Login = dr["login"].ToString();
-                    e.DataZakonczenia = dr["data_zakonczenia"].ToString();
-                    e.NazwaProduktu = dr["nazwa_produktu"].ToString();
-                    e.CenaStartowa = dr["cena_startowa"].ToString();
-                    e.CenaWysylki = dr["cena_wysylki"].ToString();
-                    e.OcenaSprzedawcy = dr["ocena_sprzedawcy"].ToString();
-                    e.Cena = dr["cena"].ToString();
-
-                    result.Add(e);
-                }
-            }
-            catch (SqlException blad)
-            {
-                //result[0] = "Blad podczas wykonywania polecenia w bazie: " + blad.Errors.ToString();
-                return null;
-            }
-
-            disconnect();
-            return result;
-        }*/
 
         public List<string> getAuctionList(string haslo, string kategoria, int sposob_sort, int rosnaco)
         {
@@ -889,9 +848,14 @@ namespace MyWCFServices
 
             SqlCommand cmd = null;
 
+            if(kategoria != "null")
+            {
+                kategoria = "\'" + kategoria + "\'";
+            }
+
             try
             {
-                cmd = new SqlCommand("EXEC wyszukiwanie \'" + haslo + "\', \'" + kategoria + "\'," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
+                cmd = new SqlCommand("EXEC wyszukiwanie \'" + haslo + "\'," + kategoria + "," + sposob_sort.ToString() + "," + rosnaco.ToString(), conn);
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 while (dr.Read())
