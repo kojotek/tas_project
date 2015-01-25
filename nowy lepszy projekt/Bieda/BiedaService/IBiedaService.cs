@@ -81,7 +81,7 @@ namespace MyWCFServices
         IList<int> getAuctionIdListByCategory(int categoryId);
 
         [OperationContract]
-        void createAuction(string userLogin, string categoryName, string productName, string productDesc, 
+        bool createAuction(string userLogin, string categoryName, string productName, string productDesc, 
             decimal pricePerUnit, decimal priceDelivery, int lifeTimeDays);
                           
         /*[OperationContract]

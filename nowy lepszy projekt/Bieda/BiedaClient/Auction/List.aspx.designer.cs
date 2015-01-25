@@ -10,24 +10,33 @@
 namespace BiedaClient.Auction {
     
     
-    public partial class AuctionDraftPage {
+    public partial class AuctionList {
         
         /// <summary>
-        /// lb_Description control.
+        /// panelBackground control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lb_Description;
+        protected global::System.Web.UI.WebControls.Panel panelBackground;
         
         /// <summary>
-        /// UserName control.
+        /// btnPrevPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UserName;
+        protected global::System.Web.UI.WebControls.Button btnPrevPage;
+        
+        /// <summary>
+        /// btnNextPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNextPage;
     }
 }

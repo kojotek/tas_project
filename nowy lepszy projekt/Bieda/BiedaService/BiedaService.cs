@@ -1029,9 +1029,11 @@ namespace MyWCFServices
             return result;
         }
 
-        public void createAuction(string userLogin, string categoryName, string productName, string productDesc, 
+        public bool createAuction(string userLogin, string categoryName, string productName, string productDesc, 
             decimal pricePerUnit, decimal priceDelivery, int lifeTimeDays)
-        {     
+        {      
+            int cmdResult = 0;
+
             if (connect())
             {
                 try
@@ -1044,14 +1046,15 @@ namespace MyWCFServices
                     cmd.Parameters.AddWithValue("@productName",productName);
                     cmd.Parameters.AddWithValue("@pricePerUnit",pricePerUnit);
                     cmd.Parameters.AddWithValue("@priceDelivery",priceDelivery);
-                    cmd.ExecuteNonQuery(); //mozna by zwracac inta jako id aukcji, pytajac o ostatnia aukcje uzytkownika, jezeli NonQuery > 0
+                    cmdResult = cmd.ExecuteNonQuery(); //mozna by zwracac inta jako id aukcji, pytajac o ostatnia aukcje uzytkownika, jezeli NonQuery > 0
                 }
-                catch (SqlException)
+                catch (SqlException ex)
                 {
                 }
 
                 disconnect();
             }
+            return cmdResult>0;
         }
 
 

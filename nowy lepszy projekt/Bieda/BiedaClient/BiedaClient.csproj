@@ -156,10 +156,8 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Account\Seller.aspx" />
-    <Content Include="Auction\AuctionCreator.aspx" />
-    <Content Include="Auction\AuctionDraftPage.aspx" />
-    <Content Include="Auction\AuctionList.aspx" />
-    <Content Include="Auction\AuctionView.aspx" />
+    <Content Include="Auction\Create.aspx" />
+    <Content Include="Auction\List.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -170,6 +168,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="app.config" />
+    <Content Include="Auction\Web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -274,13 +273,6 @@
     <Compile Include="Account\Seller.aspx.designer.cs">
       <DependentUpon>Seller.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Auction\AuctionCreator.aspx.cs">
-      <DependentUpon>AuctionCreator.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Auction\AuctionCreator.aspx.designer.cs">
-      <DependentUpon>AuctionCreator.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -291,26 +283,19 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Auction\AuctionDraftPage.aspx.cs">
-      <DependentUpon>AuctionDraftPage.aspx</DependentUpon>
+    <Compile Include="Auction\Create.aspx.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Auction\AuctionDraftPage.aspx.designer.cs">
-      <DependentUpon>AuctionDraftPage.aspx</DependentUpon>
+    <Compile Include="Auction\Create.aspx.designer.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Auction\AuctionList.aspx.cs">
-      <DependentUpon>AuctionList.aspx</DependentUpon>
+    <Compile Include="Auction\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Auction\AuctionList.aspx.designer.cs">
-      <DependentUpon>AuctionList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Auction\AuctionView.aspx.cs">
-      <DependentUpon>AuctionView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Auction\AuctionView.aspx.designer.cs">
-      <DependentUpon>AuctionView.aspx</DependentUpon>
+    <Compile Include="Auction\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
     </Compile>
     <Compile Include="BiedaServiceRef.cs" />
     <Compile Include="Default.aspx.cs">
