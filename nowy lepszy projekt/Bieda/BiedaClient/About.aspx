@@ -5,9 +5,9 @@
   
     <asp:Panel ID="Panel1" runat="server" BackColor="#FFBC79" BorderColor="#FFBC79" BorderWidth="20px" Width="1100px" Height="2000px">
         <asp:Label ID="kontrolka" runat="server" Visible="false"></asp:Label>
-    <br />
-    <br />
-    <br />
+        <br />
+        <br />
+        <br />
     
         <div align="right"><asp:Label ID="LabelTime" runat="server" Text="Label" align="right" Font-Size="10"></asp:Label></div>
 

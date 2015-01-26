@@ -118,7 +118,6 @@ namespace BiedaClient
                 l7.Text = lista[i + 6];
 
                 TableRow r = new TableRow();
-                r.Attributes.Add("onClick","rowClick");
                 r.BorderColor = System.Drawing.Color.Black;
                 r.BorderWidth = 3;
                 r.Controls.Add(c1);

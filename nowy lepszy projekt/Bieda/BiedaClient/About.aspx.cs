@@ -24,7 +24,6 @@ namespace BiedaClient
 
 
 
-
             zlozOferte.Visible = false;
             oferta.Visible = false;
             opinia.Visible = false;
@@ -153,8 +152,9 @@ namespace BiedaClient
 
             if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
             {
-                    oferta.Visible = false;
-                    zlozOferte.Visible = false;
+                oferta.Visible = false;
+                zlozOferte.Visible = false;
+                LabelActualPrice.Text = oferta.Text + " zł";
             }
 
         }

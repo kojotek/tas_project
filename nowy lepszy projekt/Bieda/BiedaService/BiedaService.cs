@@ -678,6 +678,8 @@ namespace MyWCFServices
                 return result;
             }
 
+            kwota = kwota.Replace(',', '.');
+
             try
             {
                 cmd = new SqlCommand( "exec DODAJ_OFERTE "+ id_aukcji.ToString() +", '" + login + "', " + kwota , conn);
