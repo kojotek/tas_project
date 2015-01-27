@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="List.aspx.cs" Inherits="BiedaClient.Auction.AuctionList" %>
 
-<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
 
@@ -14,21 +12,52 @@
     
     <style type="text/css">
 
-        div.auction_list table.content {
+        table tr td {
+            cursor : pointer;
+        }
+
+        div.auction_list table {
             width: 100%;
-            border : solid;
         }
         
+        div.auction_list table.content {
+            border : solid;
+            border-color : black;
+            border-width : 1px;
+        }
+
+        div.auction_list table tr.header {
+            border-bottom : solid;
+            border-bottom-width : 1px;
+            border-bottom-color : black;
+            background-color : white;
+            text-align : center;
+        }
+
+        div.auction_list table tr td.lp {
+            text-align : left;
+            padding-left : 0;
+            font-size : smaller;
+        }
+
         div.auction_list table.content tr.header {
             border-bottom : solid;
+            border-width : 2px;
+        }
+
+        div.auction_list table.content tr.item td{
             background-color : white;
+            padding-left: 1em;
         }
 
-        div.auction_list table.content tr.item {
+        div.auction_list table.content tr.odd-item td{
+            background-color: lightgray;
+            padding-left: 1em;
         }
 
-        div.auction_list table.navbar {
-            width: 100%;
+        div.auction_list table.content tr.item:hover td,
+        div.auction_list table.content tr.odd-item:hover td{
+            background-color : yellow;
         }
 
         .right {
@@ -40,19 +69,21 @@
           text-align: left;
           margin-left: 1em;
         }
-
-
-    </style>       
+    </style>
+        
+               
 <div class="auction_list">
     <table class="header">
     </table>
         
     <table class="content">
 	    <tr class="header">
+            <th class="lp">Lp.</th>
             <th class="name">Nazwa produktu</th>
 		    <th class="id">Identyfikator aukcji</th>
 		    <th class="cat">Nazwa kategorii</th>
 		    <th class="price">Cena startowa</th>
+		    <th class="price">Najwyższa oferta</th>
 		    <th class="time">Czas trwania</th>
 	    </tr>
 
@@ -61,11 +92,8 @@
         var auctionIdList = biedaWebService.getAuctionListbyUserId(Context.User.Identity.Name);
         var categoryList = biedaWebService.getAuctionCategoryList();
 
-        var rowCount = 20;
-        var rowIndex = 0;
-
-        //Session["row_index"] = Request["row_index"];
-        //Session["row_count"] = Request["row_count"];
+        int rowCount = 20;
+        int rowIndex = 0;
     
         if (Request.QueryString["row_index"] != null)
             int.TryParse(Request.QueryString["row_index"], out rowIndex);
@@ -80,11 +108,14 @@
             var catNameList = categoryList.Where(x => x.Id == auction.id_kategoria);
             var catName = categoryList.Where(x => x.Id == auction.id_kategoria).Select(x => x.Name).FirstOrDefault(); 
             %>
-	    <tr class="<%=i%2==1?"odd-":""%>item">
+
+	    <tr class="<%=i%2==1?"odd-":""%>item" onclick="document.location = '<%=ResolveClientUrl("~/About?numer=")+auctionId%>';">
+            <td class="lp"><%=i.ToString() %></td>
             <td class="name"><%=auction.nazwa_produktu%></td>
-		    <td class="id"><a href="<%=ResolveClientUrl("~/About?numer=")+auctionId%>"><%=auctionId%></a></td>
+		    <td class="id"><%=auctionId%></td>
 		    <td class="cat"><%=categoryList.Where(x=>x.Id==auction.id_kategoria).Select(x=>x.Name).FirstOrDefault()%></td>
 		    <td class="price"><%=auction.cena_startowa.ToString("#.##")%></td>
+		    <td class="price"><%=biedaWebService.getAuctionHighestOffer(auctionId)%></td>
 		    <td class="time"><%=auction.data_zakonczenia%></td>
 	    </tr>
 	    <%}%>
@@ -92,8 +123,8 @@
 
     <table class="navbar">
         <tr>
-            <td class="left item"><asp:Button ID="btnPrevPage" Text="Poprzednia strona" runat="server"  OnClick="AuctionListPrevPage" /></td>
-            <td class="right item"><asp:Button ID="btnNextPage" Text="Następna strona" runat="server" OnClick="AuctionListNextPage" /></td>
+            <td class="left item nav_button"><asp:Button ID="btnPrevPage" Text="Poprzednia strona" runat="server"  OnClick="AuctionListPrevPage" /></td>
+            <td class="right item nav_button"><asp:Button ID="btnNextPage" Text="Następna strona" runat="server" OnClick="AuctionListNextPage" /></td>
         </tr>
     </table>
 
