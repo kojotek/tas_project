@@ -114,6 +114,9 @@ namespace MyWCFServices
         [OperationContract]
         List<string> getUserInfo(string login);
 
+        [OperationContract]
+        List<string> getOffers(int id_aukcji);
+
     }
 
     public interface helpfullThings
