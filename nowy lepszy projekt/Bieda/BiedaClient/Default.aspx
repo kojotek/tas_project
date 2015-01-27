@@ -43,13 +43,20 @@
                 Text="Wpisz hasło wyszukiwania" Font-Size="Large" BackColor="#FFCC66" CssClass="form-control"></asp:TextBox>
         </asp:TableCell>
         <asp:TableCell runat="server">
-            <asp:DropDownList ID="DropDownList_kategoria" runat="server" Height="40" Width="200" Font-Size="Larger" AutoPostBack="false"></asp:DropDownList>
+            <asp:DropDownList ID="DropDownList_kategoria" runat="server" Height="40" Width="200" Font-Size="Larger" AutoPostBack="false">
+            </asp:DropDownList>
         </asp:TableCell>
         <asp:TableCell runat="server">
-            <asp:DropDownList ID="DropDownList_sortuj" runat="server" Height="40" Width="150" Font-Size="Larger" AutoPostBack="false"></asp:DropDownList>
+            <asp:DropDownList ID="DropDownList_sortuj" runat="server" Height="40" Width="150" Font-Size="Larger" AutoPostBack="false">
+                <asp:ListItem Text="Cena"></asp:ListItem>
+                <asp:ListItem Text="Data zakończenia"></asp:ListItem>
+            </asp:DropDownList>
         </asp:TableCell>
         <asp:TableCell runat="server">
-            <asp:DropDownList ID="DropDownList_kierunek" runat="server" Height="40" Width="150" Font-Size="Larger" AutoPostBack="false"></asp:DropDownList>
+            <asp:DropDownList ID="DropDownList_kierunek" runat="server" Height="40" Width="150" Font-Size="Larger" AutoPostBack="false">
+                <asp:ListItem Text="Rosnąco"></asp:ListItem>
+                <asp:ListItem Text="Malejąco"></asp:ListItem>
+            </asp:DropDownList>
         </asp:TableCell>
 
     </asp:TableRow>

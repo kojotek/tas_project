@@ -868,7 +868,7 @@ namespace MyWCFServices
                     lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_startowa"].ToString())) + " zł");
                     lista.Add(String.Format("{0:F2}", float.Parse(dr["cena_wysylki"].ToString())) + " zł");
                     lista.Add(dr["ocena_sprzedawcy"].ToString());
-                    lista.Add(dr["cena"].ToString());
+                    lista.Add(String.Format("{0:F2}", float.Parse(dr["cena"].ToString())) + " zł");
                     lista.Add(dr["id_aukcji"].ToString());
                 }
             }

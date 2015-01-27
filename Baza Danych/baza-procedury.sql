@@ -301,8 +301,8 @@ END
 
 --przyklad uzycia
 EXEC DODAJ_AUKCJE
-'AGD', 'Janek123', 3, 'lodówka z technologi¹ turbo full', 
-'beko extra lux', 300, 100 
+'AGD', 'Janek123', 3, 'lodówka bez technologii turbo full', 
+'beko', 200, 100 
 GO
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -550,6 +550,7 @@ if @a != 0 begin
 	set @text = (select right(@text,@l-@a))
 	insert into TAGI values(@i,@t) end
 if @a = 0 begin
+	set @i = (select id_aukcji from inserted)
 	insert into TAGI values(@i,@text)
 	set @text = null end
 end
@@ -713,7 +714,7 @@ select * from wyszukiwanie_k_t('beko 8000',3)
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 alter procedure wyszukiwanie(@has³o varchar(100) = null,@kategoria int = null, @sposob_sort int = 1, @rosn¹co bit = 1)
-as													        	  -- 1 cena 0 kategoria -- 1 rosn¹co 0 malej¹co
+as													        	  -- 1 cena 0 data_zakoñczenia -- 1 rosn¹co 0 malej¹co
 
 BEGIN
 declare @aukcje table
@@ -732,42 +733,47 @@ declare @oferty table
 (	id_aukcji int, cena money
 	)
 
-if @has³o is null and @kategoria is null begin
+if @has³o = '' and @kategoria is null begin
 	insert into @aukcje
 	select * from AUKCJA end 
-if @has³o is null and @kategoria is not null begin
+if @has³o = '' and @kategoria is not null begin
 	insert into @aukcje
 	select * from wyszukiwanie_kategorie(@kategoria) end
-if @has³o is not null and @kategoria is null begin
+if @has³o != '' and @kategoria is null begin
 	insert into @aukcje
 	select * from wyszukiwanie_tagi(@has³o) end
-if @has³o is not null and @kategoria is not null begin
+if @has³o != '' and @kategoria is not null begin
 	insert into @aukcje
 	select * from wyszukiwanie_k_t(@has³o,@kategoria) end
 
 insert into @oferty
-select id_aukcji,max(kwota) from OFERTA group by id_aukcji
+select id_aukcji,max(kwota) as cena from OFERTA group by id_aukcji
+
+delete from @oferty where cena is null
+
+insert into @oferty
+select id_aukcji,cena_startowa as cena from @aukcje where id_aukcji != all (select id_aukcji from @oferty)
 
 if @sposob_sort = 1
 	begin
 	if @rosn¹co = 1 begin
-		select * from @aukcje a left outer join @oferty o on a.id_aukcji = o.id_aukcji order by cena ASC end
+		select * from @aukcje a join @oferty o on a.id_aukcji = o.id_aukcji order by cena ASC end
 	else begin
-		select * from @aukcje a left outer join @oferty o on a.id_aukcji = o.id_aukcji order by cena DESC end
+		select * from @aukcje a join @oferty o on a.id_aukcji = o.id_aukcji order by cena DESC end
 	end
 
 if @sposob_sort = 0
 	begin
 	if @rosn¹co = 1 begin
-		select * from @aukcje a left outer join @oferty o on a.id_aukcji = o.id_aukcji order by data_zakonczenia ASC end
+		select * from @aukcje a join @oferty o on a.id_aukcji = o.id_aukcji order by data_zakonczenia ASC end
 	else begin
-		select * from @aukcje a left outer join @oferty o on a.id_aukcji = o.id_aukcji order by data_zakonczenia DESC end
+		select * from @aukcje a join @oferty o on a.id_aukcji = o.id_aukcji order by data_zakonczenia DESC end
 	end	
 
 END
 
 --przyk³ad u¿ycia
-EXEC wyszukiwanie '8000 beko',null,0,0
+EXEC wyszukiwanie '8000 beko',null,1,1
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////
 --////////////////////////////////WYSZUKIWANIE_AUKCJI - SORTOWANIE PO CENIE////////////////////////////////

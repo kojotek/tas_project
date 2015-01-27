@@ -23,9 +23,9 @@ namespace BiedaClient
                 IList<AuctionCategory> categories = client.getAuctionCategoryList();
                 var categoryList = client.getAuctionCategoryList();
                 DropDownList_kategoria.DataSource = categoryList.Select(x => x.Name);
-                DropDownList_kategoria.DataBind();
+                DropDownList_kategoria.DataBind(); 
                 
-                Search("beko extra lux zelmor", "3", 0, 0); //Wyszukanie defaultowe można zostawić puste, ale może by tak wyświetlać najnowsze aukcje?
+                Search("", "null", 0, 1); //Defaultowo wyświetlamy wszystkie aukcje w kolejności od tych, które kończą się najszybiej
             }  
         }
            
@@ -43,8 +43,26 @@ namespace BiedaClient
                 default: kategoria = "null"; break;
             }
 
+            int sortuj;
+            switch (DropDownList_sortuj.Text)
+            {
+                case "Cena": sortuj = 1; break;
+                case "Data zakończenia": sortuj = 0; break;
+
+                default: sortuj = 1; break;
+            }
+
+            int kierunek;
+            switch (DropDownList_kierunek.Text)
+            {
+                case "Rosnąco": kierunek = 1; break;
+                case "Malejąco": kierunek = 0; break;
+
+                default: kierunek = 1; break;
+            }
             //sortowanie trzeba dorobic, narazie ustawilem domyslnie 0
-            Search(TextBox_haslo.Text, kategoria, 0 /*Convert.ToInt16(DropDownList_sortuj.Text)*/, 0 /*Convert.ToInt16(DropDownList_kierunek.Text)*/); 
+            /*Search(TextBox_haslo.Text, kategoria, 0 /*Convert.ToInt16(DropDownList_sortuj.Text)*, 0 *Convert.ToInt16(DropDownList_kierunek.Text)*);*/
+            Search(TextBox_haslo.Text, kategoria, sortuj, kierunek); 
         }
 
         protected void Search(string haslo, string kategoria, int sortuj, int kierunek)
@@ -116,6 +134,7 @@ namespace BiedaClient
                 l7.Font.Size = FontUnit.Large;
                 l7.Font.Bold = true;
                 l7.Text = lista[i + 6];
+                c7.Controls.Add(l7);
 
                 TableRow r = new TableRow();
                 r.BorderColor = System.Drawing.Color.Black;
