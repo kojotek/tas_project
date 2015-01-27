@@ -23,12 +23,16 @@ namespace BiedaClient.Auction
                 categoryListDropdown.DataSource = categoryList.Select(x => x.Name);
                 categoryListDropdown.DataBind();
             }   
+        
         }
 
         protected void CreateAuctionClick(object sender, EventArgs e)
         {
-            if (!Page.IsValid)
+            if (!Page.IsValid)  
+            {
                 return;
+            }
+
             var userId = System.Web.HttpContext.Current.User.Identity.Name;
 
             string categoryName = categoryListDropdown.Items[categoryListDropdown.SelectedIndex > 0 ? categoryListDropdown.SelectedIndex : 0].Text;

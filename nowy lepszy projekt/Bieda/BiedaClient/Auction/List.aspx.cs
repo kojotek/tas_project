@@ -19,8 +19,8 @@ namespace BiedaClient.Auction
 
         protected void AuctionListNextPage(object sender, EventArgs e)
         {
-            var rowCount = Convert.ToInt32(Request.QueryString["row_count"]);
-            var rowIndex = Convert.ToInt32(Request.QueryString["row_index"]);
+            int rowCount = (int)Session["row_count"];
+            int rowIndex = (int)Session["row_index"];
             rowIndex += rowCount;
             StringBuilder sb = new StringBuilder();
             sb.Append("~/Auction/List?")
@@ -31,8 +31,8 @@ namespace BiedaClient.Auction
 
         protected void AuctionListPrevPage(object sender, EventArgs e)
         {
-            var rowCount = Convert.ToInt32(Request.QueryString["row_count"]);
-            var rowIndex = Convert.ToInt32(Request.QueryString["row_index"]);
+            int rowCount = (int) Session["row_count"];
+            int rowIndex = (int) Session["row_index"];  
             rowIndex -= rowCount;
             rowIndex = rowIndex > 0 ? rowIndex : 0;
             StringBuilder sb = new StringBuilder();

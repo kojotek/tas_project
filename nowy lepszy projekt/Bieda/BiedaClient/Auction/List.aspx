@@ -83,7 +83,7 @@
 		    <th class="id">Identyfikator aukcji</th>
 		    <th class="cat">Nazwa kategorii</th>
 		    <th class="price">Cena startowa</th>
-		    <th class="price">Najwyższa oferta</th>
+		    <th class="price">Najwyższa oferta (zł)</th>
 		    <th class="time">Czas trwania</th>
 	    </tr>
 
@@ -95,18 +95,26 @@
         int rowCount = 20;
         int rowIndex = 0;
     
+        
         if (Request.QueryString["row_index"] != null)
             int.TryParse(Request.QueryString["row_index"], out rowIndex);
+            
 
         if (Request.QueryString["row_count"] != null)
             int.TryParse(Request.QueryString["row_count"], out rowCount);
+            
+        Session["row_index"] = rowIndex;
+        Session["row_count"] = rowCount;
 
         for (int i = 0, j = rowIndex; i < rowCount && j < auctionIdList.Length; j++, i++)
         {
             var auctionId = auctionIdList[j];
             var auction = biedaWebService.getAuctionById(auctionId);
             var catNameList = categoryList.Where(x => x.Id == auction.id_kategoria);
-            var catName = categoryList.Where(x => x.Id == auction.id_kategoria).Select(x => x.Name).FirstOrDefault(); 
+            var catName = categoryList.Where(x => x.Id == auction.id_kategoria).Select(x => x.Name).FirstOrDefault();
+            var offerText = biedaWebService.getAuctionHighestOffer(auctionId);
+            decimal offerNum = 0.0m;
+            decimal.TryParse(offerText, out offerNum);
             %>
 
 	    <tr class="<%=i%2==1?"odd-":""%>item" onclick="document.location = '<%=ResolveClientUrl("~/About?numer=")+auctionId%>';">
@@ -115,7 +123,7 @@
 		    <td class="id"><%=auctionId%></td>
 		    <td class="cat"><%=categoryList.Where(x=>x.Id==auction.id_kategoria).Select(x=>x.Name).FirstOrDefault()%></td>
 		    <td class="price"><%=auction.cena_startowa.ToString("#.##")%></td>
-		    <td class="price"><%=biedaWebService.getAuctionHighestOffer(auctionId)%></td>
+		    <td class="price"><%=offerNum.ToString("#.##")%></td>
 		    <td class="time"><%=auction.data_zakonczenia%></td>
 	    </tr>
 	    <%}%>
