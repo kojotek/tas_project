@@ -70,11 +70,7 @@ namespace BiedaClient
             List<string> lista = new List<string>(client.getAuctionList( haslo, kategoria, sortuj, kierunek));
 
             Table1.Visible = false;
-            /*
-            HyperLink hl = new HyperLink();
-            hl.NavigateUrl = "About";
-            r.Controls.Add(hl);
-            */
+
             for (int i = 0; i < lista.Count; i = i + 8)
             {
                 string link = "About?numer=" + lista[7];

@@ -47,12 +47,22 @@
                 <asp:Label ID="opiniaError" runat="server" Text=""></asp:Label>
             </asp:TableCell>
         </asp:TableRow>
-    </asp:Table>
-    <br />
-    <br />
-    <asp:Label ID="LabelTemp4" runat="server" Text="Opis produktu:" Font-Bold="True" Font-Size="12pt"></asp:Label><br />
 
-    <asp:Label ID="TextBoxDescription" runat="server" ReadOnly="True" MaxLength="80" Height="100px" Width="500px"></asp:Label><br />
+        
+        <asp:TableRow runat="server" >
+            <asp:TableCell>
+                <asp:Label ID="LabelTemp4" runat="server" Text="Opis produktu:" Font-Bold="True" Font-Size="12pt"></asp:Label><br />
+                <asp:Label ID="TextBoxDescription" runat="server" ReadOnly="True" MaxLength="80" Height="100px" Width="500px"></asp:Label><br />
+            </asp:TableCell>
+        </asp:TableRow>
+
+        <asp:TableRow runat="server" >
+            <asp:TableCell>
+                <asp:Table ID="TableOferty" runat="server" ></asp:Table>
+            </asp:TableCell>
+        </asp:TableRow>
+
+    </asp:Table>
 
     </asp:Panel>
 </asp:Content>

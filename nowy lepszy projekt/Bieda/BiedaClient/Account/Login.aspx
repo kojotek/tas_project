@@ -42,7 +42,7 @@
                 <br />
                 <br />
                 <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Zarejestruj się</asp:HyperLink> jeśli niemasz u nas konta.
+                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Zarejestruj się</asp:HyperLink> jeśli nie masz u nas konta.
                 </p>
                     
             </asp:Panel>
