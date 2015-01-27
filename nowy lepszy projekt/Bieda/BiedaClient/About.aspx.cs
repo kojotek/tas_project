@@ -114,7 +114,9 @@ namespace BiedaClient
             LabelSendPrice.Text = lista[4];
             LabelTime.Text = "Zakończenie aukcji: " + lista[5];
             TextBoxDescription.Text = lista[6];
-            LabelActualPrice.Text =  client.getAuctionHighestOffer(numer) + " zł";
+            LabelActualPrice.Text =  client.getAuctionHighestOffer(numer);
+            if (LabelActualPrice.Text != "Brak ofert")
+                LabelActualPrice.Text += " zł";
 
 
             if (!client.isAuctionOver(numer) && client.getAuctionWinner(numer) != Context.User.Identity.GetUserName() && Context.User.Identity.IsAuthenticated )
@@ -142,6 +144,13 @@ namespace BiedaClient
 
             refreshOffers();
 
+            if( lista[1] == User.Identity.Name )
+            {
+                zlozOferte.Visible = false;
+                oferta.Visible = false;
+                LabelState.Text = "Jesteś właścicielem tej aukcji.";
+            }
+
         }
 
         
@@ -157,6 +166,7 @@ namespace BiedaClient
 
             if (client.getAuctionWinner(numer) == Context.User.Identity.GetUserName())
             {
+                LabelState.Text = "Twoja oferta jest najlepsza.";
                 oferta.Visible = false;
                 zlozOferte.Visible = false;
                 LabelActualPrice.Text = oferta.Text;
@@ -165,7 +175,6 @@ namespace BiedaClient
             }
 
             refreshOffers();
-
         }
 
 
@@ -201,6 +210,8 @@ namespace BiedaClient
             }
             
         }
+
+
 
         protected void refreshOffers()
         {
